@@ -35,15 +35,15 @@ All data injected into the system (course attributes and student testimonials) i
 *   **UI Constraints:** Students answer 6 questions on a 1-5 scale. **All scales must default to a value of 3** to prevent decision fatigue. Every field must be validated before submission.
 *   **Question Mapping:**
     *   **Prior Knowledge (Background) — Backend averages Q1 & Q2:**
-        1. "Do you prefer courses on topics you already know, or topics that are totally new to you?" (1 = Already know $\rightarrow$ 5 = Totally new)
-        2. "If a course covers something you've never studied, how comfortable are you picking it up as you go?" (1 = Not comfortable $\rightarrow$ 5 = Very comfortable)
+        1. "Do you prefer courses on topics you already know, or topics that are totally new to you?" (1 = Already know to 5 = Totally new)
+        2. "If a course covers something you've never studied, how comfortable are you picking it up as you go?" (1 = Not comfortable to 5 = Very comfortable)
     *   **Difficulty — Backend averages Q3 & Q4:**
-        3. "Do you prefer easy, straightforward courses or more challenging ones?" (1 = Easy $\rightarrow$ 5 = Challenging)
-        4. "How much do you enjoy spending extra time solving a tough problem?" (1 = Not much $\rightarrow$ 5 = A lot)
+        3. "Do you prefer easy, straightforward courses or more challenging ones?" (1 = Easy to 5 = Challenging)
+        4. "How much do you enjoy spending extra time solving a tough problem?" (1 = Not much to 5 = A lot)
     *   **Workload — Single variable, direct mapping:**
-        5. "How much time can you give a course every week, outside class?" (1 = Very little $\rightarrow$ 5 = A good amount)
+        5. "How much time can you give a course every week, outside class?" (1 = Very little to 5 = A good amount)
     *   **Hands-on vs. Theory — Single variable, direct mapping:**
-        6. "Do you enjoy hands-on/practical work more, or theory more?" (1 = Theory $\rightarrow$ 5 = Hands-on)
+        6. "Do you enjoy hands-on/practical work more, or theory more?" (1 = Theory to 5 = Hands-on)
 
 ### 2.3 Results Display
 *   **Elements:** A ranked list of course cards from highest to lowest fit percentage.
@@ -95,23 +95,23 @@ The FastAPI backend receives the student payload (Branch + the 4 attributes gene
 **1. Shortfall Formula (For `prior_knowledge` and `workload`)**
 A course demanding *less* than the student can handle incurs no penalty. A course demanding *more* reduces the score.
 
-$$\text{shortfall} = \max(0, \text{course\_value} - \text{student\_value})$$
+$$\text{shortfall}=\max(0,\text{courseValue}-\text{studentValue})$$
 
-$$\text{raw\_score} = 5 - \text{shortfall}$$
+$$\text{rawScore}=5-\text{shortfall}$$
 
-$$\text{normalized\_score} = \frac{\text{raw\_score} - 1}{4}$$
+$$\text{normalizedScore}=\frac{\text{rawScore}-1}{4}$$
 
 **2. Distance Formula (For `difficulty` and `hands_on`)**
 Mismatch in *either* direction penalizes the score.
 
-$$\text{raw\_score} = 5 - |\text{student\_value} - \text{course\_value}|$$
+$$\text{rawScore}=5-|\text{studentValue}-\text{courseValue}|$$
 
-$$\text{normalized\_score} = \frac{\text{raw\_score} - 1}{4}$$
+$$\text{normalizedScore}=\frac{\text{rawScore}-1}{4}$$
 
 **3. Final Percentage Calculation**
 Include the `branch_proximity` score directly (0 to 1.0). Average all 5 included values.
 
-$$\text{fit\_percentage} = \text{round} \left( \frac{\sum \text{normalized\_scores}}{\text{count}} \times 100 \right)$$
+$$\text{fitPercentage}=\text{round}\left(\frac{\sum\text{normalizedScores}}{\text{count}}\times100\right)$$
 
 *Constraint:* If an attribute is missing (null), exclude it from the denominator. Do not invent defaults. 
 
