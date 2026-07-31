@@ -1,10 +1,10 @@
 import os
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware # 1. Import this!
 from pydantic import BaseModel
 from google import genai
 from dotenv import load_dotenv
 
-# 1. Load the secret key from the .env file
 load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
 
@@ -12,12 +12,19 @@ if not api_key:
     print("WARNING: Gemini API Key not found!")
     client = None
 else:
-    # 2. Turn on the modern GenAI Client
     client = genai.Client(api_key=api_key)
 
 app = FastAPI()
 
-# 3. Data structure expected from frontend
+# 2. Add this entire block right here!
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], # In production, you will change this to Aaditya's exact Vercel URL
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 class StudentData(BaseModel):
     name: str
     gpa: float
@@ -41,7 +48,6 @@ def get_recommendations(data: StudentData):
         Provide a brief reason for each. Keep the response clear, structured, and under 150 words.
         """
         
-        # Modern execution syntax using the new SDK
         response = client.models.generate_content(
             model='gemini-3.6-flash',
             contents=prompt
