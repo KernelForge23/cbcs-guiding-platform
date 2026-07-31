@@ -35,16 +35,20 @@ type StudentAttributes = {
   hands_on: number;
 };
 
-type MockCourse = {
+type CourseCard = {
   rank: number;
-  code: string;
-  name: string;
-  fitPercentage: number;
-  tags: string[];
-  whyThisFits: string;
-  worthKnowing: string;
-  testimonial: string;
-  testimonialAuthor: string;
+  course_code: string;
+  course_name: string;
+  fit_percentage: number;
+  topic_tags: string[];
+  why_this_fits: string;
+  worth_knowing: string;
+  testimonials: string[];
+  evaluation_style_facts: string;
+};
+
+type RecommendResponse = {
+  courses: CourseCard[];
 };
 
 const BRANCHES: Branch[] = [
@@ -143,60 +147,8 @@ function average(a: number, b: number): number {
   return Math.round(((a + b) / 2) * 10) / 10;
 }
 
-function buildMockCourses(attrs: StudentAttributes): MockCourse[] {
-  const baseFit = Math.round(
-    ((attrs.prior_knowledge +
-      attrs.difficulty +
-      attrs.workload +
-      attrs.hands_on) /
-      20) *
-      100,
-  );
-
-  return [
-    {
-      rank: 1,
-      code: "CS301",
-      name: "Introduction to Machine Learning",
-      fitPercentage: Math.min(98, baseFit + 12),
-      tags: ["AI", "Python", "DataScience"],
-      whyThisFits:
-        "Your comfort with new topics and moderate workload preference align well with this course. The hands-on lab sessions match your practical learning style, and the difficulty level sits close to what you indicated you enjoy.",
-      worthKnowing:
-        "Expect a noticeable jump in mathematical rigor around Week 4. Past students say the mid-sem project takes longer than the syllabus suggests.",
-      testimonial:
-        "The projects are genuinely fun if you start early. Don't skip the linear algebra refresher — it saves you in the second half.",
-      testimonialAuthor: "Priya M., CS, Sem 4",
-    },
-    {
-      rank: 2,
-      code: "EC402",
-      name: "Digital Signal Processing",
-      fitPercentage: Math.min(92, baseFit + 4),
-      tags: ["Signals", "Matlab", "Electronics"],
-      whyThisFits:
-        "Your willingness to tackle challenging problems pairs well with this course's problem-set structure. The theory-to-lab ratio balances your stated preference for hands-on work without overwhelming weekly commitments.",
-      worthKnowing:
-        "Fourier transforms and filter design can feel abstract before the lab sessions click. Budget extra time for the end-sem numerical component.",
-      testimonial:
-        "Prof explains concepts clearly, but the assignments stack up in the last month. Form a study group early.",
-      testimonialAuthor: "Arjun K., ECE, Sem 5",
-    },
-    {
-      rank: 3,
-      code: "ME305",
-      name: "Finite Element Analysis",
-      fitPercentage: Math.max(55, baseFit - 6),
-      tags: ["Simulation", "Mechanics", "CAD"],
-      whyThisFits:
-        "If you're open to stretching into applied mechanics, this course rewards systematic problem-solving. The workload is manageable week-to-week, though the software learning curve is real.",
-      worthKnowing:
-        "Prior exposure to solid mechanics helps significantly. The course leans more theory-heavy than the lab hours might suggest.",
-      testimonial:
-        "ANSYS tutorials are well-structured. Come in with basic mechanics knowledge or you'll spend weekends catching up.",
-      testimonialAuthor: "Neha S., Mechanical, Sem 5",
-    },
-  ];
+function formatTag(tag: string): string {
+  return tag.startsWith("#") ? tag : `#${tag}`;
 }
 
 function RatingScale({
@@ -270,7 +222,11 @@ export default function CBCSElectiveGuide() {
   const [q6, setQ6] = useState(3);
 
   const [attributes, setAttributes] = useState<StudentAttributes | null>(null);
-  const [courses, setCourses] = useState<MockCourse[]>([]);
+  const [courses, setCourses] = useState<CourseCard[]>([]);
+  const [isLoadingRecommendations, setIsLoadingRecommendations] = useState(false);
+  const [recommendationError, setRecommendationError] = useState<string | null>(
+    null,
+  );
 
   const [testimonialName, setTestimonialName] = useState("");
   const [misNumber, setMisNumber] = useState("");
@@ -307,6 +263,8 @@ export default function CBCSElectiveGuide() {
     setQ6(3);
     setAttributes(null);
     setCourses([]);
+    setIsLoadingRecommendations(false);
+    setRecommendationError(null);
     setTestimonialName("");
     setMisNumber("");
     setTestimonialBranch("");
@@ -325,16 +283,52 @@ export default function CBCSElectiveGuide() {
     setView("wizard");
   }
 
-  function handleGetRecommendations() {
+  async function handleGetRecommendations() {
+    if (!branch || isLoadingRecommendations) return;
+
     const computed: StudentAttributes = {
       prior_knowledge: average(q1, q2),
       difficulty: average(q3, q4),
       workload: q5,
       hands_on: q6,
     };
+
     setAttributes(computed);
-    setCourses(buildMockCourses(computed));
-    setView("results");
+    setRecommendationError(null);
+    setIsLoadingRecommendations(true);
+
+    try {
+      const response = await fetch("http://localhost:8000/api/recommend", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          student_branch: branch,
+          prior_knowledge: computed.prior_knowledge,
+          difficulty: computed.difficulty,
+          workload: computed.workload,
+          hands_on: computed.hands_on,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorBody = await response.json().catch(() => null);
+        throw new Error(
+          errorBody?.detail ?? "Failed to fetch recommendations. Please try again.",
+        );
+      }
+
+      const data = (await response.json()) as RecommendResponse;
+      setCourses(data.courses);
+      setView("results");
+    } catch (error) {
+      setRecommendationError(
+        error instanceof Error
+          ? error.message
+          : "Failed to fetch recommendations. Please try again.",
+      );
+    } finally {
+      setIsLoadingRecommendations(false);
+    }
   }
 
   function handleTestimonialLoginContinue() {
@@ -536,19 +530,28 @@ export default function CBCSElectiveGuide() {
               <button
                 type="button"
                 onClick={() => setView("home")}
-                className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900"
+                disabled={isLoadingRecommendations}
+                className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <ChevronLeft className="h-4 w-4" />
                 Back to Home
               </button>
-              <button
-                type="button"
-                onClick={handleGetRecommendations}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-8 py-3 text-sm font-semibold text-white shadow-md shadow-indigo-200 transition hover:bg-indigo-700"
-              >
-                Get My Recommendations
-                <Sparkles className="h-4 w-4" />
-              </button>
+              <div className="flex flex-col items-stretch gap-2 sm:items-end">
+                {recommendationError && (
+                  <p className="text-sm text-red-600">{recommendationError}</p>
+                )}
+                <button
+                  type="button"
+                  onClick={handleGetRecommendations}
+                  disabled={isLoadingRecommendations}
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-8 py-3 text-sm font-semibold text-white shadow-md shadow-indigo-200 transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {isLoadingRecommendations
+                    ? "Loading..."
+                    : "Get My Recommendations"}
+                  <Sparkles className="h-4 w-4" />
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -588,7 +591,7 @@ export default function CBCSElectiveGuide() {
             <div className="space-y-5">
               {courses.map((course) => (
                 <article
-                  key={course.code}
+                  key={course.course_code}
                   className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
                 >
                   <div className="border-b border-slate-100 bg-slate-50/60 px-5 py-4 sm:px-6">
@@ -598,21 +601,21 @@ export default function CBCSElectiveGuide() {
                       </span>
                       <div className="min-w-0 flex-1">
                         <p className="font-mono text-xs font-semibold uppercase tracking-wider text-indigo-600">
-                          {course.code}
+                          {course.course_code}
                         </p>
                         <h2 className="text-lg font-bold text-slate-900 sm:text-xl">
-                          {course.name}
+                          {course.course_name}
                         </h2>
                       </div>
-                      <FitBadge percentage={course.fitPercentage} />
+                      <FitBadge percentage={course.fit_percentage} />
                     </div>
                     <div className="mt-3 flex flex-wrap gap-2">
-                      {course.tags.map((tag) => (
+                      {course.topic_tags.map((tag) => (
                         <span
                           key={tag}
                           className="rounded-full bg-indigo-50 px-2.5 py-0.5 text-xs font-medium text-indigo-700"
                         >
-                          #{tag}
+                          {formatTag(tag)}
                         </span>
                       ))}
                     </div>
@@ -625,7 +628,7 @@ export default function CBCSElectiveGuide() {
                         Why this fits you
                       </h3>
                       <p className="text-sm leading-relaxed text-slate-600">
-                        {course.whyThisFits}
+                        {course.why_this_fits}
                       </p>
                     </div>
 
@@ -635,18 +638,20 @@ export default function CBCSElectiveGuide() {
                         Worth knowing
                       </h3>
                       <p className="text-sm leading-relaxed text-slate-600">
-                        {course.worthKnowing}
+                        {course.worth_knowing}
                       </p>
                     </div>
 
-                    <blockquote className="rounded-xl border-l-4 border-indigo-300 bg-indigo-50/50 px-4 py-3">
-                      <p className="text-sm italic leading-relaxed text-slate-700">
-                        &ldquo;{course.testimonial}&rdquo;
-                      </p>
-                      <footer className="mt-2 text-xs font-medium text-slate-500">
-                        — {course.testimonialAuthor}
-                      </footer>
-                    </blockquote>
+                    {course.testimonials.map((testimonial) => (
+                      <blockquote
+                        key={testimonial}
+                        className="rounded-xl border-l-4 border-indigo-300 bg-indigo-50/50 px-4 py-3"
+                      >
+                        <p className="text-sm italic leading-relaxed text-slate-700">
+                          &ldquo;{testimonial}&rdquo;
+                        </p>
+                      </blockquote>
+                    ))}
                   </div>
                 </article>
               ))}
