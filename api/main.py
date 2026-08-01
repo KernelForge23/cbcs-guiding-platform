@@ -1,7 +1,6 @@
 import json
 import os
 import re
-import time
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -201,58 +200,38 @@ def parse_narrative_response(text: str) -> dict[str, str]:
         ),
     }
 
-
-def generate_narrative(
-    course: dict,
-    fit_percentage: int,
-    attributes_used: list[dict[str, float | str]],
-) -> dict[str, str]:
-    prompt = build_narrative_prompt(course, fit_percentage, attributes_used)
-
-    response = client.models.generate_content(
-        model="gemini-2.0-flash",
-        contents=prompt,
-        config=types.GenerateContentConfig(
-            system_instruction=(
-                "You are an academic advisor for first-year engineering students. "
-                "Explain course matches based strictly on the provided scoring data. "
-                "Return JSON with keys 'why_this_fits' and 'worth_knowing' only."
-            ),
-            response_mime_type="application/json",
-        ),
+def generate_batch_narratives(top_courses):
+    prompt = (
+        "You are an expert academic advisor. I will provide 3 courses below. "
+        "For each course, write a short 'why_this_fits' (based on student preferences) "
+        "and 'worth_knowing' (evaluation/workload facts).\n\n"
+        "Return ONLY a valid JSON array of objects. Do not include markdown formatting or backticks. "
+        "Each object must have these exact keys: 'course_code', 'why_this_fits', 'worth_knowing'.\n\nCourses:\n"
     )
+    
+    for course, fit, _ in top_courses:
+        prompt += f"- {course['course_code']}: {course['course_name']} (Fit: {fit}%)\n"
+        prompt += f"  Facts: {course.get('evaluation_style_facts', '')}\n\n"
 
-    return parse_narrative_response(response.text or "")
-
-
-def build_course_card(
-    rank: int,
-    course: dict,
-    fit_percentage: int,
-    attributes_used: list[dict[str, float | str]],
-) -> dict:
-    narrative = generate_narrative(course, fit_percentage, attributes_used)
-    testimonials = course.get("testimonials") or []
-
-    return {
-        "rank": rank,
-        "course_code": course["course_code"],
-        "course_name": course["course_name"],
-        "fit_percentage": fit_percentage,
-        "topic_tags": course.get("topic_tags", []),
-        "why_this_fits": narrative["why_this_fits"],
-        "worth_knowing": narrative["worth_knowing"],
-        "testimonials": testimonials
-        if testimonials
-        else ["Be the first to review this course"],
-        "evaluation_style_facts": course.get("evaluation_style_facts", ""),
-    }
-
-
-@app.get("/api/health")
-def health_check():
-    return {"status": "CBCS AI Engine is online"}
-
+    try:
+        # The API call is now protected by a try block
+        response = client.models.generate_content(
+            model="gemini-3.6-flash",
+            contents=prompt,
+        )
+        
+        raw_text = response.text.strip()
+        if raw_text.startswith("```json"):
+            raw_text = raw_text[7:-3].strip()
+        elif raw_text.startswith("```"):
+            raw_text = raw_text[3:-3].strip()
+            
+        return json.loads(raw_text)
+        
+    except Exception as e:
+        # If Google throws a 429 rate limit, we catch it here instead of crashing!
+        print(f"Gemini API Blocked/Failed: {e}")
+        return []
 
 @app.post("/api/recommend")
 def get_recommendations(payload: WizardPayload):
@@ -260,22 +239,49 @@ def get_recommendations(payload: WizardPayload):
         raise HTTPException(status_code=500, detail="API Key missing")
 
     courses = load_courses()
-    scored: list[tuple[dict, int, list[dict[str, float | str]]]] = []
+    scored = []
 
     for course in courses:
         fit_percentage, attributes_used = calculate_fit(payload, course)
         scored.append((course, fit_percentage, attributes_used))
 
     scored.sort(key=lambda item: item[1], reverse=True)
-    top_courses = scored[:3]
+    top_courses = scored
 
-    # Replaced the list comprehension with a standard loop to add a delay
+    # 1. Fetch narratives in ONE batch call
+    ai_narratives = generate_batch_narratives(top_courses)
+    
+    # Convert list to a dictionary for easy lookup by course_code
+    narratives_dict = {item.get("course_code"): item for item in ai_narratives if isinstance(item, dict)}
+
+    # 2. Build the final cards dynamically
     course_cards = []
     for rank, (course, fit_percentage, attributes_used) in enumerate(top_courses, start=1):
-        card = build_course_card(rank, course, fit_percentage, attributes_used)
-        course_cards.append(card)
+        course_code = course.get("course_code")
         
-        # 4-second delay (Gemini free tier allows ~15 requests per minute)
-        time.sleep(4) 
+        # Grab the AI generated text for this specific course, or use safe fallbacks
+        ai_text = narratives_dict.get(course_code, {})
+        why_this_fits = ai_text.get("why_this_fits", "Excellent match based on your wizard preferences.")
+        worth_knowing = ai_text.get("worth_knowing", course.get("evaluation_style_facts", "Standard evaluation."))
+        
+        # Safely extract a testimonial if it exists
+        testimonial_list = course.get("testimonials", [])
+        testimonial_text = testimonial_list[0] if testimonial_list else ""
+
+        # Construct the final card payload for the Next.js frontend
+        card = {
+            "rank": rank,
+            "course_code": course_code,
+            "course_name": course.get("course_name"),
+            "fit_percentage": fit_percentage,
+            "topic_tags": course.get("topic_tags", []),
+            "why_this_fits": why_this_fits,
+            "worth_knowing": worth_knowing,
+            "testimonials": course.get("testimonials", [])
+        }
+        course_cards.append(card)
 
     return {"courses": course_cards}
+
+
+
