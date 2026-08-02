@@ -1,30 +1,48 @@
 [
-    {
-      "course_code": "CS-E01",
-      "course_name": "Quantum Computing Fundamentals",
-      "branch_proximity": {"Computer Science": 1.0, "Electronics": 0.6, "Mechanical": 0.3},
-      "attributes": {
-        "prior_knowledge_score": 4,
-        "difficulty_score": 5,
-        "workload_score": 4,
-        "hands_on_score": 2
-      },
-      "topic_tags": ["#Qubits", "#LinearAlgebra", "#QuantumGates"],
-      "evaluation_style_facts": "Heavy math focus, final exam is 60% of grade.",
-      "testimonials": ["Fascinating but the math is brutal. Do not take if you hate linear algebra."]
+  {
+    "course_code": "CS-E01",
+    "course_name": "Quantum Computing Fundamentals",
+    "branch": "Computer Engineering",
+    "category": "Program Elective",
+    "prior_knowledge_score": 4.0,
+    "difficulty_score": 5.0,
+    "workload_score": 4.0,
+    "hands_on_score": 2.0,
+    "source": {
+      "prior_knowledge": "estimated",
+      "difficulty": "estimated",
+      "workload": "computed"
     },
-    {
-      "course_code": "EL-E02",
-      "course_name": "Applied Embedded Systems",
-      "branch_proximity": {"Electronics": 1.0, "Computer Science": 0.6, "Mechanical": 0.3},
-      "attributes": {
-        "prior_knowledge_score": 2,
-        "difficulty_score": 3,
-        "workload_score": 5,
-        "hands_on_score": 5
-      },
-      "topic_tags": ["#Microcontrollers", "#Hardware", "#CProgramming"],
-      "evaluation_style_facts": "Project-based. Weekly lab submissions.",
-      "testimonials": ["Spent hours in the lab but learned so much about hardware prototyping."]
-    }
-  ]
+    "evaluation_style_facts": {
+      "theory_exam_pct": 0.6,
+      "lab_is_fully_continuous": true
+    },
+    "topic_tags": ["Qubits", "Linear Algebra", "Quantum Gates"],
+    "testimonials": [
+      "Fascinating but the math is brutal. Do not take if you hate linear algebra."
+    ]
+  },
+  {
+    "course_code": "EL-E02",
+    "course_name": "Applied Embedded Systems",
+    "branch": "Electronics Engineering",
+    "category": "Program Elective",
+    "prior_knowledge_score": 2.0,
+    "difficulty_score": 3.0,
+    "workload_score": 5.0,
+    "hands_on_score": 5.0,
+    "source": {
+      "prior_knowledge": "estimated",
+      "difficulty": "estimated",
+      "workload": "computed"
+    },
+    "evaluation_style_facts": {
+      "theory_exam_pct": 0.3,
+      "lab_is_fully_continuous": true
+    },
+    "topic_tags": ["Microcontrollers", "Hardware Prototyping", "C Programming"],
+    "testimonials": [
+      "Spent hours in the lab but learned so much about hardware prototyping."
+    ]
+  }
+]

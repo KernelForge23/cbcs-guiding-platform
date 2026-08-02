@@ -40,11 +40,23 @@ type CourseCard = {
   course_code: string;
   course_name: string;
   fit_percentage: number;
+  attributes_used: Array<{
+    name: string;
+    student_value: number | string;
+    course_value: number | string;
+    score: number;
+  }>;
   topic_tags: string[];
   why_this_fits: string;
   worth_knowing: string;
   testimonials: string[];
-  evaluation_style_facts: string;
+  evaluation_style_facts:
+    | {
+        theory_exam_pct: number | null;
+        lab_is_fully_continuous: boolean;
+      }
+    | string
+    | null;
 };
 
 type RecommendResponse = {
@@ -302,11 +314,13 @@ export default function CBCSElectiveGuide() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          student_branch: branch,
-          prior_knowledge: computed.prior_knowledge,
-          difficulty: computed.difficulty,
-          workload: computed.workload,
-          hands_on: computed.hands_on,
+          prior_knowledge_q1: Number(q1),
+          prior_knowledge_q2: Number(q2),
+          difficulty_q1: Number(q3),
+          difficulty_q2: Number(q4),
+          workload: Number(q5),
+          hands_on: Number(q6),
+          branch,
         }),
       });
 
