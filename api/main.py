@@ -30,13 +30,14 @@ app.add_middleware(
 COURSES_PATH = Path(__file__).parent / "courses.json"
 
 BRANCH_CLUSTERS: dict[str, str] = {
-    "Computer Science": "computing",
-    "Information Technology": "computing",
-    "Electronics & Communication": "electronics",
-    "Electronics": "electronics",
-    "Electrical": "electronics",
-    "Mechanical": "core",
-    "Civil": "core",
+    "Computer Science and Engineering": "Software_and_Computing",
+    "Electronic and Telecommunication Engineering": "Circuit_and_Hardware",
+    "Electrical Engineering": "Circuit_and_Hardware",
+    "Instrumentation and Control Engineering": "Circuit_and_Hardware",
+    "Mechanical Engineering": "Core_and_Mechanics",
+    "Manufacturing Engineering and Industrial Management": "Core_and_Mechanics",
+    "Metallurgy and Material Engineering": "Materials_and_Process",
+    "Civil Engineering": "Infrastructure"
 }
 
 class WizardPayload(BaseModel):

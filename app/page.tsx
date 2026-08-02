@@ -20,13 +20,15 @@ type View =
   | "testimonial_login"
   | "testimonial_form";
 
-type Branch =
-  | "Computer Science"
-  | "Electronics & Communication"
-  | "Mechanical"
-  | "Civil"
-  | "Electrical"
-  | "Information Technology";
+  type Branch = 
+  | "Civil Engineering"
+  | "Computer Science and Engineering"
+  | "Electrical Engineering"
+  | "Electronic and Telecommunication Engineering"
+  | "Instrumentation and Control Engineering"
+  | "Manufacturing Engineering and Industrial Management"
+  | "Mechanical Engineering"
+  | "Metallurgy and Material Engineering";
 
 type StudentAttributes = {
   prior_knowledge: number;
@@ -64,12 +66,14 @@ type RecommendResponse = {
 };
 
 const BRANCHES: Branch[] = [
-  "Computer Science",
-  "Electronics & Communication",
-  "Mechanical",
-  "Civil",
-  "Electrical",
-  "Information Technology",
+  "Civil Engineering",
+  "Computer Science and Engineering",
+  "Electrical Engineering",
+  "Electronic and Telecommunication Engineering",
+  "Instrumentation and Control Engineering",
+  "Manufacturing Engineering and Industrial Management",
+  "Mechanical Engineering",
+  "Metallurgy and Material Engineering"
 ];
 
 const COURSE_CODES = [
