@@ -21,6 +21,7 @@ type View =
   | "testimonial_form";
 
   type Branch = 
+  | "Artificial Intelligence and Machine Learning"
   | "Civil Engineering"
   | "Computer Science and Engineering"
   | "Electrical Engineering"
@@ -66,6 +67,7 @@ type RecommendResponse = {
 };
 
 const BRANCHES: Branch[] = [
+  "Artificial Intelligence and Machine Learning",
   "Civil Engineering",
   "Computer Science and Engineering",
   "Electrical Engineering",

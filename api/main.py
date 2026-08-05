@@ -30,6 +30,7 @@ app.add_middleware(
 COURSES_PATH = Path(__file__).parent / "courses.json"
 
 BRANCH_CLUSTERS: dict[str, str] = {
+    "Artificial Intelligence and Machine Learning": "Software_and_Computing",
     "Computer Science and Engineering": "Software_and_Computing",
     "Electronic and Telecommunication Engineering": "Circuit_and_Hardware",
     "Electrical Engineering": "Circuit_and_Hardware",
