@@ -1,48 +1,218 @@
 [
   {
-    "course_code": "CS-E01",
-    "course_name": "Quantum Computing Fundamentals",
-    "branch": "Computer Engineering",
-    "category": "Program Elective",
+    "course_code": "MA-BS101",
+    "course_name": "Advanced Linear Algebra",
+    "branch": "Mechanical Engineering",
+    "category": "BS Mathematics",
     "prior_knowledge_score": 4.0,
-    "difficulty_score": 5.0,
-    "workload_score": 4.0,
+    "difficulty_score": 4.0,
+    "workload_score": 3.0,
     "hands_on_score": 2.0,
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
-    },
     "evaluation_style_facts": {
-      "theory_exam_pct": 0.6,
-      "lab_is_fully_continuous": true
+      "theory_exam_pct": 0.7,
+      "lab_is_fully_continuous": false
     },
-    "topic_tags": ["Qubits", "Linear Algebra", "Quantum Gates"],
+    "topic_tags": ["Matrices", "Vector Spaces", "Eigenvalues"],
     "testimonials": [
-      "Fascinating but the math is brutal. Do not take if you hate linear algebra."
+      "Solid math foundation course with manageable pace."
     ]
   },
   {
-    "course_code": "EL-E02",
-    "course_name": "Applied Embedded Systems",
-    "branch": "Electronics Engineering",
-    "category": "Program Elective",
+    "course_code": "MA-BS201",
+    "course_name": "Probability and Stochastic Models",
+    "branch": "Electronic and Telecommunication Engineering",
+    "category": "BS Mathematics",
+    "prior_knowledge_score": 3.0,
+    "difficulty_score": 4.0,
+    "workload_score": 3.0,
+    "hands_on_score": 2.0,
+    "evaluation_style_facts": {
+      "theory_exam_pct": 0.75,
+      "lab_is_fully_continuous": false
+    },
+    "topic_tags": ["Probability", "Markov Chains", "Random Variables"],
+    "testimonials": [
+      "Helpful if you want stronger analytical skills."
+    ]
+  },
+  {
+    "course_code": "AS1-BS110",
+    "course_name": "Engineering Physics in Practice",
+    "branch": "Civil Engineering",
+    "category": "BS Applied Science 1",
     "prior_knowledge_score": 2.0,
     "difficulty_score": 3.0,
-    "workload_score": 5.0,
-    "hands_on_score": 5.0,
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "workload_score": 3.0,
+    "hands_on_score": 3.0,
+    "evaluation_style_facts": {
+      "theory_exam_pct": 0.55,
+      "lab_is_fully_continuous": true
     },
+    "topic_tags": ["Mechanics", "Waves", "Measurement"],
+    "testimonials": [
+      "Balanced between practical labs and theory."
+    ]
+  },
+  {
+    "course_code": "AS1-BS210",
+    "course_name": "Applied Chemistry for Engineers",
+    "branch": "Manufacturing Engineering and Industrial Management",
+    "category": "BS Applied Science 1",
+    "prior_knowledge_score": 2.0,
+    "difficulty_score": 3.0,
+    "workload_score": 2.0,
+    "hands_on_score": 3.0,
+    "evaluation_style_facts": {
+      "theory_exam_pct": 0.5,
+      "lab_is_fully_continuous": true
+    },
+    "topic_tags": ["Materials", "Corrosion", "Industrial Chemistry"],
+    "testimonials": [
+      "Useful for understanding materials behavior."
+    ]
+  },
+  {
+    "course_code": "AS2-BS120",
+    "course_name": "Environmental Systems and Sustainability",
+    "branch": "Instrumentation and Control Engineering",
+    "category": "BS Applied Science 2",
+    "prior_knowledge_score": 2.0,
+    "difficulty_score": 2.0,
+    "workload_score": 2.0,
+    "hands_on_score": 2.0,
+    "evaluation_style_facts": {
+      "theory_exam_pct": 0.6,
+      "lab_is_fully_continuous": false
+    },
+    "topic_tags": ["Sustainability", "Environment", "Lifecycle"],
+    "testimonials": [
+      "Light workload and practical real-world context."
+    ]
+  },
+  {
+    "course_code": "AS2-BS220",
+    "course_name": "Engineering Biology Basics",
+    "branch": "Electrical Engineering",
+    "category": "BS Applied Science 2",
+    "prior_knowledge_score": 1.0,
+    "difficulty_score": 2.0,
+    "workload_score": 2.0,
+    "hands_on_score": 2.0,
+    "evaluation_style_facts": {
+      "theory_exam_pct": 0.65,
+      "lab_is_fully_continuous": false
+    },
+    "topic_tags": ["Biology", "Systems", "Applications"],
+    "testimonials": [
+      "Good elective if you want interdisciplinary exposure."
+    ]
+  },
+  {
+    "course_code": "ESC1-130",
+    "course_name": "Data Structures and Problem Solving",
+    "branch": "Computer Science and Engineering",
+    "category": "ESC 1",
+    "prior_knowledge_score": 3.0,
+    "difficulty_score": 4.0,
+    "workload_score": 4.0,
+    "hands_on_score": 4.0,
+    "evaluation_style_facts": {
+      "theory_exam_pct": 0.45,
+      "lab_is_fully_continuous": true
+    },
+    "topic_tags": ["Algorithms", "Complexity", "Coding"],
+    "testimonials": [
+      "Hands-on and intense, but very rewarding."
+    ]
+  },
+  {
+    "course_code": "ESC1-230",
+    "course_name": "Circuits and Instrumentation",
+    "branch": "Electrical Engineering",
+    "category": "ESC 1",
+    "prior_knowledge_score": 3.0,
+    "difficulty_score": 3.0,
+    "workload_score": 3.0,
+    "hands_on_score": 4.0,
+    "evaluation_style_facts": {
+      "theory_exam_pct": 0.5,
+      "lab_is_fully_continuous": true
+    },
+    "topic_tags": ["Circuits", "Sensors", "Measurement"],
+    "testimonials": [
+      "Great practical exposure if you enjoy labs."
+    ]
+  },
+  {
+    "course_code": "ESC2-140",
+    "course_name": "Manufacturing Systems Design",
+    "branch": "Manufacturing Engineering and Industrial Management",
+    "category": "ESC 2",
+    "prior_knowledge_score": 3.0,
+    "difficulty_score": 3.0,
+    "workload_score": 4.0,
+    "hands_on_score": 4.0,
+    "evaluation_style_facts": {
+      "theory_exam_pct": 0.4,
+      "lab_is_fully_continuous": true
+    },
+    "topic_tags": ["Production", "Planning", "Operations"],
+    "testimonials": [
+      "Project-heavy and industry-oriented."
+    ]
+  },
+  {
+    "course_code": "ESC2-240",
+    "course_name": "Smart Infrastructure Analytics",
+    "branch": "Civil Engineering",
+    "category": "ESC 2",
+    "prior_knowledge_score": 2.0,
+    "difficulty_score": 3.0,
+    "workload_score": 3.0,
+    "hands_on_score": 3.0,
+    "evaluation_style_facts": {
+      "theory_exam_pct": 0.55,
+      "lab_is_fully_continuous": false
+    },
+    "topic_tags": ["Infrastructure", "Data", "Modeling"],
+    "testimonials": [
+      "Moderate workload and relevant case studies."
+    ]
+  },
+  {
+    "course_code": "VS-150",
+    "course_name": "Innovation and Entrepreneurship",
+    "branch": "Artificial Intelligence and Machine Learning",
+    "category": "VSEC",
+    "prior_knowledge_score": 1.0,
+    "difficulty_score": 2.0,
+    "workload_score": 2.0,
+    "hands_on_score": 3.0,
+    "evaluation_style_facts": {
+      "theory_exam_pct": 0.35,
+      "lab_is_fully_continuous": true
+    },
+    "topic_tags": ["Innovation", "Startups", "Pitching"],
+    "testimonials": [
+      "Very interactive with practical assignments."
+    ]
+  },
+  {
+    "course_code": "VS-250",
+    "course_name": "Professional Communication Lab",
+    "branch": "Metallurgy and Material Engineering",
+    "category": "VSEC",
+    "prior_knowledge_score": 1.0,
+    "difficulty_score": 1.0,
+    "workload_score": 2.0,
+    "hands_on_score": 3.0,
     "evaluation_style_facts": {
       "theory_exam_pct": 0.3,
       "lab_is_fully_continuous": true
     },
-    "topic_tags": ["Microcontrollers", "Hardware Prototyping", "C Programming"],
+    "topic_tags": ["Communication", "Presentations", "Teamwork"],
     "testimonials": [
-      "Spent hours in the lab but learned so much about hardware prototyping."
+      "Easy to follow and improves soft skills."
     ]
   }
 ]

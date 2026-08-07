@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   AlertCircle,
   ArrowRight,
@@ -12,6 +12,11 @@ import {
   Sparkles,
   Star,
 } from "lucide-react";
+import {
+  COURSE_CATEGORIES,
+  type CourseCategory,
+  getEligibleCourses,
+} from "./lib/getEligibleCourses";
 
 type View =
   | "home"
@@ -42,6 +47,9 @@ type CourseCard = {
   rank: number;
   course_code: string;
   course_name: string;
+  branch: Branch;
+  category: CourseCategory;
+  branch_proximity: number;
   fit_percentage: number;
   attributes_used: Array<{
     name: string;
@@ -169,6 +177,19 @@ function formatTag(tag: string): string {
   return tag.startsWith("#") ? tag : `#${tag}`;
 }
 
+function getDepartmentsForCategory(
+  category: CourseCategory,
+  courses: Array<{ category: CourseCategory; branch: string }>,
+): string[] {
+  return Array.from(
+    new Set(
+      courses
+        .filter((course) => course.category === category)
+        .map((course) => course.branch),
+    ),
+  ).sort();
+}
+
 function RatingScale({
   value,
   onChange,
@@ -245,6 +266,8 @@ export default function CBCSElectiveGuide() {
   const [recommendationError, setRecommendationError] = useState<string | null>(
     null,
   );
+  const [activeTab, setActiveTab] = useState<CourseCategory>(COURSE_CATEGORIES[0]);
+  const [selectedDepartments, setSelectedDepartments] = useState<string[]>([]);
 
   const [testimonialName, setTestimonialName] = useState("");
   const [misNumber, setMisNumber] = useState("");
@@ -257,6 +280,32 @@ export default function CBCSElectiveGuide() {
   const [tHandsOn, setTHandsOn] = useState(3);
   const [review, setReview] = useState("");
   const [testimonialSubmitted, setTestimonialSubmitted] = useState(false);
+
+  const eligibleCourses = useMemo(
+    () =>
+      branch
+        ? getEligibleCourses({ branch }, courses)
+        : [],
+    [branch, courses],
+  );
+
+  const activeTabCourses = useMemo(
+    () => eligibleCourses.filter((course) => course.category === activeTab),
+    [activeTab, eligibleCourses],
+  );
+
+  const hostDepartments = useMemo(
+    () => Array.from(new Set(activeTabCourses.map((course) => course.branch))).sort(),
+    [activeTabCourses],
+  );
+
+  const visibleCourses = useMemo(
+    () =>
+      activeTabCourses.filter((course) =>
+        selectedDepartments.includes(course.branch),
+      ),
+    [activeTabCourses, selectedDepartments],
+  );
 
   const questionSetters = {
     q1: setQ1,
@@ -294,6 +343,21 @@ export default function CBCSElectiveGuide() {
     setTHandsOn(3);
     setReview("");
     setTestimonialSubmitted(false);
+    setActiveTab(COURSE_CATEGORIES[0]);
+    setSelectedDepartments([]);
+  }
+
+  function handleDepartmentToggle(department: string) {
+    setSelectedDepartments((current) =>
+      current.includes(department)
+        ? current.filter((item) => item !== department)
+        : [...current, department],
+    );
+  }
+
+  function handleTabChange(category: CourseCategory) {
+    setActiveTab(category);
+    setSelectedDepartments(getDepartmentsForCategory(category, eligibleCourses));
   }
 
   function handleStartWizard() {
@@ -338,7 +402,14 @@ export default function CBCSElectiveGuide() {
       }
 
       const data = (await response.json()) as RecommendResponse;
+      const nextEligibleCourses = branch
+        ? getEligibleCourses({ branch }, data.courses)
+        : [];
       setCourses(data.courses);
+      setActiveTab(COURSE_CATEGORIES[0]);
+      setSelectedDepartments(
+        getDepartmentsForCategory(COURSE_CATEGORIES[0], nextEligibleCourses),
+      );
       setView("results");
     } catch (error) {
       setRecommendationError(
@@ -608,8 +679,56 @@ export default function CBCSElectiveGuide() {
               </button>
             </div>
 
+            <div className="space-y-4">
+              <div className="flex flex-wrap gap-2">
+                {COURSE_CATEGORIES.map((category) => (
+                  <button
+                    key={category}
+                    type="button"
+                    onClick={() => handleTabChange(category)}
+                    aria-pressed={activeTab === category}
+                    className={`rounded-full px-3 py-1.5 text-sm font-medium transition ${
+                      activeTab === category
+                        ? "bg-indigo-600 text-white"
+                        : "bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50"
+                    }`}
+                  >
+                    {category}
+                  </button>
+                ))}
+              </div>
+
+              <details className="rounded-xl border border-slate-200 bg-white">
+                <summary className="cursor-pointer list-none px-4 py-3 text-sm font-semibold text-slate-900">
+                  Host Department
+                </summary>
+                <div className="space-y-2 border-t border-slate-100 px-4 py-3">
+                  {hostDepartments.length === 0 ? (
+                    <p className="text-sm text-slate-500">
+                      No departments available for this category.
+                    </p>
+                  ) : (
+                    hostDepartments.map((department) => (
+                      <label
+                        key={department}
+                        className="flex items-center gap-2 text-sm text-slate-700"
+                      >
+                        <input
+                          type="checkbox"
+                          checked={selectedDepartments.includes(department)}
+                          onChange={() => handleDepartmentToggle(department)}
+                          className="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+                        />
+                        {department}
+                      </label>
+                    ))
+                  )}
+                </div>
+              </details>
+            </div>
+
             <div className="space-y-5">
-              {courses.map((course) => (
+              {visibleCourses.map((course) => (
                 <article
                   key={course.course_code}
                   className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
@@ -675,6 +794,16 @@ export default function CBCSElectiveGuide() {
                   </div>
                 </article>
               ))}
+              {activeTabCourses.length > 0 && visibleCourses.length === 0 && (
+                <div className="rounded-xl border border-slate-200 bg-white px-4 py-6 text-center text-sm text-slate-600">
+                  No courses match the selected Host Department filters.
+                </div>
+              )}
+              {activeTabCourses.length === 0 && (
+                <div className="rounded-xl border border-slate-200 bg-white px-4 py-6 text-center text-sm text-slate-600">
+                  No eligible courses found for this category.
+                </div>
+              )}
             </div>
           </div>
         )}

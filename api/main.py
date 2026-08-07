@@ -40,6 +40,7 @@ BRANCH_CLUSTERS: dict[str, str] = {
     "Metallurgy and Material Engineering": "Materials_and_Process",
     "Civil Engineering": "Infrastructure"
 }
+ESC_CATEGORIES = {"ESC 1", "ESC 2"}
 
 class WizardPayload(BaseModel):
     prior_knowledge_q1: int
@@ -54,6 +55,26 @@ class WizardPayload(BaseModel):
 def load_courses() -> list[dict]:
     with open(COURSES_PATH, encoding="utf-8") as handle:
         return json.load(handle)
+
+
+def getEligibleCourses(student: WizardPayload, courses: list[dict]) -> list[dict]:
+    eligible_courses: list[dict] = []
+    for course in courses:
+        category = course.get("category")
+        course_branch = course.get("branch")
+        is_esc_hard_block = (
+            category in ESC_CATEGORIES
+            and isinstance(course_branch, str)
+            and course_branch == student.branch
+        )
+        if is_esc_hard_block:
+            continue
+
+        course_with_flattened_proximity = dict(course)
+        course_with_flattened_proximity["branch_proximity"] = 1.0
+        eligible_courses.append(course_with_flattened_proximity)
+
+    return eligible_courses
 
 
 def branch_lookup(student_branch: str, course_branch: str) -> float:
@@ -101,6 +122,7 @@ def compute_fit(
     s_workload = float(payload.workload)
     s_hands_on = float(payload.hands_on)
     course_branch = _resolve_course_branch(course, payload.branch)
+    branch_proximity = float(course.get("branch_proximity", 1.0))
     scores = {
         "prior_knowledge": shortfall_normalized(
             s_pk, _get_course_attribute(course, "prior_knowledge_score")
@@ -114,7 +136,7 @@ def compute_fit(
         "hands_on": distance_normalized(
             s_hands_on, _get_course_attribute(course, "hands_on_score")
         ),
-        "branch_proximity": branch_lookup(payload.branch, course_branch),
+        "branch_proximity": branch_proximity,
     }
     attributes_used: list[dict[str, float | str]] = []
 
@@ -217,9 +239,10 @@ def get_recommendations(payload: WizardPayload):
         raise HTTPException(status_code=500, detail="API Key missing")
 
     courses = load_courses()
+    eligible_courses = getEligibleCourses(payload, courses)
     scored = []
 
-    for course in courses:
+    for course in eligible_courses:
         fit_percentage, attributes_used = compute_fit(payload, course)
         scored.append((course, fit_percentage, attributes_used))
 
@@ -262,6 +285,9 @@ def get_recommendations(payload: WizardPayload):
             "rank": rank,
             "course_code": course_code,
             "course_name": course.get("course_name"),
+            "branch": course.get("branch"),
+            "category": course.get("category"),
+            "branch_proximity": course.get("branch_proximity", 1.0),
             "fit_percentage": fit_percentage,
             "attributes_used": attributes_used,
             "evaluation_style_facts": course.get("evaluation_style_facts"),
@@ -273,4 +299,3 @@ def get_recommendations(payload: WizardPayload):
         course_cards.append(card)
 
     return {"courses": course_cards}
-
