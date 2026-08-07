@@ -179,15 +179,12 @@ function formatTag(tag: string): string {
 
 function getDepartmentsForCategory(
   category: CourseCategory,
-  courses: Array<{ category: CourseCategory; branch: string }>,
+  studentBranch: Branch | "",
 ): string[] {
-  return Array.from(
-    new Set(
-      courses
-        .filter((course) => course.category === category)
-        .map((course) => course.branch),
-    ),
-  ).sort();
+  if ((category === "ESC 1" || category === "ESC 2") && studentBranch) {
+    return BRANCHES.filter((department) => department !== studentBranch);
+  }
+  return [...BRANCHES];
 }
 
 function RatingScale({
@@ -295,8 +292,8 @@ export default function CBCSElectiveGuide() {
   );
 
   const hostDepartments = useMemo(
-    () => Array.from(new Set(activeTabCourses.map((course) => course.branch))).sort(),
-    [activeTabCourses],
+    () => getDepartmentsForCategory(activeTab, branch),
+    [activeTab, branch],
   );
 
   const visibleCourses = useMemo(
@@ -357,7 +354,7 @@ export default function CBCSElectiveGuide() {
 
   function handleTabChange(category: CourseCategory) {
     setActiveTab(category);
-    setSelectedDepartments(getDepartmentsForCategory(category, eligibleCourses));
+    setSelectedDepartments(getDepartmentsForCategory(category, branch));
   }
 
   function handleStartWizard() {
@@ -402,13 +399,10 @@ export default function CBCSElectiveGuide() {
       }
 
       const data = (await response.json()) as RecommendResponse;
-      const nextEligibleCourses = branch
-        ? getEligibleCourses({ branch }, data.courses)
-        : [];
       setCourses(data.courses);
       setActiveTab(COURSE_CATEGORIES[0]);
       setSelectedDepartments(
-        getDepartmentsForCategory(COURSE_CATEGORIES[0], nextEligibleCourses),
+        getDepartmentsForCategory(COURSE_CATEGORIES[0], branch),
       );
       setView("results");
     } catch (error) {
@@ -679,7 +673,7 @@ export default function CBCSElectiveGuide() {
               </button>
             </div>
 
-            <div className="space-y-4">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
               <div className="flex flex-wrap gap-2">
                 {COURSE_CATEGORIES.map((category) => (
                   <button
@@ -698,37 +692,31 @@ export default function CBCSElectiveGuide() {
                 ))}
               </div>
 
-              <details className="rounded-xl border border-slate-200 bg-white">
+              <details className="w-full rounded-xl border border-slate-200 bg-white sm:ml-4 sm:w-80">
                 <summary className="cursor-pointer list-none px-4 py-3 text-sm font-semibold text-slate-900">
                   Host Department
                 </summary>
                 <div className="space-y-2 border-t border-slate-100 px-4 py-3">
-                  {hostDepartments.length === 0 ? (
-                    <p className="text-sm text-slate-500">
-                      No departments available for this category.
-                    </p>
-                  ) : (
-                    hostDepartments.map((department) => (
-                      <label
-                        key={department}
-                        className="flex items-center gap-2 text-sm text-slate-700"
-                      >
-                        <input
-                          type="checkbox"
-                          checked={selectedDepartments.includes(department)}
-                          onChange={() => handleDepartmentToggle(department)}
-                          className="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
-                        />
-                        {department}
-                      </label>
-                    ))
-                  )}
+                  {hostDepartments.map((department) => (
+                    <label
+                      key={department}
+                      className="flex items-center gap-2 text-sm text-slate-700"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={selectedDepartments.includes(department)}
+                        onChange={() => handleDepartmentToggle(department)}
+                        className="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+                      />
+                      {department}
+                    </label>
+                  ))}
                 </div>
               </details>
             </div>
 
             <div className="space-y-5">
-              {visibleCourses.map((course) => (
+              {visibleCourses.map((course, index) => (
                 <article
                   key={course.course_code}
                   className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
@@ -736,7 +724,7 @@ export default function CBCSElectiveGuide() {
                   <div className="border-b border-slate-100 bg-slate-50/60 px-5 py-4 sm:px-6">
                     <div className="flex flex-wrap items-center gap-3">
                       <span className="flex h-9 w-9 items-center justify-center rounded-full bg-indigo-600 text-sm font-bold text-white">
-                        #{course.rank}
+                        #{index + 1}
                       </span>
                       <div className="min-w-0 flex-1">
                         <p className="font-mono text-xs font-semibold uppercase tracking-wider text-indigo-600">
