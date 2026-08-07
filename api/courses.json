@@ -15,7 +15,11 @@
     "topic_tags": ["Matrices", "Vector Spaces", "Eigenvalues"],
     "testimonials": [
       "Solid math foundation course with manageable pace."
-    ]
+    ],
+    "narrative": {
+      "why_this_fits": "This course suits students who want stronger mathematical foundations and can handle abstract reasoning.",
+      "worth_knowing": "Expect proof-heavy topics that may feel intense without steady weekly revision."
+    }
   },
   {
     "course_code": "MA-BS201",
@@ -33,7 +37,11 @@
     "topic_tags": ["Probability", "Markov Chains", "Random Variables"],
     "testimonials": [
       "Helpful if you want stronger analytical skills."
-    ]
+    ],
+    "narrative": {
+      "why_this_fits": "This is a strong fit for learners interested in analytical thinking and uncertainty modeling.",
+      "worth_knowing": "The conceptual depth can ramp up quickly if your probability basics are weak."
+    }
   },
   {
     "course_code": "AS1-BS110",
@@ -51,7 +59,11 @@
     "topic_tags": ["Mechanics", "Waves", "Measurement"],
     "testimonials": [
       "Balanced between practical labs and theory."
-    ]
+    ],
+    "narrative": {
+      "why_this_fits": "This course balances applied science concepts with lab-backed understanding, making it broadly approachable.",
+      "worth_knowing": "You still need consistent effort in both practical records and theory preparation."
+    }
   },
   {
     "course_code": "AS1-BS210",
@@ -69,7 +81,11 @@
     "topic_tags": ["Materials", "Corrosion", "Industrial Chemistry"],
     "testimonials": [
       "Useful for understanding materials behavior."
-    ]
+    ],
+    "narrative": {
+      "why_this_fits": "This elective fits students who want practical chemistry context for engineering materials and processes.",
+      "worth_knowing": "Some chemical fundamentals may need a quick refresher before advanced sections."
+    }
   },
   {
     "course_code": "AS2-BS120",
@@ -87,7 +103,11 @@
     "topic_tags": ["Sustainability", "Environment", "Lifecycle"],
     "testimonials": [
       "Light workload and practical real-world context."
-    ]
+    ],
+    "narrative": {
+      "why_this_fits": "It is well-suited for students looking for sustainability-focused learning with real-world engineering relevance.",
+      "worth_knowing": "The course is lighter, so it may feel less technical if you want heavy quantitative rigor."
+    }
   },
   {
     "course_code": "AS2-BS220",
@@ -105,7 +125,11 @@
     "topic_tags": ["Biology", "Systems", "Applications"],
     "testimonials": [
       "Good elective if you want interdisciplinary exposure."
-    ]
+    ],
+    "narrative": {
+      "why_this_fits": "A good fit for students exploring interdisciplinary applications between biology and engineering systems.",
+      "worth_knowing": "If you prefer strictly core-domain content, parts of the syllabus may feel unfamiliar."
+    }
   },
   {
     "course_code": "ESC1-130",
@@ -123,7 +147,11 @@
     "topic_tags": ["Algorithms", "Complexity", "Coding"],
     "testimonials": [
       "Hands-on and intense, but very rewarding."
-    ]
+    ],
+    "narrative": {
+      "why_this_fits": "This course strongly fits students who enjoy problem-solving, coding practice, and algorithmic thinking.",
+      "worth_knowing": "Workload is comparatively high and requires regular hands-on problem practice."
+    }
   },
   {
     "course_code": "ESC1-230",
@@ -141,7 +169,11 @@
     "topic_tags": ["Circuits", "Sensors", "Measurement"],
     "testimonials": [
       "Great practical exposure if you enjoy labs."
-    ]
+    ],
+    "narrative": {
+      "why_this_fits": "A strong match for students interested in instrumentation workflows and lab-oriented electrical applications.",
+      "worth_knowing": "You should be comfortable with circuit fundamentals to keep up with practical sessions."
+    }
   },
   {
     "course_code": "ESC2-140",
@@ -159,7 +191,11 @@
     "topic_tags": ["Production", "Planning", "Operations"],
     "testimonials": [
       "Project-heavy and industry-oriented."
-    ]
+    ],
+    "narrative": {
+      "why_this_fits": "This course is ideal for learners who like operations-focused projects and manufacturing system design.",
+      "worth_knowing": "The project load can be significant, especially around milestone deadlines."
+    }
   },
   {
     "course_code": "ESC2-240",
@@ -177,7 +213,11 @@
     "topic_tags": ["Infrastructure", "Data", "Modeling"],
     "testimonials": [
       "Moderate workload and relevant case studies."
-    ]
+    ],
+    "narrative": {
+      "why_this_fits": "It fits students interested in applying analytics and modeling methods to civil infrastructure use cases.",
+      "worth_knowing": "Case-study interpretation and data context may require steady reading outside class."
+    }
   },
   {
     "course_code": "VS-150",
@@ -195,7 +235,11 @@
     "topic_tags": ["Innovation", "Startups", "Pitching"],
     "testimonials": [
       "Very interactive with practical assignments."
-    ]
+    ],
+    "narrative": {
+      "why_this_fits": "Great for students who enjoy collaborative ideation, pitching, and innovation-oriented coursework.",
+      "worth_knowing": "The course favors participation, so passive attendance may limit learning outcomes."
+    }
   },
   {
     "course_code": "VS-250",
@@ -213,6 +257,10 @@
     "topic_tags": ["Communication", "Presentations", "Teamwork"],
     "testimonials": [
       "Easy to follow and improves soft skills."
-    ]
+    ],
+    "narrative": {
+      "why_this_fits": "This course is a good fit for improving communication, presentation confidence, and team collaboration.",
+      "worth_knowing": "If you are seeking deep technical content, this elective is comparatively soft-skill focused."
+    }
   }
 ]

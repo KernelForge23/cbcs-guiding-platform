@@ -58,8 +58,12 @@ type CourseCard = {
     score: number;
   }>;
   topic_tags: string[];
-  why_this_fits: string;
-  worth_knowing: string;
+  why_this_fits?: string;
+  worth_knowing?: string;
+  narrative?: {
+    why_this_fits?: string;
+    worth_knowing?: string;
+  } | null;
   testimonials: string[];
   evaluation_style_facts:
     | {
@@ -86,16 +90,72 @@ const BRANCHES: Branch[] = [
   "Metallurgy and Material Engineering"
 ];
 
-const COURSE_CODES = [
-  "CS301",
-  "EC402",
-  "ME305",
-  "CS410",
-  "EE320",
-  "IT350",
+const TESTIMONIAL_COURSES: Array<{
+  code: string;
+  name: string;
+  category: CourseCategory;
+}> = [
+  {
+    code: "MA-BS101",
+    name: "Advanced Linear Algebra",
+    category: "BS Mathematics",
+  },
+  {
+    code: "MA-BS201",
+    name: "Probability and Stochastic Models",
+    category: "BS Mathematics",
+  },
+  {
+    code: "AS1-BS110",
+    name: "Engineering Physics in Practice",
+    category: "BS Applied Science 1",
+  },
+  {
+    code: "AS1-BS210",
+    name: "Applied Chemistry for Engineers",
+    category: "BS Applied Science 1",
+  },
+  {
+    code: "AS2-BS120",
+    name: "Environmental Systems and Sustainability",
+    category: "BS Applied Science 2",
+  },
+  {
+    code: "AS2-BS220",
+    name: "Engineering Biology Basics",
+    category: "BS Applied Science 2",
+  },
+  {
+    code: "ESC1-130",
+    name: "Data Structures and Problem Solving",
+    category: "ESC 1",
+  },
+  {
+    code: "ESC1-230",
+    name: "Circuits and Instrumentation",
+    category: "ESC 1",
+  },
+  {
+    code: "ESC2-140",
+    name: "Manufacturing Systems Design",
+    category: "ESC 2",
+  },
+  {
+    code: "ESC2-240",
+    name: "Smart Infrastructure Analytics",
+    category: "ESC 2",
+  },
+  {
+    code: "VS-150",
+    name: "Innovation and Entrepreneurship",
+    category: "VSEC",
+  },
+  {
+    code: "VS-250",
+    name: "Professional Communication Lab",
+    category: "VSEC",
+  },
 ];
-
-const SEMESTERS = ["Semester 3", "Semester 4", "Semester 5", "Semester 6"];
 
 const WIZARD_QUESTIONS = [
   {
@@ -145,25 +205,29 @@ const WIZARD_QUESTIONS = [
 const TESTIMONIAL_ATTRIBUTES = [
   {
     key: "prior_knowledge" as const,
-    label: "Prior Knowledge Required",
+    label:
+      "How much prior knowledge or prerequisite understanding was needed to succeed?",
     lowLabel: "Minimal",
     highLabel: "Significant",
   },
   {
     key: "difficulty" as const,
-    label: "Course Difficulty",
+    label:
+      "How would you rate the overall academic difficulty and conceptual complexity of this course?",
     lowLabel: "Easy",
     highLabel: "Challenging",
   },
   {
     key: "workload" as const,
-    label: "Weekly Workload",
+    label:
+      "How heavy was the weekly workload, including assignments, labs, and self-study?",
     lowLabel: "Light",
     highLabel: "Heavy",
   },
   {
     key: "hands_on" as const,
-    label: "Hands-on vs. Theory",
+    label:
+      "How would you describe the balance between theoretical concepts and practical, hands-on application?",
     lowLabel: "Theory",
     highLabel: "Hands-on",
   },
@@ -200,22 +264,24 @@ function RatingScale({
 }) {
   return (
     <div className="space-y-3">
-      <div className="flex items-center justify-between gap-2">
+      <input
+        type="range"
+        min={1}
+        max={5}
+        step={1}
+        value={value}
+        onChange={(e) => onChange(Number(e.target.value))}
+        aria-label="Rate on a scale of 1 to 5"
+        className="h-2 w-full cursor-pointer appearance-none rounded-full bg-slate-200 accent-indigo-600"
+      />
+      <div className="flex items-center justify-between text-xs font-semibold text-slate-500">
         {[1, 2, 3, 4, 5].map((n) => (
-          <button
+          <span
             key={n}
-            type="button"
-            onClick={() => onChange(n)}
-            aria-label={`Rate ${n} out of 5`}
-            aria-pressed={value === n}
-            className={`flex h-11 w-full max-w-[3.25rem] items-center justify-center rounded-xl text-sm font-semibold transition-all sm:h-12 sm:max-w-none sm:flex-1 ${
-              value === n
-                ? "bg-indigo-600 text-white shadow-md shadow-indigo-200 ring-2 ring-indigo-300"
-                : "bg-slate-100 text-slate-600 hover:bg-indigo-50 hover:text-indigo-700"
-            }`}
+            className={value === n ? "text-indigo-600" : "text-slate-500"}
           >
             {n}
-          </button>
+          </span>
         ))}
       </div>
       <div className="flex justify-between text-xs text-slate-500">
@@ -227,20 +293,58 @@ function RatingScale({
 }
 
 function FitBadge({ percentage }: { percentage: number }) {
-  const tone =
-    percentage >= 85
-      ? "bg-emerald-100 text-emerald-800 ring-emerald-200"
-      : percentage >= 70
-        ? "bg-amber-100 text-amber-800 ring-amber-200"
-        : "bg-slate-100 text-slate-700 ring-slate-200";
+  const ringColor =
+    percentage >= 70 ? "#34d399" : percentage >= 40 ? "#fbbf24" : "#f87171";
+  const clampedPercentage = Math.max(0, Math.min(100, percentage));
+  const size = 100;
+  const strokeWidth = 12;
+  const center = size / 2;
+  const radius = center - strokeWidth / 2;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset =
+    circumference - (clampedPercentage / 100) * circumference;
 
   return (
-    <span
-      className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-sm font-semibold ring-1 ${tone}`}
-    >
-      <Sparkles className="h-3.5 w-3.5" />
-      {percentage}% fit
-    </span>
+    <div className="inline-flex h-24 w-24 items-center justify-center">
+      <svg
+        width="100%"
+        height="100%"
+        viewBox={`0 0 ${size} ${size}`}
+        shapeRendering="geometricPrecision"
+      >
+        <circle
+          cx={center}
+          cy={center}
+          r={radius}
+          fill="none"
+          stroke="#1e293b"
+          strokeWidth={strokeWidth}
+          shapeRendering="geometricPrecision"
+        />
+        <circle
+          cx={center}
+          cy={center}
+          r={radius}
+          fill="none"
+          stroke={ringColor}
+          strokeWidth={strokeWidth}
+          strokeLinecap="round"
+          strokeDasharray={circumference}
+          strokeDashoffset={strokeDashoffset}
+          transform={`rotate(-90 ${center} ${center})`}
+          shapeRendering="geometricPrecision"
+        />
+        <text
+          x="50%"
+          y="50%"
+          textAnchor="middle"
+          dominantBaseline="middle"
+          className="fill-slate-900 text-[20px] font-bold"
+        >
+          {clampedPercentage}%
+        </text>
+      </svg>
+    </div>
   );
 }
 
@@ -269,14 +373,18 @@ export default function CBCSElectiveGuide() {
   const [testimonialName, setTestimonialName] = useState("");
   const [misNumber, setMisNumber] = useState("");
   const [testimonialBranch, setTestimonialBranch] = useState<Branch | "">("");
+  const [testimonialCategory, setTestimonialCategory] = useState<
+    CourseCategory | ""
+  >("");
   const [courseCode, setCourseCode] = useState("");
-  const [semester, setSemester] = useState("");
   const [tPriorKnowledge, setTPriorKnowledge] = useState(3);
   const [tDifficulty, setTDifficulty] = useState(3);
   const [tWorkload, setTWorkload] = useState(3);
   const [tHandsOn, setTHandsOn] = useState(3);
   const [review, setReview] = useState("");
   const [testimonialSubmitted, setTestimonialSubmitted] = useState(false);
+  const [testimonialSubmissionMessage, setTestimonialSubmissionMessage] =
+    useState("");
 
   const eligibleCourses = useMemo(
     () =>
@@ -302,6 +410,16 @@ export default function CBCSElectiveGuide() {
         selectedDepartments.includes(course.branch),
       ),
     [activeTabCourses, selectedDepartments],
+  );
+
+  const filteredTestimonialCourses = useMemo(
+    () =>
+      testimonialCategory
+        ? TESTIMONIAL_COURSES.filter(
+            (course) => course.category === testimonialCategory,
+          )
+        : [],
+    [testimonialCategory],
   );
 
   const questionSetters = {
@@ -332,14 +450,15 @@ export default function CBCSElectiveGuide() {
     setTestimonialName("");
     setMisNumber("");
     setTestimonialBranch("");
+    setTestimonialCategory("");
     setCourseCode("");
-    setSemester("");
     setTPriorKnowledge(3);
     setTDifficulty(3);
     setTWorkload(3);
     setTHandsOn(3);
     setReview("");
     setTestimonialSubmitted(false);
+    setTestimonialSubmissionMessage("");
     setActiveTab(COURSE_CATEGORIES[0]);
     setSelectedDepartments([]);
   }
@@ -419,12 +538,35 @@ export default function CBCSElectiveGuide() {
   function handleTestimonialLoginContinue() {
     if (!testimonialName.trim() || !misNumber.trim() || !testimonialBranch)
       return;
+    setTestimonialSubmissionMessage("");
+    setTestimonialSubmitted(false);
     setView("testimonial_form");
   }
 
   function handleTestimonialSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!courseCode || !semester || !review.trim()) return;
+    if (!testimonialCategory || !courseCode || !review.trim()) return;
+
+    const submitter = (e.nativeEvent as SubmitEvent).submitter;
+    const shouldAddAnother =
+      submitter instanceof HTMLButtonElement &&
+      submitter.value === "submit_add_another";
+
+    if (shouldAddAnother) {
+      setTestimonialCategory("");
+      setCourseCode("");
+      setTPriorKnowledge(3);
+      setTDifficulty(3);
+      setTWorkload(3);
+      setTHandsOn(3);
+      setReview("");
+      setTestimonialSubmissionMessage(
+        "Submitted successfully. You can add another testimonial now.",
+      );
+      return;
+    }
+
+    setTestimonialSubmissionMessage("");
     setTestimonialSubmitted(true);
   }
 
@@ -749,25 +891,37 @@ export default function CBCSElectiveGuide() {
                   </div>
 
                   <div className="space-y-5 px-5 py-5 sm:px-6">
-                    <div>
-                      <h3 className="mb-1.5 flex items-center gap-1.5 text-sm font-semibold text-slate-900">
-                        <Star className="h-4 w-4 text-indigo-500" />
-                        Why this fits you
-                      </h3>
-                      <p className="text-sm leading-relaxed text-slate-600">
-                        {course.why_this_fits}
-                      </p>
-                    </div>
+                    {course.narrative ? (
+                      <>
+                        <div>
+                          <h3 className="mb-1.5 flex items-center gap-1.5 text-sm font-semibold text-slate-900">
+                            <Star className="h-4 w-4 text-indigo-500" />
+                            Why this fits you
+                          </h3>
+                          <p className="text-sm leading-relaxed text-slate-600">
+                            {course.narrative?.why_this_fits ??
+                              course.why_this_fits ??
+                              "AI narrative currently generating..."}
+                          </p>
+                        </div>
 
-                    <div>
-                      <h3 className="mb-1.5 flex items-center gap-1.5 text-sm font-semibold text-slate-900">
-                        <AlertCircle className="h-4 w-4 text-amber-500" />
-                        Worth knowing
-                      </h3>
-                      <p className="text-sm leading-relaxed text-slate-600">
-                        {course.worth_knowing}
-                      </p>
-                    </div>
+                        <div>
+                          <h3 className="mb-1.5 flex items-center gap-1.5 text-sm font-semibold text-slate-900">
+                            <AlertCircle className="h-4 w-4 text-amber-500" />
+                            Worth knowing
+                          </h3>
+                          <p className="text-sm leading-relaxed text-slate-600">
+                            {course.narrative?.worth_knowing ??
+                              course.worth_knowing ??
+                              "No narrative available."}
+                          </p>
+                        </div>
+                      </>
+                    ) : (
+                      <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">
+                        AI narrative currently generating...
+                      </div>
+                    )}
 
                     {course.testimonials.map((testimonial) => (
                       <blockquote
@@ -941,48 +1095,61 @@ export default function CBCSElectiveGuide() {
                 <p className="mb-5 text-xs font-semibold uppercase tracking-wide text-slate-500">
                   Step 2 of 2 — Rate your course
                 </p>
+                {testimonialSubmissionMessage && (
+                  <div className="mb-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
+                    {testimonialSubmissionMessage}
+                  </div>
+                )}
 
                 <div className="mb-6 grid gap-4 sm:grid-cols-2">
                   <div>
                     <label
-                      htmlFor="course-code"
+                      htmlFor="course-category"
                       className="mb-1.5 block text-sm font-medium text-slate-700"
                     >
-                      Course Code
+                      Category
                     </label>
                     <select
-                      id="course-code"
-                      value={courseCode}
-                      onChange={(e) => setCourseCode(e.target.value)}
+                      id="course-category"
+                      value={testimonialCategory}
+                      onChange={(e) => {
+                        setTestimonialCategory(e.target.value as CourseCategory);
+                        setCourseCode("");
+                      }}
                       required
                       className="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-slate-900 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
                     >
-                      <option value="">Select course</option>
-                      {COURSE_CODES.map((code) => (
-                        <option key={code} value={code}>
-                          {code}
+                      <option value="">Select category</option>
+                      {COURSE_CATEGORIES.map((category) => (
+                        <option key={category} value={category}>
+                          {category}
                         </option>
                       ))}
                     </select>
                   </div>
                   <div>
                     <label
-                      htmlFor="semester"
+                      htmlFor="course-code"
                       className="mb-1.5 block text-sm font-medium text-slate-700"
                     >
-                      Semester Taken
+                      Course
                     </label>
                     <select
-                      id="semester"
-                      value={semester}
-                      onChange={(e) => setSemester(e.target.value)}
+                      id="course-code"
+                      value={courseCode}
+                      onChange={(e) => setCourseCode(e.target.value)}
                       required
+                      disabled={!testimonialCategory}
                       className="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-slate-900 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
                     >
-                      <option value="">Select semester</option>
-                      {SEMESTERS.map((s) => (
-                        <option key={s} value={s}>
-                          {s}
+                      <option value="">
+                        {testimonialCategory
+                          ? "Select course"
+                          : "Select category first"}
+                      </option>
+                      {filteredTestimonialCourses.map((course) => (
+                        <option key={course.code} value={course.code}>
+                          {course.code} — {course.name}
                         </option>
                       ))}
                     </select>
@@ -1037,6 +1204,15 @@ export default function CBCSElectiveGuide() {
                   </button>
                   <button
                     type="submit"
+                    value="submit_add_another"
+                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-indigo-300 bg-indigo-50 px-4 py-2.5 text-sm font-semibold text-indigo-700 transition hover:bg-indigo-100"
+                  >
+                    Submit &amp; Add Another
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
+                  <button
+                    type="submit"
+                    value="submit_final"
                     className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-indigo-200 transition hover:bg-indigo-700"
                   >
                     Submit Testimonial

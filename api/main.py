@@ -41,6 +41,7 @@ BRANCH_CLUSTERS: dict[str, str] = {
     "Civil Engineering": "Infrastructure"
 }
 ESC_CATEGORIES = {"ESC 1", "ESC 2"}
+REQUIRED_NARRATIVE_FIELDS = ("why_this_fits", "worth_knowing")
 
 class WizardPayload(BaseModel):
     prior_knowledge_q1: int
@@ -197,6 +198,30 @@ def _extract_json_array(text: str) -> list[dict]:
     return parsed
 
 
+def _extract_narrative_fields(payload: dict | None) -> tuple[str | None, str | None]:
+    if not isinstance(payload, dict):
+        return None, None
+    why_this_fits = payload.get(REQUIRED_NARRATIVE_FIELDS[0])
+    worth_knowing = payload.get(REQUIRED_NARRATIVE_FIELDS[1])
+    if not isinstance(why_this_fits, str) or not why_this_fits.strip():
+        return None, None
+    if not isinstance(worth_knowing, str) or not worth_knowing.strip():
+        return None, None
+    return why_this_fits.strip(), worth_knowing.strip()
+
+
+def _fallback_narrative_for_course(course: dict) -> tuple[str, str]:
+    why_this_fits, worth_knowing = _extract_narrative_fields(course.get("narrative"))
+    if why_this_fits and worth_knowing:
+        return why_this_fits, worth_knowing
+
+    course_name = course.get("course_name", "This course")
+    return (
+        f"AI narrative for {course_name} is currently generating. Please check back shortly.",
+        "No AI caveat is available yet. Review core attributes and testimonials for now.",
+    )
+
+
 def generate_batch_narratives(top_courses: list[tuple[dict, int, list[dict[str, float | str]]]]) -> list[dict]:
     prompt_courses = []
     for course, fit_percentage, attributes_used in top_courses:
@@ -249,18 +274,11 @@ def get_recommendations(payload: WizardPayload):
     scored.sort(key=lambda item: item[1], reverse=True)
     top_courses = scored
 
+    ai_narratives: list[dict] = []
     try:
         ai_narratives = generate_batch_narratives(top_courses)
-    except (json.JSONDecodeError, ValueError) as exc:
-        raise HTTPException(
-            status_code=502,
-            detail=f"Invalid narrative response from Gemini: {exc}",
-        ) from exc
-    except Exception as exc:
-        raise HTTPException(
-            status_code=502,
-            detail=f"Narrative generation failed: {exc}",
-        ) from exc
+    except Exception:
+        ai_narratives = []
 
     narratives_dict = {
         item.get("course_code"): item
@@ -272,14 +290,11 @@ def get_recommendations(payload: WizardPayload):
     for rank, (course, fit_percentage, attributes_used) in enumerate(top_courses, start=1):
         course_code = course.get("course_code")
 
-        ai_text = narratives_dict.get(course_code, {})
-        why_this_fits = ai_text.get("why_this_fits")
-        worth_knowing = ai_text.get("worth_knowing")
-        if not isinstance(why_this_fits, str) or not isinstance(worth_knowing, str):
-            raise HTTPException(
-                status_code=502,
-                detail=f"Gemini narrative missing required fields for {course_code}",
-            )
+        why_this_fits, worth_knowing = _extract_narrative_fields(
+            narratives_dict.get(course_code)
+        )
+        if not why_this_fits or not worth_knowing:
+            why_this_fits, worth_knowing = _fallback_narrative_for_course(course)
 
         card = {
             "rank": rank,
@@ -294,6 +309,10 @@ def get_recommendations(payload: WizardPayload):
             "topic_tags": course.get("topic_tags", []),
             "why_this_fits": why_this_fits,
             "worth_knowing": worth_knowing,
+            "narrative": {
+                "why_this_fits": why_this_fits,
+                "worth_knowing": worth_knowing,
+            },
             "testimonials": course.get("testimonials", [])
         }
         course_cards.append(card)
