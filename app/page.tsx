@@ -774,7 +774,7 @@ export default function CBCSElectiveGuide() {
                   className="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-8 py-3 text-sm font-semibold text-white shadow-md shadow-indigo-200 transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {isLoadingRecommendations
-                    ? "Loading..."
+                    ? "Ranking courses..."
                     : "Get My Recommendations"}
                   <Sparkles className="h-4 w-4" />
                 </button>
@@ -782,6 +782,14 @@ export default function CBCSElectiveGuide() {
             </div>
           </div>
         )}
+        {isLoadingRecommendations && (
+  <div className="flex flex-col items-center justify-center py-16 animate-pulse">
+    <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+    <p className="text-lg font-medium text-gray-700 dark:text-gray-300">
+      Ranking the courses according to your preferences...
+    </p>
+  </div>
+)}
 
         {/* ── Results View ── */}
         {view === "results" && (
@@ -796,13 +804,7 @@ export default function CBCSElectiveGuide() {
                 </h1>
                 <p className="text-slate-600">
                   {branch} · Based on your preference profile
-                  {attributes && (
-                    <span className="mt-1 block text-xs text-slate-500">
-                      prior_knowledge: {attributes.prior_knowledge} · difficulty:{" "}
-                      {attributes.difficulty} · workload: {attributes.workload}{" "}
-                      · hands_on: {attributes.hands_on}
-                    </span>
-                  )}
+                  
                 </p>
               </header>
               <button
@@ -1149,7 +1151,7 @@ export default function CBCSElectiveGuide() {
                       </option>
                       {filteredTestimonialCourses.map((course) => (
                         <option key={course.code} value={course.code}>
-                          {course.code} — {course.name}
+                          {course.name}
                         </option>
                       ))}
                     </select>
