@@ -404,13 +404,29 @@ export default function CBCSElectiveGuide() {
     [activeTab, branch],
   );
 
-  const visibleCourses = useMemo(
-    () =>
-      activeTabCourses.filter((course) =>
-        selectedDepartments.includes(course.branch),
-      ),
-    [activeTabCourses, selectedDepartments],
-  );
+  const visibleCourses = useMemo(() => {
+    let filtered = activeTabCourses;
+
+    // The CBCS Rule: Hide ESC courses from the student's own department
+    if (activeTab.includes("ESC")) {
+      filtered = filtered.filter((course) => {
+        // Safe fallbacks to prevent crashes if the branch is empty on page load
+        const cBranch = (course.branch || "").toLowerCase();
+        const sBranch = (branch || "").toLowerCase();
+
+        // Catch string variations (e.g. "Computer" vs "Computer Science and Engineering")
+        if (cBranch.includes("computer") && sBranch.includes("computer")) return false;
+        if (cBranch.includes("civil") && sBranch.includes("civil")) return false;
+        if (cBranch.includes("mech") && sBranch.includes("mech")) return false;
+        if (cBranch.includes("electr") && sBranch.includes("electr")) return false;
+        
+        return cBranch !== sBranch; // Fallback for exact matches
+      });
+    }
+
+    // Notice we completely removed the selectedDepartments bouncer here!
+    return filtered;
+  }, [activeTabCourses, activeTab, branch]);
 
   const filteredTestimonialCourses = useMemo(
     () =>

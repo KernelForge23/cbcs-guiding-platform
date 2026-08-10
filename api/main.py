@@ -97,12 +97,23 @@ def distance_normalized(student_value: float, course_value: float) -> float:
 
 
 def _get_course_attribute(course: dict, key: str) -> float:
+    # Handle key naming differences (e.g., 'prior_knowledge_score' vs 'prior_knowledge')
+    short_key = key.replace("_score", "")
+    
+    # 1. Check top-level dictionary
     if key in course:
         return float(course[key])
+    if short_key in course:
+        return float(course[short_key])
+        
+    # 2. Check nested 'attributes' dictionary
     attributes = course.get("attributes", {})
     if key in attributes:
         return float(attributes[key])
-    raise KeyError(f"Course missing required attribute '{key}'")
+    if short_key in attributes:
+        return float(attributes[short_key])
+        
+    raise KeyError(f"Course missing required attribute '{key}' or '{short_key}'")
 
 
 def _resolve_course_branch(course: dict, student_branch: str) -> str:
