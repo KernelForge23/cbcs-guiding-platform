@@ -1,5 +1,6 @@
 import json
 import os
+import math 
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -87,13 +88,15 @@ def branch_lookup(student_branch: str, course_branch: str) -> float:
         return 0.6
     return 0.3
 
-
 def shortfall_normalized(student_value: float, course_value: float) -> float:
-    return (5.0 - max(0.0, course_value - student_value) - 1.0) / 4.0
-
+    diff = max(0.0, course_value - student_value)
+    # Exponential curve: small gaps stay near 100%, larger gaps drop off steeply
+    return float(math.exp(-0.35 * (diff ** 1.5)))
 
 def distance_normalized(student_value: float, course_value: float) -> float:
-    return (5.0 - abs(student_value - course_value) - 1.0) / 4.0
+    diff = abs(student_value - course_value)
+    # Exponential curve: small gaps stay near 100%, larger gaps drop off steeply
+    return float(math.exp(-0.35 * (diff ** 1.5)))
 
 
 def _get_course_attribute(course: dict, key: str) -> float:
