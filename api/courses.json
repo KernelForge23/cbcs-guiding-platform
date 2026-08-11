@@ -23,10 +23,11 @@
       "prior_knowledge": 3,
       "difficulty": 4,
       "workload": 5.0,
-      "hands_on": 2.0
+      "cognitive_focus": ""
     },
     "prior_knowledge_justification": "This comprehensive sequence demands solid mastery of 11th and 12th-grade JEE calculus and algebra baselines. Students must already possess a highly fluent working knowledge of single-variable differentiation and standard integration techniques to survive the rapid transition into multivariable calculus and multiple integrals in MAC-2. Furthermore, the basic matrices and introductory differential equations covered in high school are absolute prerequisites for comprehending eigenvalues, Laplace transforms, and higher-order ODEs. Without a rock-solid high school mathematical foundation, students will immediately struggle with the advanced pacing of this combined sequence.",
     "difficulty_justification": "The conceptual complexity of this two-semester sequence is substantial, requiring rigorous abstract reasoning and spatial visualization. Students must transition from 2D mathematics to 3D vector fields, mastering complex operations like gradient, divergence, curl, and advanced surface integrals. Additionally, solving Partial Differential Equations (PDEs) and computing Fourier series expansions involve lengthy, multi-step algorithmic procedures that leave little room for algebraic errors. The sheer density of advanced mathematical tools introduced makes this a highly rigorous and conceptually demanding basic science requirement.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Multivariable Calculus",
       "Differential Equations",
@@ -34,16 +35,13 @@
       "Linear Algebra",
       "Fourier Analysis"
     ],
+    "rating_metadata": {
+      "total_votes": 1
+    },
     "testimonials": [],
-    "raw_workload": 5.0,
-    "hands_on_score": 2.0,
     "evaluation_style_facts": {
       "theory_exam_pct": null,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 5.0,
-    "source": {
-      "workload": "computed"
     }
   },
   {
@@ -70,26 +68,24 @@
       "prior_knowledge": 1,
       "difficulty": 5,
       "workload": 5.0,
-      "hands_on": 2.0
+      "cognitive_focus": ""
     },
     "prior_knowledge_justification": "As a foundational first-year combined mathematics block covering core linear algebra (matrices, vector spaces) and statistics (descriptive measures, basic probability), it builds directly from standard high school mathematics without requiring advanced prerequisites.",
     "difficulty_justification": "Combining rigorous abstract linear algebra (vector spaces, linear mappings, orthogonalization) with probability theory and inferential statistics (hypothesis testing, distributions) alongside concurrent R programming implementation creates an exceptionally heavy workload. Coupled with unforgiving exam papers and harsh grading standards, the overall academic bottleneck reaches a maximum difficulty of 5.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Linear Algebra",
       "Probability Theory",
       "Inferential Statistics",
       "R Programming"
     ],
+    "rating_metadata": {
+      "total_votes": 1
+    },
     "testimonials": [],
-    "raw_workload": 5.0,
-    "hands_on_score": 2.0,
     "evaluation_style_facts": {
       "theory_exam_pct": null,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 5.0,
-    "source": {
-      "workload": "computed"
     }
   },
   {
@@ -114,26 +110,24 @@
       "prior_knowledge": 3,
       "difficulty": 3,
       "workload": 5.0,
-      "hands_on": 3.0
+      "cognitive_focus": ""
     },
     "prior_knowledge_justification": "This comprehensive, two-semester science sequence relies heavily on a firm grasp of 12th-grade JEE and MHT-CET baselines. Students must be fully comfortable with wave-particle duality to engage with the Quantum Mechanics units, as well as classical wave optics to understand interference and diffraction phenomena. Furthermore, foundational electrochemical cell principles and general chemistry baselines are absolute prerequisites for comprehending advanced battery technologies and corrosion mechanisms. Without a solid high school science foundation, students will struggle with the rapid leap into semiconductor band theory and instrumental chemical analysis.",
-    "difficulty_justification": "The difficulty of this sequence is moderate, successfully balancing abstract physics concepts with descriptive, application-based chemistry. The physics modules present conceptual hurdles with Schr\u00f6dinger's equations and laser population inversion, but the mathematical rigor is restricted primarily to 1D models and standard derivations. The chemistry modules focus heavily on practical industrial applications, such as water softening techniques and corrosion prevention, which demand memorization and conceptual mapping rather than intense mathematical problem-solving. Thus, it presents a manageable conceptual challenge typical of foundational engineering sciences.",
+    "difficulty_justification": "The difficulty of this sequence is moderate, successfully balancing abstract physics concepts with descriptive, application-based chemistry. The physics modules present conceptual hurdles with Schrödinger's equations and laser population inversion, but the mathematical rigor is restricted primarily to 1D models and standard derivations. The chemistry modules focus heavily on practical industrial applications, such as water softening techniques and corrosion prevention, which demand memorization and conceptual mapping rather than intense mathematical problem-solving. Thus, it presents a manageable conceptual challenge typical of foundational engineering sciences.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Quantum Mechanics",
       "Wave Optics & Lasers",
       "Electrochemistry & Corrosion",
       "Analytical Chemistry"
     ],
+    "rating_metadata": {
+      "total_votes": 1
+    },
     "testimonials": [],
-    "raw_workload": 5.0,
-    "hands_on_score": 3.0,
     "evaluation_style_facts": {
       "theory_exam_pct": 0.0,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 5.0,
-    "source": {
-      "workload": "computed"
     }
   },
   {
@@ -158,26 +152,24 @@
       "prior_knowledge": 3,
       "difficulty": 4,
       "workload": 5.0,
-      "hands_on": 3.0
+      "cognitive_focus": ""
     },
     "prior_knowledge_justification": "This physics-intensive sequence requires a strong command of 12th-grade JEE and MHT-CET modern physics and calculus. Students need a solid foundation in wave-particle duality, classical mechanics, and differential calculus to grasp the mathematical formulations in Quantum Physics, such as wave functions, operators, and expectation values. Familiarity with basic classical wave optics is also crucial for the interference and diffraction modules in Engineering Physics. Without this foundational calculus and physics baseline, the leap into formal quantum mechanics will be jarring.",
-    "difficulty_justification": "The inclusion of a dedicated Quantum Physics module significantly elevates the conceptual and mathematical rigor of this track compared to standard applied sciences. While the Engineering Physics modules balance abstract concepts with standard 1D models and laser applications, Quantum Physics introduces complex mathematical derivations. Students must grapple with proofs for Heisenberg's Uncertainty Principle and solve Schr\u00f6dinger's time-dependent and independent equations for potential barriers, quantum tunneling, and harmonic oscillators. This demanding shift from descriptive physics to rigorous mathematical mechanics justifies a higher difficulty rating.",
+    "difficulty_justification": "The inclusion of a dedicated Quantum Physics module significantly elevates the conceptual and mathematical rigor of this track compared to standard applied sciences. While the Engineering Physics modules balance abstract concepts with standard 1D models and laser applications, Quantum Physics introduces complex mathematical derivations. Students must grapple with proofs for Heisenberg's Uncertainty Principle and solve Schrödinger's time-dependent and independent equations for potential barriers, quantum tunneling, and harmonic oscillators. This demanding shift from descriptive physics to rigorous mathematical mechanics justifies a higher difficulty rating.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Quantum Mechanics",
-      "Schr\u00f6dinger's Equation",
+      "Schrödinger's Equation",
       "Wave Optics & Lasers",
       "Solid State Physics"
     ],
+    "rating_metadata": {
+      "total_votes": 1
+    },
     "testimonials": [],
-    "raw_workload": 5.0,
-    "hands_on_score": 3.0,
     "evaluation_style_facts": {
       "theory_exam_pct": 0.0,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 5.0,
-    "source": {
-      "workload": "computed"
     }
   },
   {
@@ -202,26 +194,24 @@
       "prior_knowledge": 3,
       "difficulty": 3,
       "workload": 5.0,
-      "hands_on": 3.0
+      "cognitive_focus": ""
     },
     "prior_knowledge_justification": "This sequence requires a solid foundation in 12th-grade JEE and MHT-CET physics, specifically modern physics and basic semiconductor concepts. Students must already be familiar with basic p-n junctions, wave-particle duality, and classical optics before starting. The course immediately dives into advanced band theory, Fermi-Dirac distributions, and Hall effect calculations, which rely heavily on high school electrostatics and solid-state physics baselines. A firm grasp of these 12th-grade prerequisites is essential to keep up with the pacing.",
     "difficulty_justification": "The difficulty remains moderate as it effectively bridges abstract physics with tangible electronic applications. While the semiconductor modules introduce detailed mathematical formulations for carrier concentration, diode equations, and energy band structures, they remain grounded in practical device physics (LEDs, photodiodes, transistors) rather than deep quantum mechanics. The engineering physics modules balance this with standard 1D models and optics derivations, presenting a manageable but rigorous foundational challenge without overwhelming mathematical complexity.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Semiconductor Physics",
       "Wave Optics & Lasers",
       "Electronic Devices",
       "Solid State Physics"
     ],
+    "rating_metadata": {
+      "total_votes": 1
+    },
     "testimonials": [],
-    "raw_workload": 5.0,
-    "hands_on_score": 3.0,
     "evaluation_style_facts": {
       "theory_exam_pct": 0.0,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 5.0,
-    "source": {
-      "workload": "computed"
     }
   },
   {
@@ -246,26 +236,24 @@
       "prior_knowledge": 3,
       "difficulty": 2,
       "workload": 5.0,
-      "hands_on": 3.0
+      "cognitive_focus": ""
     },
     "prior_knowledge_justification": "This interdisciplinary sequence requires a solid foundation in 12th-grade JEE and MHT-CET chemistry and physics. Students must be familiar with basic electrochemistry to understand advanced battery technologies and corrosion mechanisms. Similarly, the semiconductor modules demand prior familiarity with p-n junctions and basic solid-state physics to seamlessly transition into advanced band theory and Fermi-Dirac distributions. A firm grasp of these high school prerequisites is essential to keep up with the pacing.",
     "difficulty_justification": "The difficulty is low to moderate, leaning heavily on descriptive, practical concepts rather than complex mathematical derivations. The chemistry modules (water technology and corrosion) are predominantly qualitative and memory-based. While semiconductor physics introduces formulas for carrier concentration and diode currents, the course stays anchored to practical device behavior (LEDs, transistors) rather than deep quantum mechanics or heavy proofs. This makes it one of the most accessible applied science tracks.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Electrochemistry & Corrosion",
       "Analytical Chemistry",
       "Semiconductor Physics",
       "Electronic Devices"
     ],
+    "rating_metadata": {
+      "total_votes": 1
+    },
     "testimonials": [],
-    "raw_workload": 5.0,
-    "hands_on_score": 3.0,
     "evaluation_style_facts": {
       "theory_exam_pct": 0.0,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 5.0,
-    "source": {
-      "workload": "computed"
     }
   },
   {
@@ -285,32 +273,28 @@
       "CIE": 20,
       "ESE": 30
     },
-    "prior_knowledge_score": 4,
+    "attributes": {
+      "prior_knowledge": 4,
+      "difficulty": 4,
+      "workload": 1.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "While the syllabus officially introduces advanced 3D vector calculus in Unit 1, the grueling 6-hour pacing realistically demands prior college-level mathematical maturity. To successfully navigate this course, students effectively need prior or concurrent exposure to a college-level Vector Calculus course to survive the rapid application of gradient, divergence, curl, and Stokes' theorem. Relying solely on a 12th-grade calculus baseline will leave students immediately overwhelmed by the mathematical prerequisites required for Maxwell's equations.",
-    "difficulty_score": 4,
-    "difficulty_justification": "Despite being a 1-credit course, the conceptual and mathematical rigor is very high. Students must rapidly master abstract 3D vector calculus\u2014including the Gauss-Divergence and Stokes theorems\u2014and apply them to derive Maxwell's equations in differential form. Transitioning from standard high-school integral laws to advanced electrodynamics and electromagnetic wave equations (referencing advanced texts like Griffiths) makes this a mathematically heavy and conceptually challenging module.",
+    "difficulty_justification": "Despite being a 1-credit course, the conceptual and mathematical rigor is very high. Students must rapidly master abstract 3D vector calculus—including the Gauss-Divergence and Stokes theorems—and apply them to derive Maxwell's equations in differential form. Transitioning from standard high-school integral laws to advanced electrodynamics and electromagnetic wave equations (referencing advanced texts like Griffiths) makes this a mathematically heavy and conceptually challenging module.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Electromagnetics",
       "Vector Calculus",
       "Maxwell's Equations",
       "Electrodynamics"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 3.0,
-    "hands_on_score": 1.0,
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 1.0,
-    "attributes": {
-      "workload": 1.0,
-      "hands_on": 1.0
     }
   },
   {
@@ -330,32 +314,28 @@
       "CIE": 20,
       "ESE": 30
     },
-    "prior_knowledge_score": 3,
+    "attributes": {
+      "prior_knowledge": 3,
+      "difficulty": 3,
+      "workload": 1.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "This course requires a solid foundation in 12th-grade JEE/MHT-CET physics and chemistry, particularly the high school 'Solid State' chemistry chapter and basic magnetism. Students must already be familiar with basic crystal lattices, unit cells, and fundamental magnetic properties (diamagnetism, paramagnetism) to keep pace. While it introduces advanced ideas like the statistical partition function, the core baseline entry requirement is securely at the 12th-grade level.",
-    "difficulty_score": 3,
     "difficulty_justification": "The difficulty is moderate. It blends high school spatial reasoning (Miller indices, 3D lattices) with more advanced, abstract quantum and statistical concepts like Cooper pairs, superconductivity, and the DC Josephson effect. While it references classic undergraduate texts like Kittel, the condensed 1-credit scope restricts it from diving into grueling mathematical derivations, keeping the focus primarily on conceptual understanding, structural visualization, and standard formulas.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Solid State Physics",
       "Crystallography",
       "Magnetism",
       "Superconductivity"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 3.0,
-    "hands_on_score": 1.0,
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 1.0,
-    "attributes": {
-      "workload": 1.0,
-      "hands_on": 1.0
     }
   },
   {
@@ -375,32 +355,28 @@
       "CIE": 20,
       "ESE": 30
     },
-    "prior_knowledge_score": 3,
+    "attributes": {
+      "prior_knowledge": 3,
+      "difficulty": 4,
+      "workload": 1.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "This course necessitates a strong 11th and 12th-grade JEE foundation in classical thermodynamics and probability. Students must enter with a clear understanding of the basic laws of thermodynamics, entropy, and Gibbs free energy from high school physics and chemistry. Furthermore, high school combinatorics and probability baselines are required to successfully transition into calculating microstates, macrostates, and statistical distribution functions.",
-    "difficulty_score": 4,
     "difficulty_justification": "Despite its 1-credit weight, the conceptual rigor of this course is exceptionally high. Statistical mechanics is notoriously abstract, requiring students to bridge microscopic quantum states with macroscopic thermodynamic variables using complex mathematical tools like partition functions and ensembles. Compressing advanced topics like Fermi-Dirac and Bose-Einstein statistics into just 12 lecture hours creates a steep and heavily abstract learning curve, justifying a top difficulty rating.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Statistical Mechanics",
       "Thermodynamics",
       "Quantum Statistics",
       "Ensembles"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 3.0,
-    "hands_on_score": 1.0,
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 1.0,
-    "attributes": {
-      "workload": 1.0,
-      "hands_on": 1.0
     }
   },
   {
@@ -420,32 +396,28 @@
       "CIE": 20,
       "ESE": 30
     },
-    "prior_knowledge_score": 1,
+    "attributes": {
+      "prior_knowledge": 1,
+      "difficulty": 2,
+      "workload": 1.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "This course assumes absolutely zero high school biology background, specifically catering to engineering students who likely dropped biology after 10th grade for JEE preparation. The syllabus acts as an introductory bridge, starting from scratch with basic biomolecules and mapping them to engineering domains. The professor will not expect any prior technical mastery of NEET-level biology.",
-    "difficulty_score": 2,
     "difficulty_justification": "While completely devoid of mathematical derivations and complex computational logic, the course requires a solid amount of rote memorization. Engineering students who have not studied biology for years will need to invest time in learning new vocabulary (biomolecules, ATP, biosensors) and grasping cross-disciplinary analogies (e.g., biological systems as mechanical or electrical structures). It is a highly descriptive and qualitative course, making it low difficulty, but the memorization volume elevates it above an absolute baseline 1.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Bioengineering",
       "Biomimetics",
       "Biomolecules",
       "Interdisciplinary Applications"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 3.0,
-    "hands_on_score": 1.0,
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 1.0,
-    "attributes": {
-      "workload": 1.0,
-      "hands_on": 1.0
     }
   },
   {
@@ -465,32 +437,28 @@
       "CIE": 20,
       "ESE": 30
     },
-    "prior_knowledge_score": 3,
+    "attributes": {
+      "prior_knowledge": 3,
+      "difficulty": 2,
+      "workload": 1.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "This course relies on a foundational understanding of 12th-grade physical chemistry, specifically basic electrochemistry. The syllabus jumps straight into advanced battery technologies (Lithium-Sulfur, Solid-State) and various fuel cells (PEMFC, SOFC). To grasp these working principles without struggling, students must already be comfortable with high-school concepts like redox reactions, anodes, cathodes, and basic galvanic cell operation.",
-    "difficulty_score": 2,
     "difficulty_justification": "The difficulty level is accessible and leans heavily toward descriptive, applied science. The curriculum focuses on the construction, classification, and applications of different energy storage systems rather than rigorous thermodynamic derivations or complex mathematical problem-solving. While students will need to memorize the operating principles of multiple cell types and hydrogen storage methods, the lack of heavy math or abstract theory keeps it at a solid 2.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Battery Technology",
       "Fuel Cells",
       "Hydrogen Energy",
       "Electrochemistry"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 3.0,
-    "hands_on_score": 1.0,
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 1.0,
-    "attributes": {
-      "workload": 1.0,
-      "hands_on": 1.0
     }
   },
   {
@@ -510,32 +478,28 @@
       "CIE": 20,
       "ESE": 30
     },
-    "prior_knowledge_score": 2,
+    "attributes": {
+      "prior_knowledge": 2,
+      "difficulty": 2,
+      "workload": 1.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "This course relies on a general high school science background (basic understanding of atoms and materials) but builds the specific domain of nanotechnology entirely from scratch. The syllabus explicitly begins with a broad introduction and classification of nanomaterials, meaning students are not expected to have any prior specialized knowledge of nanostructures or synthesis techniques.",
-    "difficulty_score": 2,
     "difficulty_justification": "The course is heavily qualitative and descriptive, focusing on classification, synthesis approaches (top-down and bottom-up), and broad applications across different industries (electronics, sensors, medicine). There are no rigorous mathematical derivations or complex quantum mechanical models involved in this introductory 1-credit scope. The straightforward, application-based nature of the content makes it highly accessible, requiring mostly conceptual mapping and rote memorization.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Nanomaterials",
       "Nanotechnology",
       "Materials Science",
       "Emerging Technologies"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 3.0,
-    "hands_on_score": 1.0,
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 1.0,
-    "attributes": {
-      "workload": 1.0,
-      "hands_on": 1.0
     }
   },
   {
@@ -555,32 +519,28 @@
       "CIE": 20,
       "ESE": 30
     },
-    "prior_knowledge_score": 3,
+    "attributes": {
+      "prior_knowledge": 3,
+      "difficulty": 2,
+      "workload": 1.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "This course relies directly on the foundational concepts covered in the 12th-grade JEE/MHT-CET chemistry 'Polymers' chapter. Students must already be familiar with basic terminologies such as monomers, degree of polymerization, types of polymerization, and common structural classifications. The syllabus immediately builds on this high school baseline to explore advanced properties like glass transition temperatures, tacticity, and conducting polymers.",
-    "difficulty_score": 2,
     "difficulty_justification": "The course is primarily qualitative and descriptive, focusing on structure-property relationships, material classifications, and sustainable engineering applications (e.g., biodegradable polymers and reinforced plastics). While it introduces technical concepts like molecular weight distributions and glass transition thermodynamics, it lacks the heavy mathematical proofs, complex computational logic, or abstract calculus found in harder tiers, keeping its difficulty comfortably at a 2.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Polymer Science",
       "Materials Engineering",
       "Conducting Polymers",
       "Sustainable Materials"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 3.0,
-    "hands_on_score": 1.0,
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 1.0,
-    "attributes": {
-      "workload": 1.0,
-      "hands_on": 1.0
     }
   },
   {
@@ -600,32 +560,28 @@
       "CIE": 20,
       "ESE": 30
     },
-    "prior_knowledge_score": 4,
-    "prior_knowledge_justification": "This course demands a strong, rigorous college-level mathematical baseline, specifically requiring prior familiarity with differential equations, linear algebra, and complex numbers to understand wave functions, operators, and eigenvalues. While it touches on de Broglie waves and Heisenberg's uncertainty principle from 12th-grade physics, the rapid transition into solving differential Schr\u00f6dinger equations means students effectively need prior or concurrent college math maturity.",
-    "difficulty_score": 4,
+    "attributes": {
+      "prior_knowledge": 4,
+      "difficulty": 4,
+      "workload": 1.0,
+      "cognitive_focus": ""
+    },
+    "prior_knowledge_justification": "This course demands a strong, rigorous college-level mathematical baseline, specifically requiring prior familiarity with differential equations, linear algebra, and complex numbers to understand wave functions, operators, and eigenvalues. While it touches on de Broglie waves and Heisenberg's uncertainty principle from 12th-grade physics, the rapid transition into solving differential Schrödinger equations means students effectively need prior or concurrent college math maturity.",
     "difficulty_justification": "The conceptual and mathematical rigor is very high, dealing directly with abstract quantum mechanics. Students must master differential wave equations, operator algebra, expectation values, and solve boundary value problems like finite/infinite potential wells and harmonic oscillators. Referencing heavyweights like Schiff and Beiser, this course requires intense abstract thinking and mathematical manipulation, easily earning a difficulty rating of 4.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Quantum Mechanics",
       "Wave Mechanics",
-      "Schr\u00f6dinger Equation",
+      "Schrödinger Equation",
       "Potential Wells"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 3.0,
-    "hands_on_score": 1.0,
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 1.0,
-    "attributes": {
-      "workload": 1.0,
-      "hands_on": 1.0
     }
   },
   {
@@ -646,32 +602,28 @@
       "CIE": 50,
       "ESE": 30
     },
-    "prior_knowledge_score": 1,
+    "attributes": {
+      "prior_knowledge": 1,
+      "difficulty": 2,
+      "workload": 3.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "This vocational course introduces surveying and mapping from the ground up, assuming no prior exposure to civil engineering or geomatics. Because VSEC modules are designed to be accessible to all branches, the syllabus starts with foundational concepts like map types, scales, and basic instrument introductions, requiring zero prerequisite technical knowledge.",
-    "difficulty_score": 2,
     "difficulty_justification": "The curriculum is highly practical and descriptive, focusing heavily on hands-on field skills such as leveling, setting up a Total Station, and basic AutoCAD drafting. While it avoids complex mathematical derivations or abstract physics, students still must invest effort into memorizing instrument mechanics, surveying procedures, and software commands, which naturally elevates the effort required above an absolute baseline of 1.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Surveying",
       "Total Station",
       "AutoCAD",
       "Mapping"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 4.0,
-    "hands_on_score": 3.6666666666666665,
     "evaluation_style_facts": {
       "theory_exam_pct": 0.6,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 3.0,
-    "attributes": {
-      "workload": 3.0,
-      "hands_on": 3.7
     }
   },
   {
@@ -692,32 +644,28 @@
       "CIE": 50,
       "ESE": 30
     },
-    "prior_knowledge_score": 1,
+    "attributes": {
+      "prior_knowledge": 1,
+      "difficulty": 2,
+      "workload": 3.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "This course is structured as an absolute beginner's introduction to construction, assuming no prior engineering or technical background. It starts at the ground level with identifying Personal Protective Equipment (PPE), the basic ingredients of concrete, and the general scope of construction, making it fully accessible to all branches.",
-    "difficulty_score": 2,
     "difficulty_justification": "While completely devoid of math or abstract theory, this course requires active memorization of technical specifications such as concrete grades, cement-sand mortar ratios, and various masonry types. The laboratory assignments are highly practical, involving site visits, drawing simple layouts, and creating charts. The need to memorize material properties and maintenance procedures elevates it slightly above a baseline 1.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Construction Practices",
       "Concrete & Masonry",
       "Building Maintenance",
       "Site Safety"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 4.0,
-    "hands_on_score": 3.6666666666666665,
     "evaluation_style_facts": {
       "theory_exam_pct": 0.6,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 3.0,
-    "attributes": {
-      "workload": 3.0,
-      "hands_on": 3.7
     }
   },
   {
@@ -738,32 +686,28 @@
       "CIE": 50,
       "ESE": 30
     },
-    "prior_knowledge_score": 1,
+    "attributes": {
+      "prior_knowledge": 1,
+      "difficulty": 4,
+      "workload": 3.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "The syllabus begins with the absolute basics, starting with an 'Introduction and Overview of C programming Language' and simple I/O statements. It expects zero prior coding experience, making it fully accessible for students from non-computing backgrounds, such as those who opted for bi-focal Electronics in high school, to begin learning from scratch.",
-    "difficulty_score": 4,
     "difficulty_justification": "For a student with absolutely zero programming background, the learning curve here is exceptionally steep. The course expects students to transition from basic syntax to abstract, notoriously difficult concepts like pointer arithmetic, memory referencing, and linked lists within a highly compressed 12-hour theory window. C is an unforgiving language for beginners, and mastering algorithmic logic alongside manual memory management justifies a high difficulty rating.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "C Programming",
       "Data Structures",
       "Pointers",
       "Algorithms"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 4.0,
-    "hands_on_score": 3.6666666666666665,
     "evaluation_style_facts": {
       "theory_exam_pct": 0.6,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 3.0,
-    "attributes": {
-      "workload": 3.0,
-      "hands_on": 3.7
     }
   },
   {
@@ -784,32 +728,28 @@
       "CIE": 50,
       "ESE": 30
     },
-    "prior_knowledge_score": 1,
+    "attributes": {
+      "prior_knowledge": 1,
+      "difficulty": 3,
+      "workload": 3.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "The syllabus begins with fundamental concepts such as the 'Basics of the Internet and the Web' and setting up a basic HTML page. It requires zero prior programming or web development experience, starting from the very first step of installing a text editor like VS Code.",
-    "difficulty_score": 3,
     "difficulty_justification": "While the initial units on HTML and CSS are highly accessible and focus on visual formatting like the 'box model,' the difficulty ramps up significantly in Unit 4. Students from non-programming backgrounds must suddenly grasp JavaScript control flow, DOM manipulation, and basic server-side programming using Node.js to handle GET and POST methods. This transition from simple descriptive markup to backend server logic elevates the overall difficulty for an absolute beginner.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "HTML & CSS",
       "JavaScript",
       "Node.js",
       "Frontend Development"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 4.0,
-    "hands_on_score": 3.6666666666666665,
     "evaluation_style_facts": {
       "theory_exam_pct": 0.6,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 3.0,
-    "attributes": {
-      "workload": 3.0,
-      "hands_on": 3.7
     }
   },
   {
@@ -830,32 +770,28 @@
       "CIE": 50,
       "ESE": 30
     },
-    "prior_knowledge_score": 1,
+    "attributes": {
+      "prior_knowledge": 1,
+      "difficulty": 2,
+      "workload": 3.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "The course is designed for absolute beginners, starting explicitly from 'Introduction to Python' and 'Setting up the environment'. It requires zero prior exposure to coding or computer science, making it highly accessible for students from non-CS backgrounds.",
-    "difficulty_score": 2,
     "difficulty_justification": "Unlike C programming, Python has a highly readable and forgiving syntax that abstract away complex memory management. The syllabus sticks strictly to foundational concepts like loops, conditionals, basic data structures (lists, dictionaries, sets), and simple functions without delving into object-oriented programming or advanced algorithms. The lab experiments culminate in a straightforward command-line mini-project. While developing programmatic logic for the first time still requires effort, Python's gentle learning curve keeps this comfortably at a 2.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Scripting",
       "Data Structures",
       "Control Flow",
       "Algorithmic Logic"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 4.0,
-    "hands_on_score": 3.6666666666666665,
     "evaluation_style_facts": {
       "theory_exam_pct": 0.6,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 3.0,
-    "attributes": {
-      "workload": 3.0,
-      "hands_on": 3.7
     }
   },
   {
@@ -876,32 +812,28 @@
       "CIE": 50,
       "ESE": 30
     },
-    "prior_knowledge_score": 1,
+    "attributes": {
+      "prior_knowledge": 1,
+      "difficulty": 2,
+      "workload": 3.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "Explicitly offered to all students as a VSEC, this course assumes no formal background in electrical engineering. It focuses heavily on practical hardware handling, basic wiring, and safety protocols, relying only on general common sense and basic high-school science to grasp how household and industrial electrical systems function.",
-    "difficulty_score": 2,
     "difficulty_justification": "The curriculum is entirely descriptive and hands-on, avoiding complex mathematical modeling, abstract circuit analysis, or heavy theoretical physics. Students will need to memorize various safety codes, installation procedures, and troubleshooting steps for equipment like transformers, EV chargers, and solar systems. This practical memorization elevates it slightly above a baseline score of 1, but keeps it highly manageable.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Industrial Wiring",
       "Equipment Troubleshooting",
       "Safety Protocols",
       "Power Systems"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 4.0,
-    "hands_on_score": 3.6666666666666665,
     "evaluation_style_facts": {
       "theory_exam_pct": 0.6,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 3.0,
-    "attributes": {
-      "workload": 3.0,
-      "hands_on": 3.7
     }
   },
   {
@@ -922,32 +854,28 @@
       "CIE": 50,
       "ESE": 30
     },
-    "prior_knowledge_score": 1,
+    "attributes": {
+      "prior_knowledge": 1,
+      "difficulty": 4,
+      "workload": 3.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "As a vocational workshop open to all branches, this course requires zero prior theoretical knowledge of electrical engineering. The focus is entirely on introducing basic tools, components, and standard operating procedures for physical wiring and assembly tasks from the ground up.",
-    "difficulty_score": 4,
     "difficulty_justification": "Handling 415V, 3-phase industrial setups and wiring control panels introduces a severe element of physical risk and requires intense situational awareness. For an absolute beginner from a non-electrical background, the pressure of executing high-voltage wiring without error, combined with the meticulous, zero-margin-for-error precision required to fabricate PCBs and wind transformers from scratch, pushes the overall stress and execution difficulty to a very high level.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Workshop Practices",
       "Circuit Fabrication",
       "Motor Wiring",
       "PCB Design"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 4.0,
-    "hands_on_score": 3.6666666666666665,
     "evaluation_style_facts": {
       "theory_exam_pct": 0.6,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 3.0,
-    "attributes": {
-      "workload": 3.0,
-      "hands_on": 3.7
     }
   },
   {
@@ -968,32 +896,28 @@
       "CIE": 50,
       "ESE": 30
     },
-    "prior_knowledge_score": 1,
+    "attributes": {
+      "prior_knowledge": 1,
+      "difficulty": 3,
+      "workload": 3.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "The course is designed to introduce the concepts of digital identity, UPI, and consent-based data sharing from the ground up. Even with the lab components, it emphasizes 'familiarization' and uses 'demo platforms' and 'mock APIs', requiring no prior background in public policy or advanced software development.",
-    "difficulty_score": 3,
     "difficulty_justification": "The newly provided lab assignments significantly elevate the practical expectations of the course. Students are not just studying policy; they are required to simulate digital KYC, interact with mock APIs (UPI, ONDC, Open Banking), and ultimately develop an integrative mini-project (such as a 'Budget Tracker' app) using these APIs. For a student without a prior programming or web development background, transitioning from theory to actively handling API integrations and prototyping applications represents a solid jump in effort and cognitive load, bumping the difficulty to a 3.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Digital Identity",
       "Digital Payments",
       "API Integration",
       "Policy & Governance"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 4.0,
-    "hands_on_score": 3.6666666666666665,
     "evaluation_style_facts": {
       "theory_exam_pct": 0.6,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 3.0,
-    "attributes": {
-      "workload": 3.0,
-      "hands_on": 3.7
     }
   },
   {
@@ -1014,32 +938,28 @@
       "CIE": 50,
       "ESE": 30
     },
-    "prior_knowledge_score": 1,
+    "attributes": {
+      "prior_knowledge": 1,
+      "difficulty": 3,
+      "workload": 3.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "The syllabus begins with foundational concepts like the 'Overview of data visualization and its importance'. The lab assignments start with downloading free datasets in Excel format and creating basic charts, gradually moving to UI-based tools like Tableau or Power BI. It requires no prior data science, statistical, or programming experience.",
-    "difficulty_score": 3,
     "difficulty_justification": "The course starts gently with theoretical visualization principles, but the practical components introduce a moderate technical learning curve. Students are required to utilize Python libraries such as Matplotlib, Seaborn, and Plotly, as well as install and use WEKA for feature extraction and filtering. Understanding concepts like data normalization, dimensionality reduction, and handling missing data, while transitioning from drag-and-drop dashboards to programmatic visualization tools, elevates the cognitive load. This justifies a score of 3 for students without a programming background.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Data Visualization",
       "Dashboard Design",
       "Feature Extraction",
       "Exploratory Data Analysis"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 4.0,
-    "hands_on_score": 3.6666666666666665,
     "evaluation_style_facts": {
       "theory_exam_pct": 0.6,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 3.0,
-    "attributes": {
-      "workload": 3.0,
-      "hands_on": 3.7
     }
   },
   {
@@ -1060,32 +980,28 @@
       "CIE": 50,
       "ESE": 30
     },
-    "prior_knowledge_score": 1,
+    "attributes": {
+      "prior_knowledge": 1,
+      "difficulty": 2,
+      "workload": 3.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "The syllabus is structured for an absolute beginner, starting from the basic 'Role of automation in Industries' and the 'History and evolution of PLC'. It assumes no prior knowledge of industrial control systems, introducing even foundational concepts like Boolean logic gates (AND, OR, NAND) from scratch.",
-    "difficulty_score": 2,
     "difficulty_justification": "Unlike text-heavy programming languages (like C), Ladder Logic is a highly visual, intuitive programming method originally designed to mimic physical relay circuits so technicians could easily adopt it. The course scope is kept strictly to basics: simple logic gates, timers, and basic applications like tank level control. While grasping relay logic requires a small cognitive shift, the visual nature of the programming and the lack of complex syntax or memory management keeps the overall difficulty very manageable for students from any branch.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Industrial Automation",
       "Ladder Logic",
       "Boolean Logic",
       "Control Systems"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 4.0,
-    "hands_on_score": 3.6666666666666665,
     "evaluation_style_facts": {
       "theory_exam_pct": 0.6,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 3.0,
-    "attributes": {
-      "workload": 3.0,
-      "hands_on": 3.7
     }
   },
   {
@@ -1106,32 +1022,28 @@
       "CIE": 50,
       "ESE": 30
     },
-    "prior_knowledge_score": 1,
+    "attributes": {
+      "prior_knowledge": 1,
+      "difficulty": 2,
+      "workload": 3.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "The syllabus is structured for absolute beginners, starting from the 'Fundamentals of CAD drawing setup' and explicitly covering the 'Principles of Orthographic Projections'. It assumes zero prior experience with drafting software, coordinate systems, or engineering graphics.",
-    "difficulty_score": 2,
-    "difficulty_justification": "The course is highly procedural, focusing heavily on executing specific software commands (Draw, Modify, Zoom, Dimensioning) rather than solving complex abstract problems. While Assignment 2 requires translating 2D orthographic views into 3D models\u2014which demands a degree of spatial reasoning\u2014the step-by-step nature of the software and the foundational scope of the mechanical elements keep the cognitive load low.",
+    "difficulty_justification": "The course is highly procedural, focusing heavily on executing specific software commands (Draw, Modify, Zoom, Dimensioning) rather than solving complex abstract problems. While Assignment 2 requires translating 2D orthographic views into 3D models—which demands a degree of spatial reasoning—the step-by-step nature of the software and the foundational scope of the mechanical elements keep the cognitive load low.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "2D Drafting",
       "3D Modeling",
       "Orthographic Projections",
       "CAD Software"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 4.0,
-    "hands_on_score": 3.6666666666666665,
     "evaluation_style_facts": {
       "theory_exam_pct": 0.6,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 3.0,
-    "attributes": {
-      "workload": 3.0,
-      "hands_on": 3.7
     }
   },
   {
@@ -1152,32 +1064,28 @@
       "CIE": 50,
       "ESE": 30
     },
-    "prior_knowledge_score": 1,
+    "attributes": {
+      "prior_knowledge": 1,
+      "difficulty": 3,
+      "workload": 3.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "The course starts with fundamental topics such as the 'History and evolution of automobiles' and basic vehicle classifications. The lab assignments focus entirely on 'Familiarization,' 'Study,' and 'Demonstrations,' assuming zero prior automotive or electrical engineering background.",
-    "difficulty_score": 3,
     "difficulty_justification": "While the theoretical aspect of the course is highly descriptive, the newly added lab assignments elevate the practical demands. Students are not just observing; they are required to test BLDC/PMSM motors, measure battery State of Charge (SOC), and actively dismantle and assemble critical EV components like the motor, controller, and Battery Management System (BMS). Handling and assembling these components safely requires a higher degree of physical effort, precision, and adherence to procedural steps, bumping the difficulty from a purely theoretical 2 to a practical 3.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Automobile Basics",
       "Electric Vehicles",
       "Battery Technology",
       "EV Component Assembly"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 4.0,
-    "hands_on_score": 3.6666666666666665,
     "evaluation_style_facts": {
       "theory_exam_pct": 0.6,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 3.0,
-    "attributes": {
-      "workload": 3.0,
-      "hands_on": 3.7
     }
   },
   {
@@ -1198,32 +1106,28 @@
       "CIE": 50,
       "ESE": 30
     },
-    "prior_knowledge_score": 2,
+    "attributes": {
+      "prior_knowledge": 2,
+      "difficulty": 5,
+      "workload": 3.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "Although framed as an 'Introduction' and offered as a VSEC, the syllabus jumps directly into heavy physical concepts like statistical-mechanics relations, partition functions, and quantum mechanics. It inherently assumes a solid foundation in first-year engineering physics and chemistry to grasp these abstract topics.",
-    "difficulty_score": 5,
     "difficulty_justification": "Compressing massive, complex fields like quantum mechanics, statistical thermodynamics, and phase diagrams into a mere 6 hours of lecture creates an intense, unforgiving pace. Expecting students to immediately apply these rapidly acquired concepts to operate research-grade computational tools like VASP (for Density Functional Theory) and LAMMPS (for Molecular Dynamics) pushes the cognitive load to the absolute maximum. The combination of a brutal theoretical pacing and the steep technical learning curve of the software justifies a peak difficulty score of 5.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Materials Modeling",
       "Molecular Dynamics",
       "Density Functional Theory",
       "Statistical Mechanics"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 4.0,
-    "hands_on_score": 3.6666666666666665,
     "evaluation_style_facts": {
       "theory_exam_pct": 0.6,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 3.0,
-    "attributes": {
-      "workload": 3.0,
-      "hands_on": 3.7
     }
   },
   {
@@ -1244,32 +1148,28 @@
       "CIE": 50,
       "ESE": 30
     },
-    "prior_knowledge_score": 1,
+    "attributes": {
+      "prior_knowledge": 1,
+      "difficulty": 3,
+      "workload": 3.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "The course begins with 'Fundamentals and Traditional Methods of Analysis', assuming only a standard high school or first-year engineering baseline in basic chemistry. It introduces the principles of titrimetric, gravimetric, and colorimetric techniques from the ground up before advancing to modern instruments.",
-    "difficulty_score": 3,
     "difficulty_justification": "The theoretical portion is relatively concise (12 lectures) and descriptive, focusing on the transition from classical to modern methods. However, the laboratory component requires a hands-on transition from basic wet chemistry to operating sensitive analytical equipment like FTIR, UV spectrometers, and Atomic Absorption Spectroscopes (AAS). This emphasis on procedural accuracy, chemical handling, and instrumental operation elevates the practical difficulty to a 3.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Chemical Analysis",
       "Spectroscopy",
       "Metallurgical Testing",
       "Instrumental Methods"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 4.0,
-    "hands_on_score": 3.6666666666666665,
     "evaluation_style_facts": {
       "theory_exam_pct": 0.6,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 3.0,
-    "attributes": {
-      "workload": 3.0,
-      "hands_on": 3.7
     }
   },
   {
@@ -1290,32 +1190,28 @@
       "CIE": 50,
       "EIE": 30
     },
-    "prior_knowledge_score": 1,
+    "attributes": {
+      "prior_knowledge": 1,
+      "difficulty": 3,
+      "workload": 3.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "The course serves as an absolute introduction to workshop practices. Modules explicitly start with 'Familiarization' and 'Introduction to tools,' assuming no prior experience with manufacturing, carpentry, or heavy machinery.",
-    "difficulty_score": 3,
     "difficulty_justification": "While theoretically lightweight, the course is physically and procedurally demanding. Students are required to operate heavy machinery (lathes, milling machines), perform high-heat tasks like arc and gas welding, and execute precise physical operations in carpentry and fitting (filing, chipping). This level of manual dexterity, physical effort, and strict adherence to safety protocols elevates the practical difficulty to a 3.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Workshop Practices",
       "Carpentry & Fitting",
       "Welding",
       "PCB Manufacturing"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 4.0,
-    "hands_on_score": 3.6666666666666665,
     "evaluation_style_facts": {
       "theory_exam_pct": 0.0,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 3.0,
-    "attributes": {
-      "workload": 3.0,
-      "hands_on": 3.7
     }
   },
   {
@@ -1336,32 +1232,28 @@
       "CIE": 50,
       "ESE": 30
     },
-    "prior_knowledge_score": 1,
+    "attributes": {
+      "prior_knowledge": 1,
+      "difficulty": 2,
+      "workload": 3.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "The syllabus is designed for absolute beginners, starting with the 'Basics of Robotics' (Robot Laws, basic definitions) and an 'Introduction to Drones' covering history and evolution. It assumes no prior experience with automation, programming, or aerodynamics.",
-    "difficulty_score": 2,
     "difficulty_justification": "The theoretical units are highly descriptive, focusing on classifications, components, and safety guidelines rather than mathematical kinematics or complex control theory. In the laboratory section, five out of the eight experiments are strictly 'Demonstrations'. While students do get to program a Niryo robot and operate a drone, the heavily guided, observational nature of the majority of the course keeps the cognitive and physical load relatively low.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Robotics Basics",
       "Drone Operations",
       "Robot Programming",
       "UAV Safety"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 4.0,
-    "hands_on_score": 3.6666666666666665,
     "evaluation_style_facts": {
       "theory_exam_pct": 0.6,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 3.0,
-    "attributes": {
-      "workload": 3.0,
-      "hands_on": 3.7
     }
   },
   {
@@ -1382,10 +1274,15 @@
       "CIE": 20,
       "ESE": 50
     },
-    "prior_knowledge_score": 1,
+    "attributes": {
+      "prior_knowledge": 1,
+      "difficulty": 2,
+      "workload": 3.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "This course serves as an entirely introductory overview of the civil engineering domain, requiring absolutely no advanced mathematical or physical theorems. Unlike core engineering subjects, it does not rely on calculus, complex algebra, or deep physics principles typically mastered in the 11th/12th-grade JEE or MHT-CET syllabi. A standard high school understanding of basic physical sciences, general environmental awareness, and basic logic is more than sufficient. Students will draw on everyday general knowledge to grasp foundational topics such as building materials, environmental planning, and basic surveying methodologies without needing any specialized technical background.",
-    "difficulty_score": 2,
     "difficulty_justification": "The syllabus is primarily theoretical and highly descriptive, completely lacking in complex mathematical derivations, heavy problem-solving, or deep analytical logic. The cognitive load is relatively low, as students mainly need to memorize terminologies, classify various building materials, and understand fundamental surveying principles at a surface level. There are no intricate structural design problems or heavy computational requirements expected from the students. The overall conceptual depth remains at an introductory tier, strategically designed to provide a broad, accessible, and multidisciplinary overview rather than demanding specialized technical proficiency or rigorous academic strain.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Surveying",
       "Materials",
@@ -1393,22 +1290,13 @@
       "Construction",
       "Sustainability"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 4.0,
-    "hands_on_score": 1.0,
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 3.0,
-    "attributes": {
-      "workload": 3.0,
-      "hands_on": 1.0
     }
   },
   {
@@ -1430,10 +1318,15 @@
       "ESE": 50,
       "CIE": 20
     },
-    "prior_knowledge_score": 1,
+    "attributes": {
+      "prior_knowledge": 1,
+      "difficulty": 2,
+      "workload": 3.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "This course requires absolutely no advanced mathematical or scientific prerequisites from the standard 11th/12th-grade JEE or MHT-CET syllabus. As demonstrated by course outcomes requiring students to 'define and classify different types of infrastructure' and 'explain basic planning principles', the foundation relies entirely on general civic awareness. Students do not need prior exposure to engineering mechanics, calculus, or physics to succeed here. A basic high school understanding of societal systems is entirely sufficient to successfully 'discuss contemporary challenges and policies' in urban and national infrastructure planning.",
-    "difficulty_score": 2,
     "difficulty_justification": "The syllabus is fundamentally theoretical and highly descriptive, lacking any rigorous mathematical modeling, complex derivations, or structural design calculations. The cognitive demand remains low, as students are primarily expected to explain basic planning frameworks for transport, water, and energy systems rather than engineering their physical components. Assessing 'sustainable and smart infrastructure practices' as outlined in the outcomes involves qualitative evaluation rather than deep analytical problem-solving. The conceptual depth is firmly introductory, tailored to provide a broad, interdisciplinary overview without rigorous academic strain.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Infrastructure",
       "Transportation",
@@ -1441,22 +1334,13 @@
       "Energy",
       "Sustainability"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 4.0,
-    "hands_on_score": 1.0,
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 3.0,
-    "attributes": {
-      "workload": 3.0,
-      "hands_on": 1.0
     }
   },
   {
@@ -1477,10 +1361,15 @@
       "CIE": 20,
       "ESE": 50
     },
-    "prior_knowledge_score": 2,
+    "attributes": {
+      "prior_knowledge": 2,
+      "difficulty": 3,
+      "workload": 3.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "While intentionally designed for students from non-computer branches, grasping concepts like neural networks, natural language processing, and model training requires a solid foundation in logic, basic probability, and algorithmic thinking. These foundational analytical skills align with standard 11th/12th-grade mathematics and basic introductory programming logic. It does not require advanced JEE-level calculus or physics, but students will need strong logical aptitude to understand how these models process data and make inferences.",
-    "difficulty_score": 3,
     "difficulty_justification": "The syllabus covers an extensive breadth of modern, highly complex technologies in a compressed timeframe, ranging from basic search algorithms to advanced architectures like BERT transformers and Generative AI models. Although it lacks practical lab hours (P=0) and serves as an introductory overview for non-CS branches, the sheer volume of advanced conceptual frameworks introduces a moderate cognitive load. Students must rapidly transition between distinct subfields like NLP, multi-modality, and prompt engineering without deep technical hand-holding.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Artificial Intelligence",
       "Natural Language Processing",
@@ -1488,22 +1377,13 @@
       "Prompt Engineering",
       "Machine Learning"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 4.0,
-    "hands_on_score": 1.0,
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 3.0,
-    "attributes": {
-      "workload": 3.0,
-      "hands_on": 1.0
     }
   },
   {
@@ -1524,10 +1404,15 @@
       "CIE": 20,
       "ESE": 50
     },
-    "prior_knowledge_score": 2,
+    "attributes": {
+      "prior_knowledge": 2,
+      "difficulty": 4,
+      "workload": 3.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "The foundational principles of this course, specifically PN junction diodes, rectifiers, and basic logic gates covered in the early units, rely directly on the standard 12th-grade Physics syllabus (specifically the Semiconductors and Communication Systems chapters). A standard high school understanding of basic electrical physics is essential to grasp how these analog components function before moving into more complex ICs. However, the latter half of the syllabus involving microcontrollers and IoT protocols requires no specialized prior knowledge and is taught from the ground up.",
-    "difficulty_score": 4,
     "difficulty_justification": "While early units offer a relatively accessible foundation, the cognitive load spikes drastically as the syllabus progresses. Moving beyond basic analog components into operational amplifiers, complex digital combinational circuits, and a massive volume of distinct IoT communication protocols (such as MQTT, LoRa, and Zigbee) presents a steep learning curve. The curriculum demands rapid context-switching across entirely different technical domains, forcing students to absorb and contextualize a high volume of unfamiliar, advanced hardware architectures in a highly compressed timeframe.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Semiconductor Devices",
       "Operational Amplifiers",
@@ -1535,22 +1420,13 @@
       "Communication Systems",
       "Internet Of Things"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 4.0,
-    "hands_on_score": 1.0,
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 3.0,
-    "attributes": {
-      "workload": 3.0,
-      "hands_on": 1.0
     }
   },
   {
@@ -1571,10 +1447,15 @@
       "CIE": 20,
       "ESE": 50
     },
-    "prior_knowledge_score": 3,
+    "attributes": {
+      "prior_knowledge": 3,
+      "difficulty": 3,
+      "workload": 3.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "This course relies directly on the standard 12th-grade physics curriculum, particularly the chapters on Alternating Current and basic electricity. Students need a solid foundational understanding of concepts like RLC circuits, RMS values, and real versus reactive power to navigate the first unit successfully. Without this high school-level baseline in electrical physics, understanding the subsequent applications in industrial motors, heating, and traction systems will be challenging. However, no advanced calculus or deep JEE-level mechanics is required.",
-    "difficulty_score": 3,
     "difficulty_justification": "The difficulty presents a moderate cognitive load as it bridges fundamental mathematical calculations with extensive descriptive theory. While students must perform basic numerical analysis for topics like AC power factors, lighting scheme designs, and trapezoidal speed-time curves in traction, a significant portion of the syllabus is heavily theoretical. It requires memorizing diverse industrial applications, from induction furnaces to specific earthing safety protocols. This blend of moderate analytical problem-solving and high-volume memorization makes it a well-rounded, intermediate-level challenge.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Power",
       "Illumination",
@@ -1582,22 +1463,13 @@
       "Traction",
       "Safety"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 4.0,
-    "hands_on_score": 1.0,
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 3.0,
-    "attributes": {
-      "workload": 3.0,
-      "hands_on": 1.0
     }
   },
   {
@@ -1618,10 +1490,15 @@
       "CIE": 20,
       "ESE": 50
     },
-    "prior_knowledge_score": 2,
+    "attributes": {
+      "prior_knowledge": 2,
+      "difficulty": 2,
+      "workload": 3.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "The foundational concepts of this course lean on standard 12th-grade electrical physics. Grasping the bridge circuits in Unit 2 requires a solid understanding of basic resistance, inductance, and capacitance. Beyond those standard electrical fundamentals, the course introduces specialized terminology like range, span, and static/dynamic characteristics from the ground up, requiring no advanced prior engineering coursework.",
-    "difficulty_score": 2,
     "difficulty_justification": "While the syllabus introduces a variety of measurement bridges and statistical error analysis techniques, the overall cognitive load is noticeably lightened by a strong existing foundation in several key practical applications. Navigating CRO front panel controls and comprehensively understanding the core working principles of strain gauges and torque meters are already firmly established concepts. This effectively turns significant portions of Units 3, 4, and 6 into straightforward review sessions. The remaining effort primarily involves memorizing the theoretical operational principles of the other specific transducer types, avoiding any need for rigorous mathematical derivations.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Sensors",
       "Measurement",
@@ -1629,22 +1506,13 @@
       "Oscilloscopes",
       "Bridges"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 4.0,
-    "hands_on_score": 1.0,
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 3.0,
-    "attributes": {
-      "workload": 3.0,
-      "hands_on": 1.0
     }
   },
   {
@@ -1665,10 +1533,15 @@
       "CIE": 20,
       "ESE": 50
     },
-    "prior_knowledge_score": 2,
+    "attributes": {
+      "prior_knowledge": 2,
+      "difficulty": 3,
+      "workload": 3.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "This course builds upon standard 11th and 12th-grade physics, specifically requiring a foundational understanding of basic thermodynamics and heat transfer principles. Students should be familiar with general concepts of work, heat, and energy conservation to comfortably grasp the first unit on thermodynamic laws and heat engines.",
-    "difficulty_score": 3,
-    "difficulty_justification": "While the syllabus explicitly minimizes mathematical rigor\u2014omitting complex derivations and limiting analytical problem-solving to 'elementary numericals'\u2014the difficulty is elevated by a significant memorization burden. Units 4 and 5 demand the retention and descriptive classification of a massive volume of machine elements, bearings, gears, and manufacturing processes. This high volume of theoretical vocabulary and component architecture creates a moderate cognitive load, justifying a balanced difficulty score despite the lack of deep analytical depth.",
+    "difficulty_justification": "While the syllabus explicitly minimizes mathematical rigor—omitting complex derivations and limiting analytical problem-solving to 'elementary numericals'—the difficulty is elevated by a significant memorization burden. Units 4 and 5 demand the retention and descriptive classification of a massive volume of machine elements, bearings, gears, and manufacturing processes. This high volume of theoretical vocabulary and component architecture creates a moderate cognitive load, justifying a balanced difficulty score despite the lack of deep analytical depth.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Thermodynamics",
       "Heat Transfer",
@@ -1676,22 +1549,13 @@
       "Manufacturing",
       "Renewable Energy"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 4.0,
-    "hands_on_score": 1.0,
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 3.0,
-    "attributes": {
-      "workload": 3.0,
-      "hands_on": 1.0
     }
   },
   {
@@ -1712,10 +1576,15 @@
       "CIE": 20,
       "ESE": 50
     },
-    "prior_knowledge_score": 3,
+    "attributes": {
+      "prior_knowledge": 3,
+      "difficulty": 3,
+      "workload": 3.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "This course requires a solid foundation in 12th-grade modern physics and chemistry. Understanding Unit 2 demands familiarity with basic atomic structure and introductory quantum concepts (like wave-particle duality and energy levels) to properly grasp quantum confinement and tunneling. Similarly, Units 3 and 4 rely on a baseline understanding of chemical bonds, crystal lattices, and the electromagnetic spectrum to comprehend various synthesis routes and spectroscopy techniques.",
-    "difficulty_score": 3,
     "difficulty_justification": "The difficulty in this course comes from a dual challenge: abstract conceptual physics and a heavy memorization burden. Unit 2 introduces advanced theoretical frameworks, such as density of states and quantum mechanics, which can be conceptually dense. Following that, Unit 4 requires students to memorize the distinct working principles and applications of an alphabet soup of characterization tools (SEM, TEM, AFM, XRD, UV-Vis, FTIR, Raman, etc.). While it likely avoids deep mathematical derivations, the conceptual depth paired with the sheer volume of specialized technical vocabulary creates a moderate cognitive load.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Nanotechnology",
       "Quantum Mechanics",
@@ -1723,22 +1592,13 @@
       "Material Characterization",
       "Spectroscopy"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 4.0,
-    "hands_on_score": 1.0,
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 3.0,
-    "attributes": {
-      "workload": 3.0,
-      "hands_on": 1.0
     }
   },
   {
@@ -1759,10 +1619,15 @@
       "CIE": 20,
       "ESE": 50
     },
-    "prior_knowledge_score": 1,
+    "attributes": {
+      "prior_knowledge": 1,
+      "difficulty": 4,
+      "workload": 3.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "This course requires virtually no advanced mathematical or scientific prerequisites from standard high school curricula. The concepts rely entirely on basic physical intuition rather than rigorous physics or calculus. Students are introduced to fundamental industrial processes from the ground up, making it highly accessible to all engineering branches regardless of their prior background.",
-    "difficulty_score": 4,
-    "difficulty_justification": "While this course completely bypasses complex mathematical derivations and analytical problem-solving, it presents a steep difficulty curve entirely through an immense memorization burden. Students must absorb, meticulously classify, and retain an exhausting volume of theoretical industrial processes\u2014from obscure casting and welding techniques to specific sheet metal operations and metrology standards. This relentless reliance on rote learning creates a high cognitive load.",
+    "difficulty_justification": "While this course completely bypasses complex mathematical derivations and analytical problem-solving, it presents a steep difficulty curve entirely through an immense memorization burden. Students must absorb, meticulously classify, and retain an exhausting volume of theoretical industrial processes—from obscure casting and welding techniques to specific sheet metal operations and metrology standards. This relentless reliance on rote learning creates a high cognitive load.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Manufacturing Processes",
       "Casting and Welding",
@@ -1770,22 +1635,13 @@
       "Robotics and CNC",
       "Metrology"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 4.0,
-    "hands_on_score": 1.0,
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 3.0,
-    "attributes": {
-      "workload": 3.0,
-      "hands_on": 1.0
     }
   },
   {
@@ -1806,10 +1662,15 @@
       "CIE": 20,
       "ESE": 50
     },
-    "prior_knowledge_score": 4,
+    "attributes": {
+      "prior_knowledge": 4,
+      "difficulty": 4,
+      "workload": 5.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "This course relies heavily on standard 11th-grade physics and core mathematics. Students must have a strong working knowledge of vector algebra (including cross and dot products for 3D force systems), basic calculus (differentiation and integration for kinematics), and fundamental Newtonian mechanics to successfully draw free-body diagrams and set up equilibrium equations.",
-    "difficulty_score": 4,
     "difficulty_justification": "Unlike the heavy memorization courses, Applied Mechanics presents a steep difficulty curve through intense analytical problem-solving and spatial visualization. Students must mathematically model complex 2D and 3D force systems, resolve forces in structural trusses, and tackle dynamic kinematics using various coordinate systems (Cartesian, normal/tangential, and polar). The addition of 2 hours of practical lab experiments (P=2) further increases the active workload and demands hands-on verification of these rigorous theoretical concepts.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Statics",
       "Equilibrium",
@@ -1817,22 +1678,13 @@
       "Dynamics",
       "Trusses"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 5.0,
-    "hands_on_score": 3.0,
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 5.0,
-    "attributes": {
-      "workload": 5.0,
-      "hands_on": 3.0
     }
   },
   {
@@ -1853,10 +1705,15 @@
       "CIE": 20,
       "ESE": 50
     },
-    "prior_knowledge_score": 1,
+    "attributes": {
+      "prior_knowledge": 1,
+      "difficulty": 2,
+      "workload": 5.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "This course assumes absolutely zero prior technical background. The syllabus is designed for non-specialists, introducing fundamental concepts like 'How the Internet Works', basic IP addressing, and everyday online safety practices from the ground up. No advanced programming, mathematics, or specialized computer science knowledge is required to grasp these introductory topics.",
-    "difficulty_score": 2,
-    "difficulty_justification": "Conceptually, this is an extremely light course. There is no analytical problem-solving, coding, or mathematical modeling involved. The difficulty maxes out at a 2 simply because it requires some rote memorization\u2014particularly in Unit 4, where you have to retain specific details about the IT Act 2000, intellectual property definitions, and various classifications of cybercrimes. It is a straightforward reading and retention exercise.",
+    "difficulty_justification": "Conceptually, this is an extremely light course. There is no analytical problem-solving, coding, or mathematical modeling involved. The difficulty maxes out at a 2 simply because it requires some rote memorization—particularly in Unit 4, where you have to retain specific details about the IT Act 2000, intellectual property definitions, and various classifications of cybercrimes. It is a straightforward reading and retention exercise.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Cybersecurity",
       "Computer Networking",
@@ -1864,22 +1721,13 @@
       "Cyber Laws",
       "Online Safety"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 5.0,
-    "hands_on_score": 3.0,
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 5.0,
-    "attributes": {
-      "workload": 5.0,
-      "hands_on": 3.0
     }
   },
   {
@@ -1900,10 +1748,15 @@
       "CIE": 20,
       "ESE": 50
     },
-    "prior_knowledge_score": 3,
+    "attributes": {
+      "prior_knowledge": 3,
+      "difficulty": 4,
+      "workload": 5.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "This course requires a solid foundation in 12th-grade physics, specifically the chapters on current electricity and electromagnetism. Students must already be comfortable with Ohm's law, basic Kirchhoff's voltage and current laws, and standard algebraic manipulation to survive the heavy network analysis introduced immediately in Unit 1.",
-    "difficulty_score": 4,
     "difficulty_justification": "This course represents a stark shift back to intense analytical problem-solving. Unit 1 hits hard with complex network theorems (Thevenin, Norton, Superposition) that require rigorous mathematical deduction and circuit simplification. Unit 2 introduces the abstract concepts of AC phasors and three-phase systems, which historically present a steep cognitive hurdle. The difficulty lies in the high volume of complex numerical calculations and spatial circuit analysis, making it a demanding course that cannot be passed through rote memorization alone.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Circuit Theorems",
       "AC Circuits",
@@ -1911,22 +1764,13 @@
       "Electrical Machines",
       "Electrical Safety"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 5.0,
-    "hands_on_score": 3.0,
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 5.0,
-    "attributes": {
-      "workload": 5.0,
-      "hands_on": 3.0
     }
   },
   {
@@ -1947,10 +1791,15 @@
       "CIE": 20,
       "ESE": 50
     },
-    "prior_knowledge_score": 2,
+    "attributes": {
+      "prior_knowledge": 2,
+      "difficulty": 3,
+      "workload": 5.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "This course builds lightly on the basic logic gates introduced in standard 12th-grade physics. However, grasping the core of Unit 1 relies heavily on formal logic and Boolean algebra. Treating these initial concepts as a practical application of discrete mathematics principles makes the transition seamless. No advanced calculus or complex physics is required.",
-    "difficulty_score": 3,
     "difficulty_justification": "This syllabus represents a return to structured, analytical problem-solving, completely abandoning heavy rote memorization. Designing combinational circuits and tracing the state changes of sequential logic flip-flops (SR, JK, T, D) requires algorithmic thinking and precise, step-by-step execution. While simplifying K-maps and designing synchronous counters presents a moderate cognitive load, the logical architecture is deeply satisfying to navigate compared to descriptive theory courses. The added practical component demands meticulous hands-on wiring of specific ICs (like 74LS90 and 74LS83) to verify these theoretical designs.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Boolean Algebra",
       "Combinational Logic",
@@ -1958,22 +1807,13 @@
       "Counter ICs",
       "Digital Design"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 5.0,
-    "hands_on_score": 3.0,
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 5.0,
-    "attributes": {
-      "workload": 5.0,
-      "hands_on": 3.0
     }
   },
   {
@@ -1994,10 +1834,15 @@
       "CIE": 20,
       "ESE": 50
     },
-    "prior_knowledge_score": 1,
+    "attributes": {
+      "prior_knowledge": 1,
+      "difficulty": 4,
+      "workload": 5.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "This course assumes absolutely zero prior drafting or technical drawing experience. Unit 1 starts at the very beginning with basic drawing tools, line conventions, lettering, and dimensioning standards. No advanced mathematics or high school physics is required; it relies entirely on basic geometric principles.",
-    "difficulty_score": 4,
     "difficulty_justification": "While entirely devoid of complex equations or algorithmic logic, the difficulty spikes due to the intense demand on 3D spatial visualization and meticulous execution. Translating a 3D object into flat 2D orthographic projections, and accurately tracking geometric features across the x-y and x-z planes, requires a highly specific cognitive shift. Additionally, the practical workload is notoriously heavy; producing precise lateral surface developments and manual isometric drawings on A2 sheets demands immense patience, accuracy, and time management.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Engineering Drawing",
       "Orthographic Projections",
@@ -2005,22 +1850,13 @@
       "Lateral Surfaces",
       "CAD"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 5.0,
-    "hands_on_score": 3.0,
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 5.0,
-    "attributes": {
-      "workload": 5.0,
-      "hands_on": 3.0
     }
   },
   {
@@ -2041,10 +1877,15 @@
       "CIE": 20,
       "ESE": 50
     },
-    "prior_knowledge_score": 2,
+    "attributes": {
+      "prior_knowledge": 2,
+      "difficulty": 3,
+      "workload": 5.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "This course relies on a foundational understanding of standard 12th-grade chemistry, specifically electrochemistry. Students need to be reasonably comfortable with the basics of anodic and cathodic reactions, oxidation-reduction, and introductory thermodynamic concepts to properly digest the scientific principles of corrosion outlined in Unit 2.",
-    "difficulty_score": 3,
-    "difficulty_justification": "The theory portion of this syllabus is relatively concise, spanning only four units with a low 12-hour total lecture footprint. The cognitive load involves a mix of understanding electrochemical mechanisms and memorizing various forms of corrosion and prevention standards. However, the overall effort is pushed up to a 3 by the extensive laboratory component. Executing 10 detailed experiments\u2014involving polarization techniques, electrode potential measurements, and observing stress corrosion cracking\u2014makes the practical workload quite significant compared to the light theory.",
+    "difficulty_justification": "The theory portion of this syllabus is relatively concise, spanning only four units with a low 12-hour total lecture footprint. The cognitive load involves a mix of understanding electrochemical mechanisms and memorizing various forms of corrosion and prevention standards. However, the overall effort is pushed up to a 3 by the extensive laboratory component. Executing 10 detailed experiments—involving polarization techniques, electrode potential measurements, and observing stress corrosion cracking—makes the practical workload quite significant compared to the light theory.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Corrosion Science",
       "Electrochemistry",
@@ -2052,22 +1893,13 @@
       "Testing Standards",
       "Galvanic Corrosion"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 5.0,
-    "hands_on_score": 3.0,
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 5.0,
-    "attributes": {
-      "workload": 5.0,
-      "hands_on": 3.0
     }
   },
   {
@@ -2088,10 +1920,15 @@
       "CIE": 20,
       "ESE": 50
     },
-    "prior_knowledge_score": 1,
+    "attributes": {
+      "prior_knowledge": 1,
+      "difficulty": 2,
+      "workload": 5.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "This course assumes absolutely zero prior engineering or design background. The syllabus begins with fundamental idea generation, brainstorming, and basic sketching before slowly introducing CAD software. No advanced mathematics, physics, or programming knowledge is required to grasp these introductory concepts.",
-    "difficulty_score": 2,
     "difficulty_justification": "Unlike the heavy theoretical manufacturing courses, this syllabus shifts focus entirely to practical, hands-on application and conceptual design. The cognitive load is very low, as there are no complex equations to solve or massive lists of industrial processes to rote-memorize. The bulk of the effort involves learning basic CAD modeling, operating a 3D printer (FDM), and understanding general prototyping workflows. The practical assignments are mostly study-based or demonstrations, making it a highly accessible and relatively relaxed course.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Product Design",
       "CAD Modeling",
@@ -2099,22 +1936,13 @@
       "3D Printing",
       "Prototyping"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 5.0,
-    "hands_on_score": 3.0,
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 5.0,
-    "attributes": {
-      "workload": 5.0,
-      "hands_on": 3.0
     }
   },
   {
@@ -2135,10 +1963,15 @@
       "CIE": 20,
       "ESE": 50
     },
-    "prior_knowledge_score": 3,
+    "attributes": {
+      "prior_knowledge": 3,
+      "difficulty": 4,
+      "workload": 5.0,
+      "cognitive_focus": ""
+    },
     "prior_knowledge_justification": "This syllabus requires a solid foundation in 12th-grade physics, specifically current electricity and electromagnetism. Students must be comfortable with Kirchhoff's laws, basic circuit elements (R, L, C), and the algebraic manipulation of complex numbers for AC phasor analysis to keep up with the initial units.",
-    "difficulty_score": 4,
     "difficulty_justification": "This course demands rigorous analytical problem-solving. Unit 1 introduces complex network theorems (Thevenin, Norton) and DC transients, requiring strong mathematical deduction. Units 2 and 3 dive into abstract AC phasor mathematics and three-phase systems. While Unit 5 adds some descriptive material science to memorize, the heavy computational load of the circuit analysis, combined with demanding lab verifications, keeps the overall cognitive load very high.",
+    "cognitive_focus_justification": "",
     "topic_tags": [
       "Network Theorems",
       "AC Circuits",
@@ -2146,22 +1979,13 @@
       "Magnetic Circuits",
       "Electrical Materials"
     ],
-    "source": {
-      "prior_knowledge": "estimated",
-      "difficulty": "estimated",
-      "workload": "computed"
+    "rating_metadata": {
+      "total_votes": 1
     },
     "testimonials": [],
-    "raw_workload": 5.0,
-    "hands_on_score": 3.0,
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    },
-    "workload_score": 5.0,
-    "attributes": {
-      "workload": 5.0,
-      "hands_on": 3.0
     }
   }
 ]
