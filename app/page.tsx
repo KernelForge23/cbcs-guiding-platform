@@ -17,6 +17,7 @@ import {
   type CourseCategory,
   getEligibleCourses,
 } from "./lib/getEligibleCourses";
+import { formatCourseCodeForDisplay } from "./lib/courseCode";
 
 type View =
   | "home"
@@ -37,10 +38,10 @@ type View =
   | "Metallurgy and Material Engineering";
 
 type StudentAttributes = {
-  prior_knowledge: number;
+  priorKnowledge: number;
   difficulty: number;
   workload: number;
-  hands_on: number;
+  cognitiveFocus: number;
 };
 
 type CourseCard = {
@@ -161,75 +162,60 @@ const WIZARD_QUESTIONS = [
   {
     id: "q1" as const,
     group: "Prior Knowledge",
-    text: "Do you prefer courses on topics you already know, or topics that are totally new to you?",
-    lowLabel: "Already know",
-    highLabel: "Totally new",
+    text: "Do you prefer exploring a completely new field, or diving deeper into the foundations you built in 11th/12th grade?",
+    lowLabel: "Explore a new field (Taught entirely from scratch)",
+    highLabel: "Dive deeper (Actively relies on a strong 11th/12th foundation)",
   },
   {
     id: "q2" as const,
-    group: "Prior Knowledge",
-    text: "If a course covers something you've never studied, how comfortable are you picking it up as you go?",
-    lowLabel: "Not comfortable",
-    highLabel: "Very comfortable",
-  },
-  {
-    id: "q3" as const,
     group: "Difficulty",
     text: "Do you prefer easy, straightforward courses or more challenging ones?",
-    lowLabel: "Easy",
+    lowLabel: "Easy and straightforward",
     highLabel: "Challenging",
   },
   {
-    id: "q4" as const,
-    group: "Difficulty",
-    text: "How much do you enjoy spending extra time solving a tough problem?",
-    lowLabel: "Not much",
-    highLabel: "A lot",
-  },
-  {
-    id: "q5" as const,
+    id: "q3" as const,
     group: "Workload",
     text: "How much time can you give a course every week, outside class?",
-    lowLabel: "Very little",
-    highLabel: "A good amount",
+    lowLabel: "Very little time",
+    highLabel: "A good amount of time",
   },
   {
-    id: "q6" as const,
-    group: "Hands-on vs. Theory",
-    text: "Do you enjoy hands-on/practical work more, or theory more?",
-    lowLabel: "Theory",
-    highLabel: "Hands-on",
+    id: "q4" as const,
+    group: "Cognitive Focus",
+    text: "When choosing between courses, what type of coursework do you prefer?",
+    lowLabel: "Knowledge & Concept-Heavy",
+    highLabel: "Logic & Calculation-Heavy",
   },
 ];
 
 const TESTIMONIAL_ATTRIBUTES = [
   {
-    key: "prior_knowledge" as const,
+    key: "priorKnowledge" as const,
     label:
-      "How much prior knowledge or prerequisite understanding was needed to succeed?",
-    lowLabel: "Minimal",
-    highLabel: "Significant",
+      "How much 11th/12th-grade foundation did this course actually expect you to have?",
+    lowLabel:
+      "Taught completely from scratch (The professor assumed zero prior knowledge)",
+    highLabel:
+      "Heavily reliant on past foundations (You will struggle if your 11th/12th basics aren't strong)",
   },
   {
     key: "difficulty" as const,
-    label:
-      "How would you rate the overall academic difficulty and conceptual complexity of this course?",
-    lowLabel: "Easy",
+    label: "How would you rate the overall academic difficulty of this course?",
+    lowLabel: "Easy and straightforward",
     highLabel: "Challenging",
   },
   {
     key: "workload" as const,
-    label:
-      "How heavy was the weekly workload, including assignments, labs, and self-study?",
-    lowLabel: "Light",
-    highLabel: "Heavy",
+    label: "How much time did this course actually demand every week, outside of class?",
+    lowLabel: "Very little time",
+    highLabel: "A good amount of time",
   },
   {
-    key: "hands_on" as const,
-    label:
-      "How would you describe the balance between theoretical concepts and practical, hands-on application?",
-    lowLabel: "Theory",
-    highLabel: "Hands-on",
+    key: "cognitiveFocus" as const,
+    label: "How would you describe the primary focus of the coursework and exams?",
+    lowLabel: "Knowledge & Concept-Heavy",
+    highLabel: "Logic & Calculation-Heavy",
   },
 ];
 
@@ -358,8 +344,6 @@ export default function CBCSElectiveGuide() {
   const [q2, setQ2] = useState(3);
   const [q3, setQ3] = useState(3);
   const [q4, setQ4] = useState(3);
-  const [q5, setQ5] = useState(3);
-  const [q6, setQ6] = useState(3);
 
   const [attributes, setAttributes] = useState<StudentAttributes | null>(null);
   const [courses, setCourses] = useState<CourseCard[]>([]);
@@ -380,7 +364,7 @@ export default function CBCSElectiveGuide() {
   const [tPriorKnowledge, setTPriorKnowledge] = useState(3);
   const [tDifficulty, setTDifficulty] = useState(3);
   const [tWorkload, setTWorkload] = useState(3);
-  const [tHandsOn, setTHandsOn] = useState(3);
+  const [tCognitiveFocus, setTCognitiveFocus] = useState(3);
   const [review, setReview] = useState("");
   const [testimonialSubmitted, setTestimonialSubmitted] = useState(false);
   const [testimonialSubmissionMessage, setTestimonialSubmissionMessage] =
@@ -443,11 +427,9 @@ export default function CBCSElectiveGuide() {
     q2: setQ2,
     q3: setQ3,
     q4: setQ4,
-    q5: setQ5,
-    q6: setQ6,
   };
 
-  const questionValues = { q1, q2, q3, q4, q5, q6 };
+  const questionValues = { q1, q2, q3, q4 };
 
   function resetAll() {
     setView("home");
@@ -457,8 +439,6 @@ export default function CBCSElectiveGuide() {
     setQ2(3);
     setQ3(3);
     setQ4(3);
-    setQ5(3);
-    setQ6(3);
     setAttributes(null);
     setCourses([]);
     setIsLoadingRecommendations(false);
@@ -471,7 +451,7 @@ export default function CBCSElectiveGuide() {
     setTPriorKnowledge(3);
     setTDifficulty(3);
     setTWorkload(3);
-    setTHandsOn(3);
+    setTCognitiveFocus(3);
     setReview("");
     setTestimonialSubmitted(false);
     setTestimonialSubmissionMessage("");
@@ -501,10 +481,10 @@ export default function CBCSElectiveGuide() {
     if (!branch || isLoadingRecommendations) return;
 
     const computed: StudentAttributes = {
-      prior_knowledge: average(q1, q2),
-      difficulty: average(q3, q4),
-      workload: q5,
-      hands_on: q6,
+      priorKnowledge: q1,
+      difficulty: q2,
+      workload: q3,
+      cognitiveFocus: q4,
     };
 
     setAttributes(computed);
@@ -517,11 +497,11 @@ export default function CBCSElectiveGuide() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           prior_knowledge_q1: Number(q1),
-          prior_knowledge_q2: Number(q2),
-          difficulty_q1: Number(q3),
-          difficulty_q2: Number(q4),
-          workload: Number(q5),
-          hands_on: Number(q6),
+          prior_knowledge_q2: Number(q1),
+          difficulty_q1: Number(q2),
+          difficulty_q2: Number(q2),
+          workload: Number(q3),
+          cognitive_focus: Number(q4),
           branch,
         }),
       });
@@ -574,7 +554,7 @@ export default function CBCSElectiveGuide() {
       setTPriorKnowledge(3);
       setTDifficulty(3);
       setTWorkload(3);
-      setTHandsOn(3);
+      setTCognitiveFocus(3);
       setReview("");
       setTestimonialSubmissionMessage(
         "Submitted successfully. You can add another testimonial now.",
@@ -587,17 +567,17 @@ export default function CBCSElectiveGuide() {
   }
 
   const testimonialRatingSetters = {
-    prior_knowledge: setTPriorKnowledge,
+    priorKnowledge: setTPriorKnowledge,
     difficulty: setTDifficulty,
     workload: setTWorkload,
-    hands_on: setTHandsOn,
+    cognitiveFocus: setTCognitiveFocus,
   };
 
   const testimonialRatingValues = {
-    prior_knowledge: tPriorKnowledge,
+    priorKnowledge: tPriorKnowledge,
     difficulty: tDifficulty,
     workload: tWorkload,
-    hands_on: tHandsOn,
+    cognitiveFocus: tCognitiveFocus,
   };
 
   return (
@@ -888,7 +868,7 @@ export default function CBCSElectiveGuide() {
                       </span>
                       <div className="min-w-0 flex-1">
                         <p className="font-mono text-xs font-semibold uppercase tracking-wider text-indigo-600">
-                          {course.course_code}
+                          {formatCourseCodeForDisplay(course.course_code)}
                         </p>
                         <h2 className="text-lg font-bold text-slate-900 sm:text-xl">
                           {course.course_name}
@@ -1167,7 +1147,7 @@ export default function CBCSElectiveGuide() {
                       </option>
                       {filteredTestimonialCourses.map((course) => (
                         <option key={course.code} value={course.code}>
-                          {course.name}
+                          {course.name} ({formatCourseCodeForDisplay(course.code)})
                         </option>
                       ))}
                     </select>
@@ -1198,8 +1178,17 @@ export default function CBCSElectiveGuide() {
                     htmlFor="review"
                     className="mb-1.5 block text-sm font-medium text-slate-700"
                   >
-                    Your Review (Pros / Cons / Tips)
+                    Leave Advice for Your Juniors (The Inside Scoop)
                   </label>
+                  <p className="mt-2 text-sm text-slate-600">
+                    Don't just repeat your slider scores! Tell the first-years what the numbers can't. If you were talking to your junior in the canteen, what is the one secret you would tell them to survive this course?
+                    Think about answering at least one of these:
+                  </p>
+                  <ul className="ml-5 mt-2 list-disc text-sm text-slate-600">
+                    <li>How do you actually score marks? (e.g., "Memorize the PYQs," "The professor is very strict about step-marking.")</li>
+                    <li>What resources saved your life? (Drop the name of that one YouTube channel or website that actually taught you the subject).</li>
+                    <li>Who should take this, and who should run away? (e.g., "Take this if you love pure math, avoid it if you just want an easy grade.")</li>
+                  </ul>
                   <textarea
                     id="review"
                     value={review}

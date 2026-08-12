@@ -1,10 +1,12 @@
 import json
 import os
 import math 
+import re
 from pathlib import Path
+from typing import Annotated
 
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Path as FastAPIPath
 from fastapi.middleware.cors import CORSMiddleware
 from google import genai
 from pydantic import BaseModel
@@ -43,6 +45,18 @@ BRANCH_CLUSTERS: dict[str, str] = {
 }
 ESC_CATEGORIES = {"ESC 1", "ESC 2"}
 REQUIRED_NARRATIVE_FIELDS = ("why_this_fits", "worth_knowing")
+COURSE_CODE_MAX_LENGTH = 64
+COURSE_CODE_ALLOWED_CHARS_PATTERN = re.compile(r"^[A-Za-z0-9() /-]+$")
+COURSE_CODE_PATH_PATTERN = r"^[A-Za-z0-9()]+-[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$"
+CourseCodePath = Annotated[
+    str,
+    FastAPIPath(
+        min_length=1,
+        max_length=COURSE_CODE_MAX_LENGTH,
+        pattern=COURSE_CODE_PATH_PATTERN,
+        description="Course code such as CT(ES)-25001-AIMA",
+    ),
+]
 
 class WizardPayload(BaseModel):
     prior_knowledge_q1: int
@@ -50,13 +64,52 @@ class WizardPayload(BaseModel):
     difficulty_q1: int
     difficulty_q2: int
     workload: int
-    hands_on: int
+    cognitive_focus: int
     branch: str
 
 
 def load_courses() -> list[dict]:
     with open(COURSES_PATH, encoding="utf-8") as handle:
-        return json.load(handle)
+        raw_courses = json.load(handle)
+
+    if not isinstance(raw_courses, list):
+        raise ValueError("courses.json must contain a top-level array")
+
+    normalized_courses: list[dict] = []
+    seen_course_codes: set[str] = set()
+
+    for index, course in enumerate(raw_courses):
+        if not isinstance(course, dict):
+            raise ValueError(f"Course at index {index} must be an object")
+
+        normalized_course = dict(course)
+        course_code = _normalize_course_code(normalized_course.get("course_code"), index)
+        if course_code in seen_course_codes:
+            raise ValueError(f"Duplicate course_code found in seed data: '{course_code}'")
+
+        seen_course_codes.add(course_code)
+        normalized_course["course_code"] = course_code
+        normalized_courses.append(normalized_course)
+
+    return normalized_courses
+
+
+def _normalize_course_code(raw_value: object, index: int) -> str:
+    if not isinstance(raw_value, str):
+        raise ValueError(f"Course at index {index} has a non-string course_code")
+
+    normalized = raw_value.strip()
+    if len(normalized) > COURSE_CODE_MAX_LENGTH:
+        raise ValueError(
+            f"Course at index {index} has course_code longer than {COURSE_CODE_MAX_LENGTH} characters"
+        )
+
+    if normalized and not COURSE_CODE_ALLOWED_CHARS_PATTERN.fullmatch(normalized):
+        raise ValueError(
+            f"Course at index {index} has unsupported characters in course_code '{normalized}'"
+        )
+
+    return normalized
 
 
 def getEligibleCourses(student: WizardPayload, courses: list[dict]) -> list[dict]:
@@ -135,7 +188,7 @@ def compute_fit(
     s_pk = (float(payload.prior_knowledge_q1) + float(payload.prior_knowledge_q2)) / 2.0
     s_diff = (float(payload.difficulty_q1) + float(payload.difficulty_q2)) / 2.0
     s_workload = float(payload.workload)
-    s_hands_on = float(payload.hands_on)
+    s_cognitive_focus = float(payload.cognitive_focus)
     course_branch = _resolve_course_branch(course, payload.branch)
     branch_proximity = float(course.get("branch_proximity", 1.0))
     scores = {
@@ -148,8 +201,8 @@ def compute_fit(
         "workload": shortfall_normalized(
             s_workload, _get_course_attribute(course, "workload_score")
         ),
-        "hands_on": distance_normalized(
-            s_hands_on, _get_course_attribute(course, "hands_on_score")
+        "cognitive_focus": distance_normalized(
+            s_cognitive_focus, _get_course_attribute(course, "cognitive_focus_score")
         ),
         "branch_proximity": branch_proximity,
     }
@@ -181,10 +234,10 @@ def compute_fit(
     )
     attributes_used.append(
         {
-            "name": "hands_on",
-            "student_value": s_hands_on,
-            "course_value": _get_course_attribute(course, "hands_on_score"),
-            "score": scores["hands_on"],
+            "name": "cognitive_focus",
+            "student_value": s_cognitive_focus,
+            "course_value": _get_course_attribute(course, "cognitive_focus_score"),
+            "score": scores["cognitive_focus"],
         }
     )
     attributes_used.append(
@@ -332,3 +385,12 @@ def get_recommendations(payload: WizardPayload):
         course_cards.append(card)
 
     return {"courses": course_cards}
+
+
+@app.get("/api/courses/{course_code}")
+def get_course_by_code(course_code: CourseCodePath):
+    courses = load_courses()
+    for course in courses:
+        if course.get("course_code") == course_code:
+            return course
+    raise HTTPException(status_code=404, detail="Course not found")

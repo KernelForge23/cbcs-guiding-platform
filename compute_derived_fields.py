@@ -17,10 +17,10 @@ def compute_derived_fields(course: dict) -> dict:
     
     contact_hours = lecture + tutorial + practical
     if contact_hours == 0:
-        course["hands_on_score"] = 3.0
+        course["cognitive_focus_score"] = 3.0
         course["needs_manual_review"] = True
     else:
-        course["hands_on_score"] = 1 + 4 * (practical / contact_hours)
+        course["cognitive_focus_score"] = 1 + 4 * (practical / contact_hours)
         
     evaluation = course.get("evaluation_scheme_raw", {})
     mse = float(evaluation.get("MSE", 0))
@@ -69,7 +69,7 @@ if __name__ == "__main__":
             course["attributes"] = {}
             
         course["attributes"]["workload"] = round(course.get("workload_score", 3.0), 1)
-        course["attributes"]["hands_on"] = round(course.get("hands_on_score", 3.0), 1)
+        course["attributes"]["cognitive_focus"] = round(course.get("cognitive_focus_score", 3.0), 1)
         
     with open(file_path, "w", encoding="utf-8") as f:
         json.dump(courses, f, indent=2)

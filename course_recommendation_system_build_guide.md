@@ -28,8 +28,8 @@
 
 - **Hands-on balance.**
   ```
-  hands_on_ratio = P / (L + T + P)     — guard: if L+T+P = 0, set hands_on_score = 3 (neutral/undefined) and flag the course for manual entry rather than dividing by zero
-  hands_on_score = 1 + 4 × hands_on_ratio
+  cognitive_focus_ratio = P / (L + T + P)     — guard: if L+T+P = 0, set cognitive_focus_score = 3 (neutral/undefined) and flag the course for manual entry rather than dividing by zero
+  cognitive_focus_score = 1 + 4 × cognitive_focus_ratio
   ```
   No pool-wide normalization needed — this ratio is already naturally bounded 0–1.
 

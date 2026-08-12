@@ -42,8 +42,8 @@ All data injected into the system (course attributes and student testimonials) i
         4. "How much do you enjoy spending extra time solving a tough problem?" (1 = Not much to 5 = A lot)
     *   **Workload — Single variable, direct mapping:**
         5. "How much time can you give a course every week, outside class?" (1 = Very little to 5 = A good amount)
-    *   **Hands-on vs. Theory — Single variable, direct mapping:**
-        6. "Do you enjoy hands-on/practical work more, or theory more?" (1 = Theory to 5 = Hands-on)
+    *   **Cognitive Focus — Single variable, direct mapping:**
+            6. "When choosing between courses, what type of coursework do you prefer?" (1 = Knowledge & Concept-Heavy to 5 = Logic & Calculation-Heavy)
 
 ### 2.3 Results Display
 *   **Elements:** A ranked list of course cards from highest to lowest fit percentage.
@@ -70,7 +70,7 @@ Each course is stored with attributes categorized by source reliability. **No at
 ### 3.1 Attribute Buckets & Calculation
 *   **Bucket A (Computed):** Pure arithmetic from syllabus.
     *   `workload_score` (1-5)
-    *   `hands_on_score` (1-5)
+    *   `cognitive_focus_score` (1-5)
     *   `topic_tags` and `evaluation_style_facts`
 *   **Bucket B (Dynamic):** AI first-pass estimate, eventually replaced by verified testimonials.
     *   `prior_knowledge_score` (1-5)
@@ -101,7 +101,7 @@ $$\text{rawScore}=5-\text{shortfall}$$
 
 $$\text{normalizedScore}=\frac{\text{rawScore}-1}{4}$$
 
-**2. Distance Formula (For `difficulty` and `hands_on`)**
+**2. Distance Formula (For `difficulty` and `cognitive_focus`)**
 Mismatch in *either* direction penalizes the score.
 
 $$\text{rawScore}=5-|\text{studentValue}-\text{courseValue}|$$
