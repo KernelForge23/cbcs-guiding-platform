@@ -10,6 +10,8 @@ from fastapi import FastAPI, HTTPException, Path as FastAPIPath
 from fastapi.middleware.cors import CORSMiddleware
 from google import genai
 from pydantic import BaseModel
+from api.database import Base, engine
+from api.routers.testimonials import router as testimonials_router
 
 load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
@@ -21,6 +23,7 @@ else:
     client = genai.Client(api_key=api_key)
 
 app = FastAPI()
+Base.metadata.create_all(bind=engine)
 
 app.add_middleware(
     CORSMiddleware,
@@ -29,6 +32,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.include_router(testimonials_router)
 
 COURSES_PATH = Path(__file__).parent / "courses.json"
 

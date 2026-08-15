@@ -44,6 +44,16 @@ type StudentAttributes = {
   cognitiveFocus: number;
 };
 
+type TestimonialCategory = "BS" | "ESC" | "VSEC";
+
+type CourseTestimonial = {
+  id: number;
+  written_review: string;
+  reviewer_name: string;
+  subject_cgpa: number | null;
+  is_featured: boolean;
+};
+
 type CourseCard = {
   rank: number;
   course_code: string;
@@ -65,7 +75,7 @@ type CourseCard = {
     why_this_fits?: string;
     worth_knowing?: string;
   } | null;
-  testimonials: string[];
+  testimonials: CourseTestimonial[];
   evaluation_style_facts:
     | {
         theory_exam_pct: number | null;
@@ -74,6 +84,11 @@ type CourseCard = {
     | string
     | null;
 };
+
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000";
+const MIS_NUMBER_PATTERN = /^6125\d{5}$/;
+const TESTIMONIAL_CATEGORIES: TestimonialCategory[] = ["BS", "ESC", "VSEC"];
 
 type RecommendResponse = {
   courses: CourseCard[];
@@ -94,57 +109,57 @@ const BRANCHES: Branch[] = [
 const TESTIMONIAL_COURSES: Array<{
   code: string;
   name: string;
-  category: CourseCategory;
+  category: TestimonialCategory;
 }> = [
   {
     code: "MA-BS101",
     name: "Advanced Linear Algebra",
-    category: "BS Mathematics",
+    category: "BS",
   },
   {
     code: "MA-BS201",
     name: "Probability and Stochastic Models",
-    category: "BS Mathematics",
+    category: "BS",
   },
   {
     code: "AS1-BS110",
     name: "Engineering Physics in Practice",
-    category: "BS Applied Science 1",
+    category: "BS",
   },
   {
     code: "AS1-BS210",
     name: "Applied Chemistry for Engineers",
-    category: "BS Applied Science 1",
+    category: "BS",
   },
   {
     code: "AS2-BS120",
     name: "Environmental Systems and Sustainability",
-    category: "BS Applied Science 2",
+    category: "BS",
   },
   {
     code: "AS2-BS220",
     name: "Engineering Biology Basics",
-    category: "BS Applied Science 2",
+    category: "BS",
   },
   {
     code: "ESC1-130",
     name: "Data Structures and Problem Solving",
-    category: "ESC 1",
+    category: "ESC",
   },
   {
     code: "ESC1-230",
     name: "Circuits and Instrumentation",
-    category: "ESC 1",
+    category: "ESC",
   },
   {
     code: "ESC2-140",
     name: "Manufacturing Systems Design",
-    category: "ESC 2",
+    category: "ESC",
   },
   {
     code: "ESC2-240",
     name: "Smart Infrastructure Analytics",
-    category: "ESC 2",
+    category: "ESC",
   },
   {
     code: "VS-150",
@@ -157,6 +172,67 @@ const TESTIMONIAL_COURSES: Array<{
     category: "VSEC",
   },
 ];
+
+function normalizeTestimonials(
+  rawTestimonials: unknown,
+): CourseTestimonial[] {
+  if (!Array.isArray(rawTestimonials)) {
+    return [];
+  }
+
+  return rawTestimonials
+    .map((item, index): CourseTestimonial | null => {
+      if (typeof item === "string") {
+        const trimmed = item.trim();
+        if (!trimmed) {
+          return null;
+        }
+        return {
+          id: -(index + 1),
+          written_review: trimmed,
+          reviewer_name: "Verified Senior",
+          subject_cgpa: null,
+          is_featured: false,
+        };
+      }
+
+      if (!item || typeof item !== "object") {
+        return null;
+      }
+
+      const candidate = item as Partial<CourseTestimonial>;
+      if (typeof candidate.written_review !== "string") {
+        return null;
+      }
+
+      const trimmedReview = candidate.written_review.trim();
+      if (!trimmedReview) {
+        return null;
+      }
+
+      const parsedCgpa =
+        typeof candidate.subject_cgpa === "number" &&
+        candidate.subject_cgpa >= 0 &&
+        candidate.subject_cgpa <= 10
+          ? candidate.subject_cgpa
+          : null;
+
+      return {
+        id:
+          typeof candidate.id === "number"
+            ? candidate.id
+            : -(index + 1),
+        written_review: trimmedReview,
+        reviewer_name:
+          typeof candidate.reviewer_name === "string" && candidate.reviewer_name.trim()
+            ? candidate.reviewer_name.trim()
+            : "Verified Senior",
+        subject_cgpa: parsedCgpa,
+        is_featured: candidate.is_featured === true,
+      };
+    })
+    .filter((testimonial): testimonial is CourseTestimonial => testimonial !== null);
+}
 
 const WIZARD_QUESTIONS = [
   {
@@ -358,17 +434,23 @@ export default function CBCSElectiveGuide() {
   const [misNumber, setMisNumber] = useState("");
   const [testimonialBranch, setTestimonialBranch] = useState<Branch | "">("");
   const [testimonialCategory, setTestimonialCategory] = useState<
-    CourseCategory | ""
+    TestimonialCategory | ""
   >("");
   const [courseCode, setCourseCode] = useState("");
+  const [subjectCgpa, setSubjectCgpa] = useState<number | "">("");
+  const [overallCgpa, setOverallCgpa] = useState<number | "">("");
   const [tPriorKnowledge, setTPriorKnowledge] = useState(3);
   const [tDifficulty, setTDifficulty] = useState(3);
   const [tWorkload, setTWorkload] = useState(3);
   const [tCognitiveFocus, setTCognitiveFocus] = useState(3);
   const [review, setReview] = useState("");
+  const [isSubmittingTestimonial, setIsSubmittingTestimonial] = useState(false);
+  const [testimonialError, setTestimonialError] = useState<string | null>(null);
   const [testimonialSubmitted, setTestimonialSubmitted] = useState(false);
   const [testimonialSubmissionMessage, setTestimonialSubmissionMessage] =
     useState("");
+  const isMisNumberValid =
+    misNumber.trim().length === 0 || MIS_NUMBER_PATTERN.test(misNumber.trim());
 
   const eligibleCourses = useMemo(
     () =>
@@ -448,11 +530,15 @@ export default function CBCSElectiveGuide() {
     setTestimonialBranch("");
     setTestimonialCategory("");
     setCourseCode("");
+    setSubjectCgpa("");
+    setOverallCgpa("");
     setTPriorKnowledge(3);
     setTDifficulty(3);
     setTWorkload(3);
     setTCognitiveFocus(3);
     setReview("");
+    setIsSubmittingTestimonial(false);
+    setTestimonialError(null);
     setTestimonialSubmitted(false);
     setTestimonialSubmissionMessage("");
     setActiveTab(COURSE_CATEGORIES[0]);
@@ -492,7 +578,7 @@ export default function CBCSElectiveGuide() {
     setIsLoadingRecommendations(true);
 
     try {
-      const response = await fetch("http://localhost:8000/api/recommend", {
+      const response = await fetch(`${API_BASE_URL}/api/recommend`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -514,7 +600,35 @@ export default function CBCSElectiveGuide() {
       }
 
       const data = (await response.json()) as RecommendResponse;
-      setCourses(data.courses);
+      const coursesWithLiveTestimonials = await Promise.all(
+        data.courses.map(async (course) => {
+          const fallbackTestimonials = normalizeTestimonials(
+            course.testimonials,
+          );
+          try {
+            const testimonialsResponse = await fetch(
+              `${API_BASE_URL}/api/testimonials/${encodeURIComponent(course.course_code)}`,
+            );
+            if (!testimonialsResponse.ok) {
+              return { ...course, testimonials: fallbackTestimonials };
+            }
+            const liveTestimonials = normalizeTestimonials(
+              await testimonialsResponse.json(),
+            );
+            return {
+              ...course,
+              testimonials:
+                liveTestimonials.length > 0
+                  ? liveTestimonials
+                  : fallbackTestimonials,
+            };
+          } catch {
+            return { ...course, testimonials: fallbackTestimonials };
+          }
+        }),
+      );
+
+      setCourses(coursesWithLiveTestimonials);
       setActiveTab(COURSE_CATEGORIES[0]);
       setSelectedDepartments(
         getDepartmentsForCategory(COURSE_CATEGORIES[0], branch),
@@ -532,38 +646,104 @@ export default function CBCSElectiveGuide() {
   }
 
   function handleTestimonialLoginContinue() {
-    if (!testimonialName.trim() || !misNumber.trim() || !testimonialBranch)
+    if (
+      !testimonialName.trim() ||
+      !misNumber.trim() ||
+      !isMisNumberValid ||
+      !testimonialBranch
+    )
       return;
+    setTestimonialError(null);
     setTestimonialSubmissionMessage("");
     setTestimonialSubmitted(false);
     setView("testimonial_form");
   }
 
-  function handleTestimonialSubmit(e: React.FormEvent) {
+  async function handleTestimonialSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!testimonialCategory || !courseCode || !review.trim()) return;
+    if (
+      !testimonialCategory ||
+      !courseCode ||
+      !review.trim() ||
+      !isMisNumberValid ||
+      subjectCgpa === "" ||
+      overallCgpa === ""
+    ) {
+      setTestimonialError("Please fill all required fields with valid values.");
+      return;
+    }
+    if (
+      subjectCgpa < 0 ||
+      subjectCgpa > 10 ||
+      overallCgpa < 0 ||
+      overallCgpa > 10
+    ) {
+      setTestimonialError("Subject and overall CGPA must be between 0.0 and 10.0.");
+      return;
+    }
 
     const submitter = (e.nativeEvent as SubmitEvent).submitter;
     const shouldAddAnother =
       submitter instanceof HTMLButtonElement &&
       submitter.value === "submit_add_another";
 
-    if (shouldAddAnother) {
-      setTestimonialCategory("");
-      setCourseCode("");
-      setTPriorKnowledge(3);
-      setTDifficulty(3);
-      setTWorkload(3);
-      setTCognitiveFocus(3);
-      setReview("");
-      setTestimonialSubmissionMessage(
-        "Submitted successfully. You can add another testimonial now.",
-      );
-      return;
-    }
-
+    setIsSubmittingTestimonial(true);
+    setTestimonialError(null);
     setTestimonialSubmissionMessage("");
-    setTestimonialSubmitted(true);
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/testimonials/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          course_code: courseCode,
+          course_category: testimonialCategory,
+          reviewer_name: testimonialName.trim(),
+          mis_no: misNumber.trim(),
+          subject_cgpa: Number(subjectCgpa),
+          overall_cgpa: Number(overallCgpa),
+          prior_knowledge: tPriorKnowledge,
+          difficulty: tDifficulty,
+          workload: tWorkload,
+          cognitive_focus: tCognitiveFocus,
+          written_review: review.trim(),
+        }),
+      });
+
+      if (!response.ok) {
+        const errorBody = await response.json().catch(() => null);
+        throw new Error(
+          errorBody?.detail ?? "Unable to submit testimonial. Please try again.",
+        );
+      }
+
+      if (shouldAddAnother) {
+        setTestimonialCategory("");
+        setCourseCode("");
+        setSubjectCgpa("");
+        setOverallCgpa("");
+        setTPriorKnowledge(3);
+        setTDifficulty(3);
+        setTWorkload(3);
+        setTCognitiveFocus(3);
+        setReview("");
+        setTestimonialSubmissionMessage(
+          "Submitted successfully. You can add another testimonial now.",
+        );
+        return;
+      }
+
+      setTestimonialSubmitted(true);
+    } catch (error) {
+      setTestimonialError(
+        error instanceof Error
+          ? error.message
+          : "Unable to submit testimonial. Please try again.",
+      );
+    } finally {
+      setIsSubmittingTestimonial(false);
+    }
   }
 
   const testimonialRatingSetters = {
@@ -921,13 +1101,28 @@ export default function CBCSElectiveGuide() {
                       </div>
                     )}
 
-                    {course.testimonials.map((testimonial) => (
+                    {course.testimonials.map((testimonial, testimonialIndex) => (
                       <blockquote
-                        key={testimonial}
+                        key={`${course.course_code}-${testimonial.id}-${testimonialIndex}`}
                         className="rounded-xl border-l-4 border-indigo-300 bg-indigo-50/50 px-4 py-3"
                       >
+                        <div className="mb-2 flex flex-wrap items-center gap-2">
+                          {testimonial.is_featured && (
+                            <span className="rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-semibold text-amber-800">
+                              ✨ Editor&apos;s Choice
+                            </span>
+                          )}
+                          {testimonial.subject_cgpa !== null && (
+                            <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-semibold text-emerald-800">
+                              Scored: {testimonial.subject_cgpa.toFixed(1)}
+                            </span>
+                          )}
+                        </div>
                         <p className="text-sm italic leading-relaxed text-slate-700">
-                          &ldquo;{testimonial}&rdquo;
+                          &ldquo;{testimonial.written_review}&rdquo;
+                        </p>
+                        <p className="mt-2 text-xs font-medium text-slate-500">
+                          — {testimonial.reviewer_name}
                         </p>
                       </blockquote>
                     ))}
@@ -997,9 +1192,19 @@ export default function CBCSElectiveGuide() {
                     type="text"
                     value={misNumber}
                     onChange={(e) => setMisNumber(e.target.value)}
-                    placeholder="e.g. 112203001"
-                    className="w-full rounded-xl border border-slate-300 px-4 py-2.5 text-slate-900 placeholder:text-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                    placeholder="e.g. 612512345"
+                    className={`w-full rounded-xl border px-4 py-2.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 ${
+                      isMisNumberValid
+                        ? "border-slate-300 focus:border-indigo-500 focus:ring-indigo-200"
+                        : "border-red-400 focus:border-red-500 focus:ring-red-100"
+                    }`}
                   />
+                  {!isMisNumberValid && (
+                    <p className="mt-1 text-xs font-medium text-red-600">
+                      MIS must start with 6125 and be exactly 9 digits (example:
+                      612512345).
+                    </p>
+                  )}
                 </div>
                 <div>
                   <label
@@ -1041,6 +1246,7 @@ export default function CBCSElectiveGuide() {
                   disabled={
                     !testimonialName.trim() ||
                     !misNumber.trim() ||
+                    !isMisNumberValid ||
                     !testimonialBranch
                   }
                   className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-indigo-200 transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"
@@ -1098,6 +1304,11 @@ export default function CBCSElectiveGuide() {
                     {testimonialSubmissionMessage}
                   </div>
                 )}
+                {testimonialError && (
+                  <div className="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                    {testimonialError}
+                  </div>
+                )}
 
                 <div className="mb-6 grid gap-4 sm:grid-cols-2">
                   <div>
@@ -1111,14 +1322,16 @@ export default function CBCSElectiveGuide() {
                       id="course-category"
                       value={testimonialCategory}
                       onChange={(e) => {
-                        setTestimonialCategory(e.target.value as CourseCategory);
+                        setTestimonialCategory(
+                          e.target.value as TestimonialCategory,
+                        );
                         setCourseCode("");
                       }}
                       required
                       className="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-slate-900 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
                     >
                       <option value="">Select category</option>
-                      {COURSE_CATEGORIES.map((category) => (
+                      {TESTIMONIAL_CATEGORIES.map((category) => (
                         <option key={category} value={category}>
                           {category}
                         </option>
@@ -1152,6 +1365,52 @@ export default function CBCSElectiveGuide() {
                       ))}
                     </select>
                   </div>
+                  <div>
+                    <label
+                      htmlFor="subject-cgpa"
+                      className="mb-1.5 block text-sm font-medium text-slate-700"
+                    >
+                      Subject CGPA (out of 10)
+                    </label>
+                    <input
+                      id="subject-cgpa"
+                      type="number"
+                      min={0}
+                      max={10}
+                      step={0.1}
+                      required
+                      value={subjectCgpa}
+                      onChange={(e) =>
+                        setSubjectCgpa(
+                          e.target.value === "" ? "" : Number(e.target.value),
+                        )
+                      }
+                      className="w-full rounded-xl border border-slate-300 px-4 py-2.5 text-slate-900 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="overall-cgpa"
+                      className="mb-1.5 block text-sm font-medium text-slate-700"
+                    >
+                      Overall CGPA (out of 10)
+                    </label>
+                    <input
+                      id="overall-cgpa"
+                      type="number"
+                      min={0}
+                      max={10}
+                      step={0.1}
+                      required
+                      value={overallCgpa}
+                      onChange={(e) =>
+                        setOverallCgpa(
+                          e.target.value === "" ? "" : Number(e.target.value),
+                        )
+                      }
+                      className="w-full rounded-xl border border-slate-300 px-4 py-2.5 text-slate-900 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                    />
+                  </div>
                 </div>
 
                 <div className="space-y-5">
@@ -1181,13 +1440,24 @@ export default function CBCSElectiveGuide() {
                     Leave Advice for Your Juniors (The Inside Scoop)
                   </label>
                   <p className="mt-2 text-sm text-slate-600">
-                    Don't just repeat your slider scores! Tell the first-years what the numbers can't. If you were talking to your junior in the canteen, what is the one secret you would tell them to survive this course?
+                    Don&apos;t just repeat your slider scores! Tell the first-years
+                    what the numbers can&apos;t. If you were talking to your junior
+                    in the canteen, what is the one secret you would tell them to
+                    survive this course?
                     Think about answering at least one of these:
                   </p>
                   <ul className="ml-5 mt-2 list-disc text-sm text-slate-600">
-                    <li>How do you actually score marks? (e.g., "Memorize the PYQs," "The professor is very strict about step-marking.")</li>
+                    <li>
+                      How do you actually score marks? (e.g., &quot;Memorize the
+                      PYQs,&quot; &quot;The professor is very strict about
+                      step-marking.&quot;)
+                    </li>
                     <li>What resources saved your life? (Drop the name of that one YouTube channel or website that actually taught you the subject).</li>
-                    <li>Who should take this, and who should run away? (e.g., "Take this if you love pure math, avoid it if you just want an easy grade.")</li>
+                    <li>
+                      Who should take this, and who should run away? (e.g.,
+                      &quot;Take this if you love pure math, avoid it if you just
+                      want an easy grade.&quot;)
+                    </li>
                   </ul>
                   <textarea
                     id="review"
@@ -1212,6 +1482,7 @@ export default function CBCSElectiveGuide() {
                   <button
                     type="submit"
                     value="submit_add_another"
+                    disabled={isSubmittingTestimonial}
                     className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-indigo-300 bg-indigo-50 px-4 py-2.5 text-sm font-semibold text-indigo-700 transition hover:bg-indigo-100"
                   >
                     Submit &amp; Add Another
@@ -1220,9 +1491,12 @@ export default function CBCSElectiveGuide() {
                   <button
                     type="submit"
                     value="submit_final"
-                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-indigo-200 transition hover:bg-indigo-700"
+                    disabled={isSubmittingTestimonial}
+                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-indigo-200 transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"
                   >
-                    Submit Testimonial
+                    {isSubmittingTestimonial
+                      ? "Submitting..."
+                      : "Submit Testimonial"}
                     <ArrowRight className="h-4 w-4" />
                   </button>
                 </div>
