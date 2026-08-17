@@ -18,6 +18,7 @@ import {
   getEligibleCourses,
 } from "./lib/getEligibleCourses";
 import { formatCourseCodeForDisplay } from "./lib/courseCode";
+import courseCatalog from "../api/courses.json";
 
 type View =
   | "home"
@@ -44,7 +45,13 @@ type StudentAttributes = {
   cognitiveFocus: number;
 };
 
-type TestimonialCategory = "BS" | "ESC" | "VSEC";
+type TestimonialCategory = string;
+
+type TestimonialCourse = {
+  course_code: string;
+  course_name: string;
+  category: string;
+};
 
 type CourseTestimonial = {
   id: number;
@@ -88,7 +95,10 @@ type CourseCard = {
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000";
 const MIS_NUMBER_PATTERN = /^6125\d{5}$/;
-const TESTIMONIAL_CATEGORIES: TestimonialCategory[] = ["BS", "ESC", "VSEC"];
+const TESTIMONIAL_COURSES: TestimonialCourse[] = courseCatalog;
+const TESTIMONIAL_CATEGORIES = Array.from(
+  new Set(TESTIMONIAL_COURSES.map((course) => course.category)),
+);
 
 type RecommendResponse = {
   courses: CourseCard[];
@@ -104,73 +114,6 @@ const BRANCHES: Branch[] = [
   "Manufacturing Engineering and Industrial Management",
   "Mechanical Engineering",
   "Metallurgy and Material Engineering"
-];
-
-const TESTIMONIAL_COURSES: Array<{
-  code: string;
-  name: string;
-  category: TestimonialCategory;
-}> = [
-  {
-    code: "MA-BS101",
-    name: "Advanced Linear Algebra",
-    category: "BS",
-  },
-  {
-    code: "MA-BS201",
-    name: "Probability and Stochastic Models",
-    category: "BS",
-  },
-  {
-    code: "AS1-BS110",
-    name: "Engineering Physics in Practice",
-    category: "BS",
-  },
-  {
-    code: "AS1-BS210",
-    name: "Applied Chemistry for Engineers",
-    category: "BS",
-  },
-  {
-    code: "AS2-BS120",
-    name: "Environmental Systems and Sustainability",
-    category: "BS",
-  },
-  {
-    code: "AS2-BS220",
-    name: "Engineering Biology Basics",
-    category: "BS",
-  },
-  {
-    code: "ESC1-130",
-    name: "Data Structures and Problem Solving",
-    category: "ESC",
-  },
-  {
-    code: "ESC1-230",
-    name: "Circuits and Instrumentation",
-    category: "ESC",
-  },
-  {
-    code: "ESC2-140",
-    name: "Manufacturing Systems Design",
-    category: "ESC",
-  },
-  {
-    code: "ESC2-240",
-    name: "Smart Infrastructure Analytics",
-    category: "ESC",
-  },
-  {
-    code: "VS-150",
-    name: "Innovation and Entrepreneurship",
-    category: "VSEC",
-  },
-  {
-    code: "VS-250",
-    name: "Professional Communication Lab",
-    category: "VSEC",
-  },
 ];
 
 function normalizeTestimonials(
@@ -503,6 +446,13 @@ export default function CBCSElectiveGuide() {
         : [],
     [testimonialCategory],
   );
+
+  function handleTestimonialCategoryChange(
+    e: React.ChangeEvent<HTMLSelectElement>,
+  ) {
+    setTestimonialCategory(e.target.value);
+    setCourseCode("");
+  }
 
   const questionSetters = {
     q1: setQ1,
@@ -1316,21 +1266,16 @@ export default function CBCSElectiveGuide() {
                       htmlFor="course-category"
                       className="mb-1.5 block text-sm font-medium text-slate-700"
                     >
-                      Category
+                      Course Category
                     </label>
                     <select
                       id="course-category"
                       value={testimonialCategory}
-                      onChange={(e) => {
-                        setTestimonialCategory(
-                          e.target.value as TestimonialCategory,
-                        );
-                        setCourseCode("");
-                      }}
+                      onChange={handleTestimonialCategoryChange}
                       required
                       className="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-slate-900 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
                     >
-                      <option value="">Select category</option>
+                      <option value="">Select course category</option>
                       {TESTIMONIAL_CATEGORIES.map((category) => (
                         <option key={category} value={category}>
                           {category}
@@ -1343,7 +1288,7 @@ export default function CBCSElectiveGuide() {
                       htmlFor="course-code"
                       className="mb-1.5 block text-sm font-medium text-slate-700"
                     >
-                      Course
+                      Course Name
                     </label>
                     <select
                       id="course-code"
@@ -1355,12 +1300,12 @@ export default function CBCSElectiveGuide() {
                     >
                       <option value="">
                         {testimonialCategory
-                          ? "Select course"
+                          ? "Select course name"
                           : "Select category first"}
                       </option>
                       {filteredTestimonialCourses.map((course) => (
-                        <option key={course.code} value={course.code}>
-                          {course.name} ({formatCourseCodeForDisplay(course.code)})
+                        <option key={course.course_code} value={course.course_code}>
+                          {course.course_name}
                         </option>
                       ))}
                     </select>
