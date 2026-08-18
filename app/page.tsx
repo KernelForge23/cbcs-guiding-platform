@@ -1095,7 +1095,7 @@ export default function CBCSElectiveGuide() {
 
         {/* ── Testimonial Login (Page 1) ── */}
         {view === "testimonial_login" && (
-          <div className="mx-auto max-w-lg space-y-6">
+          <div className="mx-auto w-full space-y-6">
             <header className="space-y-2 text-center">
               <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-100 text-indigo-600">
                 <MessageSquareQuote className="h-6 w-6" />
@@ -1211,7 +1211,7 @@ export default function CBCSElectiveGuide() {
 
         {/* ── Testimonial Form (Page 2) ── */}
         {view === "testimonial_form" && (
-          <div className="mx-auto max-w-lg space-y-6">
+          <div className="mx-auto w-full space-y-6">
             <header className="space-y-2 text-center">
               <h1 className="text-2xl font-bold text-slate-900">
                 Course Review
@@ -1260,7 +1260,7 @@ export default function CBCSElectiveGuide() {
                   </div>
                 )}
 
-                <div className="mb-6 grid gap-4 sm:grid-cols-2">
+                <div className="mb-4 grid grid-cols-1 gap-4">
                   <div>
                     <label
                       htmlFor="course-category"
@@ -1310,6 +1310,9 @@ export default function CBCSElectiveGuide() {
                       ))}
                     </select>
                   </div>
+                </div>
+
+                <div className="mb-6 grid gap-4 sm:grid-cols-2">
                   <div>
                     <label
                       htmlFor="subject-cgpa"
@@ -1322,7 +1325,7 @@ export default function CBCSElectiveGuide() {
                       type="number"
                       min={0}
                       max={10}
-                      step={0.1}
+                      step="any"
                       required
                       value={subjectCgpa}
                       onChange={(e) =>
@@ -1345,7 +1348,7 @@ export default function CBCSElectiveGuide() {
                       type="number"
                       min={0}
                       max={10}
-                      step={0.1}
+                      step="any"
                       required
                       value={overallCgpa}
                       onChange={(e) =>
