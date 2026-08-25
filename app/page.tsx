@@ -38,12 +38,15 @@ type View =
   | "Mechanical Engineering"
   | "Metallurgy and Material Engineering";
 
-type StudentAttributes = {
-  priorKnowledge: number;
-  difficulty: number;
-  workload: number;
-  cognitiveFocus: number;
-};
+type PreferenceKey =
+  | "difficulty_level"
+  | "workload_level"
+  | "new_field_exploration"
+  | "concept_heavy"
+  | "math_heavy"
+  | "practical_focus";
+
+type StudentAttributes = Record<PreferenceKey, number>;
 
 type TestimonialCategory = string;
 
@@ -116,6 +119,15 @@ const BRANCHES: Branch[] = [
   "Metallurgy and Material Engineering"
 ];
 
+const DEFAULT_PREFERENCE_RATINGS: StudentAttributes = {
+  difficulty_level: 0,
+  workload_level: 0,
+  new_field_exploration: 0,
+  concept_heavy: 0,
+  math_heavy: 0,
+  practical_focus: 0,
+};
+
 function normalizeTestimonials(
   rawTestimonials: unknown,
 ): CourseTestimonial[] {
@@ -177,70 +189,85 @@ function normalizeTestimonials(
     .filter((testimonial): testimonial is CourseTestimonial => testimonial !== null);
 }
 
-const WIZARD_QUESTIONS = [
+const LIKERT_OPTIONS = [
+  { value: 1, label: "Strongly Disagree" },
+  { value: 2, label: "Disagree" },
+  { value: 3, label: "Agree" },
+  { value: 4, label: "Strongly Agree" },
+];
+
+const WIZARD_QUESTIONS: Array<{
+  key: PreferenceKey;
+  group: string;
+  text: string;
+}> = [
   {
-    id: "q1" as const,
-    group: "Prior Knowledge",
-    text: "Do you prefer exploring a completely new field, or diving deeper into the foundations you built in 11th/12th grade?",
-    lowLabel: "Explore a new field (Taught entirely from scratch)",
-    highLabel: "Dive deeper (Actively relies on a strong 11th/12th foundation)",
-  },
-  {
-    id: "q2" as const,
+    key: "difficulty_level",
     group: "Difficulty",
-    text: "Do you prefer easy, straightforward courses or more challenging ones?",
-    lowLabel: "Easy and straightforward",
-    highLabel: "Challenging",
+    text: "I am looking for a challenging course that will push my academic limits.",
   },
   {
-    id: "q3" as const,
+    key: "workload_level",
     group: "Workload",
-    text: "How much time can you give a course every week, outside class?",
-    lowLabel: "Very little time",
-    highLabel: "A good amount of time",
+    text: "I am willing to dedicate a heavy amount of time outside of class for this subject.",
   },
   {
-    id: "q4" as const,
-    group: "Cognitive Focus",
-    text: "When choosing between courses, what type of coursework do you prefer?",
-    lowLabel: "Knowledge & Concept-Heavy",
-    highLabel: "Logic & Calculation-Heavy",
+    key: "new_field_exploration",
+    group: "Exploration",
+    text: "I prefer exploring a completely new field rather than building on my 11th/12th-grade foundations.",
+  },
+  {
+    key: "concept_heavy",
+    group: "Concepts",
+    text: "I enjoy theoretical coursework where I have to deeply understand complex concepts.",
+  },
+  {
+    key: "math_heavy",
+    group: "Math",
+    text: "I prefer coursework that involves heavy mathematical calculations and logical problem-solving.",
+  },
+  {
+    key: "practical_focus",
+    group: "Practical",
+    text: "I prefer courses that focus heavily on hands-on, practical applications.",
   },
 ];
 
-const TESTIMONIAL_ATTRIBUTES = [
+const TESTIMONIAL_ATTRIBUTES: Array<{
+  key: PreferenceKey;
+  label: string;
+}> = [
   {
-    key: "priorKnowledge" as const,
+    key: "difficulty_level",
     label:
-      "How much 11th/12th-grade foundation did this course actually expect you to have?",
-    lowLabel:
-      "Taught completely from scratch (The professor assumed zero prior knowledge)",
-    highLabel:
-      "Heavily reliant on past foundations (You will struggle if your 11th/12th basics aren't strong)",
+      "This course was academically challenging and pushed my academic limits.",
   },
   {
-    key: "difficulty" as const,
-    label: "How would you rate the overall academic difficulty of this course?",
-    lowLabel: "Easy and straightforward",
-    highLabel: "Challenging",
+    key: "workload_level",
+    label:
+      "I had to dedicate a heavy amount of time outside of class for this subject.",
   },
   {
-    key: "workload" as const,
-    label: "How much time did this course actually demand every week, outside of class?",
-    lowLabel: "Very little time",
-    highLabel: "A good amount of time",
+    key: "new_field_exploration",
+    label:
+      "This course felt like exploring a completely new field rather than building on my 11th/12th-grade foundations.",
   },
   {
-    key: "cognitiveFocus" as const,
-    label: "How would you describe the primary focus of the coursework and exams?",
-    lowLabel: "Knowledge & Concept-Heavy",
-    highLabel: "Logic & Calculation-Heavy",
+    key: "concept_heavy",
+    label:
+      "This course involved theoretical coursework that required deep understanding of complex concepts.",
+  },
+  {
+    key: "math_heavy",
+    label:
+      "This course involved heavy mathematical calculations and logical problem-solving.",
+  },
+  {
+    key: "practical_focus",
+    label:
+      "This course focused heavily on hands-on, practical applications.",
   },
 ];
-
-function average(a: number, b: number): number {
-  return Math.round(((a + b) / 2) * 10) / 10;
-}
 
 function formatTag(tag: string): string {
   return tag.startsWith("#") ? tag : `#${tag}`;
@@ -259,39 +286,30 @@ function getDepartmentsForCategory(
 function RatingScale({
   value,
   onChange,
-  lowLabel,
-  highLabel,
 }: {
   value: number;
   onChange: (v: number) => void;
-  lowLabel: string;
-  highLabel: string;
 }) {
   return (
-    <div className="space-y-3">
-      <input
-        type="range"
-        min={1}
-        max={5}
-        step={1}
-        value={value}
-        onChange={(e) => onChange(Number(e.target.value))}
-        aria-label="Rate on a scale of 1 to 5"
-        className="h-2 w-full cursor-pointer appearance-none rounded-full bg-slate-200 accent-indigo-600"
-      />
-      <div className="flex items-center justify-between text-xs font-semibold text-slate-500">
-        {[1, 2, 3, 4, 5].map((n) => (
-          <span
-            key={n}
-            className={value === n ? "text-indigo-600" : "text-slate-500"}
-          >
-            {n}
-          </span>
-        ))}
-      </div>
-      <div className="flex justify-between text-xs text-slate-500">
-        <span>{lowLabel}</span>
-        <span>{highLabel}</span>
+    <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+      {LIKERT_OPTIONS.map((option) => (
+        <button
+          key={option.value}
+          type="button"
+          onClick={() => onChange(option.value)}
+          className={`rounded-xl border px-3 py-2 text-xs font-semibold transition sm:text-sm ${
+            value === option.value
+              ? "border-indigo-600 bg-indigo-600 text-white"
+              : "border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
+          }`}
+          aria-pressed={value === option.value}
+        >
+          <span className="mr-1">{option.value}.</span>
+          {option.label}
+        </button>
+      ))}
+      <div className="col-span-2 text-center text-xs text-slate-500 sm:col-span-4">
+        1 = Strongly Disagree · 4 = Strongly Agree
       </div>
     </div>
   );
@@ -359,12 +377,10 @@ export default function CBCSElectiveGuide() {
   const [name, setName] = useState("");
   const [branch, setBranch] = useState<Branch | "">("");
 
-  const [q1, setQ1] = useState(3);
-  const [q2, setQ2] = useState(3);
-  const [q3, setQ3] = useState(3);
-  const [q4, setQ4] = useState(3);
+  const [wizardRatings, setWizardRatings] = useState<StudentAttributes>({
+    ...DEFAULT_PREFERENCE_RATINGS,
+  });
 
-  const [attributes, setAttributes] = useState<StudentAttributes | null>(null);
   const [courses, setCourses] = useState<CourseCard[]>([]);
   const [isLoadingRecommendations, setIsLoadingRecommendations] = useState(false);
   const [recommendationError, setRecommendationError] = useState<string | null>(
@@ -382,10 +398,9 @@ export default function CBCSElectiveGuide() {
   const [courseCode, setCourseCode] = useState("");
   const [subjectCgpa, setSubjectCgpa] = useState<number | "">("");
   const [overallCgpa, setOverallCgpa] = useState<number | "">("");
-  const [tPriorKnowledge, setTPriorKnowledge] = useState(3);
-  const [tDifficulty, setTDifficulty] = useState(3);
-  const [tWorkload, setTWorkload] = useState(3);
-  const [tCognitiveFocus, setTCognitiveFocus] = useState(3);
+  const [testimonialRatings, setTestimonialRatings] = useState<StudentAttributes>({
+    ...DEFAULT_PREFERENCE_RATINGS,
+  });
   const [review, setReview] = useState("");
   const [isSubmittingTestimonial, setIsSubmittingTestimonial] = useState(false);
   const [testimonialError, setTestimonialError] = useState<string | null>(null);
@@ -454,24 +469,11 @@ export default function CBCSElectiveGuide() {
     setCourseCode("");
   }
 
-  const questionSetters = {
-    q1: setQ1,
-    q2: setQ2,
-    q3: setQ3,
-    q4: setQ4,
-  };
-
-  const questionValues = { q1, q2, q3, q4 };
-
   function resetAll() {
     setView("home");
     setName("");
     setBranch("");
-    setQ1(3);
-    setQ2(3);
-    setQ3(3);
-    setQ4(3);
-    setAttributes(null);
+    setWizardRatings({ ...DEFAULT_PREFERENCE_RATINGS });
     setCourses([]);
     setIsLoadingRecommendations(false);
     setRecommendationError(null);
@@ -482,10 +484,7 @@ export default function CBCSElectiveGuide() {
     setCourseCode("");
     setSubjectCgpa("");
     setOverallCgpa("");
-    setTPriorKnowledge(3);
-    setTDifficulty(3);
-    setTWorkload(3);
-    setTCognitiveFocus(3);
+    setTestimonialRatings({ ...DEFAULT_PREFERENCE_RATINGS });
     setReview("");
     setIsSubmittingTestimonial(false);
     setTestimonialError(null);
@@ -516,14 +515,16 @@ export default function CBCSElectiveGuide() {
   async function handleGetRecommendations() {
     if (!branch || isLoadingRecommendations) return;
 
-    const computed: StudentAttributes = {
-      priorKnowledge: q1,
-      difficulty: q2,
-      workload: q3,
-      cognitiveFocus: q4,
-    };
+    const hasUnanswered = WIZARD_QUESTIONS.some(
+      (question) => wizardRatings[question.key] < 1,
+    );
+    if (hasUnanswered) {
+      setRecommendationError(
+        "Please answer all six questions before getting recommendations.",
+      );
+      return;
+    }
 
-    setAttributes(computed);
     setRecommendationError(null);
     setIsLoadingRecommendations(true);
 
@@ -532,12 +533,12 @@ export default function CBCSElectiveGuide() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          prior_knowledge_q1: Number(q1),
-          prior_knowledge_q2: Number(q1),
-          difficulty_q1: Number(q2),
-          difficulty_q2: Number(q2),
-          workload: Number(q3),
-          cognitive_focus: Number(q4),
+          difficulty_level: wizardRatings.difficulty_level,
+          workload_level: wizardRatings.workload_level,
+          new_field_exploration: wizardRatings.new_field_exploration,
+          concept_heavy: wizardRatings.concept_heavy,
+          math_heavy: wizardRatings.math_heavy,
+          practical_focus: wizardRatings.practical_focus,
           branch,
         }),
       });
@@ -631,6 +632,15 @@ export default function CBCSElectiveGuide() {
       setTestimonialError("Subject and overall CGPA must be between 0.0 and 10.0.");
       return;
     }
+    const hasUnratedAttribute = TESTIMONIAL_ATTRIBUTES.some(
+      (attribute) => testimonialRatings[attribute.key] < 1,
+    );
+    if (hasUnratedAttribute) {
+      setTestimonialError(
+        "Please answer all six statements before submitting.",
+      );
+      return;
+    }
 
     const submitter = (e.nativeEvent as SubmitEvent).submitter;
     const shouldAddAnother =
@@ -653,10 +663,12 @@ export default function CBCSElectiveGuide() {
           mis_no: misNumber.trim(),
           subject_cgpa: Number(subjectCgpa),
           overall_cgpa: Number(overallCgpa),
-          prior_knowledge: tPriorKnowledge,
-          difficulty: tDifficulty,
-          workload: tWorkload,
-          cognitive_focus: tCognitiveFocus,
+          difficulty_level: testimonialRatings.difficulty_level,
+          workload_level: testimonialRatings.workload_level,
+          new_field_exploration: testimonialRatings.new_field_exploration,
+          concept_heavy: testimonialRatings.concept_heavy,
+          math_heavy: testimonialRatings.math_heavy,
+          practical_focus: testimonialRatings.practical_focus,
           written_review: review.trim(),
         }),
       });
@@ -673,10 +685,7 @@ export default function CBCSElectiveGuide() {
         setCourseCode("");
         setSubjectCgpa("");
         setOverallCgpa("");
-        setTPriorKnowledge(3);
-        setTDifficulty(3);
-        setTWorkload(3);
-        setTCognitiveFocus(3);
+        setTestimonialRatings({ ...DEFAULT_PREFERENCE_RATINGS });
         setReview("");
         setTestimonialSubmissionMessage(
           "Submitted successfully. You can add another testimonial now.",
@@ -695,20 +704,6 @@ export default function CBCSElectiveGuide() {
       setIsSubmittingTestimonial(false);
     }
   }
-
-  const testimonialRatingSetters = {
-    priorKnowledge: setTPriorKnowledge,
-    difficulty: setTDifficulty,
-    workload: setTWorkload,
-    cognitiveFocus: setTCognitiveFocus,
-  };
-
-  const testimonialRatingValues = {
-    priorKnowledge: tPriorKnowledge,
-    difficulty: tDifficulty,
-    workload: tWorkload,
-    cognitiveFocus: tCognitiveFocus,
-  };
 
   return (
     <main className="min-h-full bg-gradient-to-b from-slate-50 via-white to-indigo-50/40">
@@ -748,9 +743,9 @@ export default function CBCSElectiveGuide() {
                   <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-xs font-bold text-indigo-700">
                     2
                   </span>
-                  Rate six short questions about your learning preferences — all
-                  default to a neutral middle so you can adjust only what
-                  matters.
+                  Answer six short statements about your learning preferences
+                  using a four-point scale from Strongly Disagree to Strongly
+                  Agree.
                 </li>
                 <li className="flex gap-3">
                   <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-xs font-bold text-indigo-700">
@@ -845,15 +840,15 @@ export default function CBCSElectiveGuide() {
                 Tell us about your learning style
               </h1>
               <p className="text-slate-600">
-                Hi {name}! Answer each question on a scale of 1–5. All ratings
-                start at 3 — adjust only what feels different for you.
+                Hi {name}! For each statement, choose the option that best
+                reflects you — from Strongly Disagree to Strongly Agree.
               </p>
             </header>
 
             <div className="space-y-5">
               {WIZARD_QUESTIONS.map((q, idx) => (
                 <div
-                  key={q.id}
+                  key={q.key}
                   className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"
                 >
                   <div className="mb-4 flex items-start gap-3">
@@ -870,10 +865,13 @@ export default function CBCSElectiveGuide() {
                     </div>
                   </div>
                   <RatingScale
-                    value={questionValues[q.id]}
-                    onChange={questionSetters[q.id]}
-                    lowLabel={q.lowLabel}
-                    highLabel={q.highLabel}
+                    value={wizardRatings[q.key]}
+                    onChange={(value) =>
+                      setWizardRatings((previous) => ({
+                        ...previous,
+                        [q.key]: value,
+                      }))
+                    }
                   />
                 </div>
               ))}
@@ -1371,10 +1369,13 @@ export default function CBCSElectiveGuide() {
                         {attr.label}
                       </p>
                       <RatingScale
-                        value={testimonialRatingValues[attr.key]}
-                        onChange={testimonialRatingSetters[attr.key]}
-                        lowLabel={attr.lowLabel}
-                        highLabel={attr.highLabel}
+                        value={testimonialRatings[attr.key]}
+                        onChange={(value) =>
+                          setTestimonialRatings((previous) => ({
+                            ...previous,
+                            [attr.key]: value,
+                          }))
+                        }
                       />
                     </div>
                   ))}
@@ -1388,7 +1389,7 @@ export default function CBCSElectiveGuide() {
                     Leave Advice for Your Juniors (The Inside Scoop)
                   </label>
                   <p className="mt-2 text-sm text-slate-600">
-                    Don&apos;t just repeat your slider scores! Tell the first-years
+                    Don&apos;t just repeat your ratings above! Tell the first-years
                     what the numbers can&apos;t. If you were talking to your junior
                     in the canteen, what is the one secret you would tell them to
                     survive this course?

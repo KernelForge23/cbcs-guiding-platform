@@ -12,10 +12,12 @@ class TestimonialBase(BaseModel):
     mis_no: str = Field(pattern=r"^6125\d{5}$")
     subject_cgpa: float = Field(ge=0.0, le=10.0)
     overall_cgpa: float = Field(ge=0.0, le=10.0)
-    prior_knowledge: int = Field(ge=1, le=5)
-    difficulty: int = Field(ge=1, le=5)
-    workload: int = Field(ge=1, le=5)
-    cognitive_focus: int = Field(ge=1, le=5)
+    difficulty_level: int = Field(ge=1, le=4)
+    workload_level: int = Field(ge=1, le=4)
+    new_field_exploration: int = Field(ge=1, le=4)
+    concept_heavy: int = Field(ge=1, le=4)
+    math_heavy: int = Field(ge=1, le=4)
+    practical_focus: int = Field(ge=1, le=4)
     written_review: str = Field(min_length=1)
 
 
@@ -23,12 +25,15 @@ class TestimonialCreate(TestimonialBase):
     pass
 
 
-class TestimonialOut(TestimonialBase):
+class TestimonialResponse(TestimonialBase):
     id: int
     status: StatusType
     is_featured: bool
 
     model_config = ConfigDict(from_attributes=True)
+
+
+TestimonialOut = TestimonialResponse
 
 
 class TestimonialStatusUpdate(BaseModel):

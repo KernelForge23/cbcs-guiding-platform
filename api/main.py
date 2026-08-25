@@ -63,12 +63,12 @@ CourseCodePath = Annotated[
 ]
 
 class WizardPayload(BaseModel):
-    prior_knowledge_q1: int
-    prior_knowledge_q2: int
-    difficulty_q1: int
-    difficulty_q2: int
-    workload: int
-    cognitive_focus: int
+    difficulty_level: int
+    workload_level: int
+    new_field_exploration: int
+    concept_heavy: int
+    math_heavy: int
+    practical_focus: int
     branch: str
 
 
@@ -189,69 +189,46 @@ def _resolve_course_branch(course: dict, student_branch: str) -> str:
 def compute_fit(
     payload: WizardPayload, course: dict
 ) -> tuple[int, list[dict[str, float | str]]]:
-    s_pk = (float(payload.prior_knowledge_q1) + float(payload.prior_knowledge_q2)) / 2.0
-    s_diff = (float(payload.difficulty_q1) + float(payload.difficulty_q2)) / 2.0
-    s_workload = float(payload.workload)
-    s_cognitive_focus = float(payload.cognitive_focus)
+    
+    s_diff = float(payload.difficulty_level)
+    s_workload = float(payload.workload_level)
+    s_exp = float(payload.new_field_exploration)
+    s_concept = float(payload.concept_heavy)
+    s_math = float(payload.math_heavy)
+    s_practical = float(payload.practical_focus)
+
     course_branch = _resolve_course_branch(course, payload.branch)
     branch_proximity = float(course.get("branch_proximity", 1.0))
+
     scores = {
-        "prior_knowledge": shortfall_normalized(
-            s_pk, _get_course_attribute(course, "prior_knowledge_score")
-        ),
-        "difficulty": distance_normalized(
-            s_diff, _get_course_attribute(course, "difficulty_score")
-        ),
-        "workload": shortfall_normalized(
-            s_workload, _get_course_attribute(course, "workload_score")
-        ),
-        "cognitive_focus": distance_normalized(
-            s_cognitive_focus, _get_course_attribute(course, "cognitive_focus_score")
-        ),
+        "difficulty_level": distance_normalized(s_diff, _get_course_attribute(course, "difficulty_level")),
+        "workload_level": shortfall_normalized(s_workload, _get_course_attribute(course, "workload_level")),
+        "new_field_exploration": shortfall_normalized(s_exp, _get_course_attribute(course, "new_field_exploration")),
+        "concept_heavy": distance_normalized(s_concept, _get_course_attribute(course, "concept_heavy")),
+        "math_heavy": distance_normalized(s_math, _get_course_attribute(course, "math_heavy")),
+        "practical_focus": distance_normalized(s_practical, _get_course_attribute(course, "practical_focus")),
         "branch_proximity": branch_proximity,
     }
+    
     attributes_used: list[dict[str, float | str]] = []
 
-    attributes_used.append(
-        {
-            "name": "prior_knowledge",
-            "student_value": s_pk,
-            "course_value": _get_course_attribute(course, "prior_knowledge_score"),
-            "score": scores["prior_knowledge"],
-        }
-    )
-    attributes_used.append(
-        {
-            "name": "difficulty",
-            "student_value": s_diff,
-            "course_value": _get_course_attribute(course, "difficulty_score"),
-            "score": scores["difficulty"],
-        }
-    )
-    attributes_used.append(
-        {
-            "name": "workload",
-            "student_value": s_workload,
-            "course_value": _get_course_attribute(course, "workload_score"),
-            "score": scores["workload"],
-        }
-    )
-    attributes_used.append(
-        {
-            "name": "cognitive_focus",
-            "student_value": s_cognitive_focus,
-            "course_value": _get_course_attribute(course, "cognitive_focus_score"),
-            "score": scores["cognitive_focus"],
-        }
-    )
-    attributes_used.append(
-        {
-            "name": "branch_proximity",
-            "student_value": payload.branch,
-            "course_value": course_branch,
-            "score": scores["branch_proximity"],
-        }
-    )
+    for key, s_val in zip(
+        ["difficulty_level", "workload_level", "new_field_exploration", "concept_heavy", "math_heavy", "practical_focus"],
+        [s_diff, s_workload, s_exp, s_concept, s_math, s_practical]
+    ):
+        attributes_used.append({
+            "name": key,
+            "student_value": s_val,
+            "course_value": _get_course_attribute(course, key),
+            "score": scores[key],
+        })
+        
+    attributes_used.append({
+        "name": "branch_proximity",
+        "student_value": payload.branch,
+        "course_value": course_branch,
+        "score": scores["branch_proximity"],
+    })
 
     fit_percentage = round(sum(scores.values()) / len(scores) * 100)
     return fit_percentage, attributes_used

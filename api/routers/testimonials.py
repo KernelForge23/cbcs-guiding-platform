@@ -9,14 +9,14 @@ from api.models import Testimonial
 from api.schemas import (
     TestimonialCreate,
     TestimonialFeatureUpdate,
-    TestimonialOut,
+    TestimonialResponse,
     TestimonialStatusUpdate,
 )
 
 router = APIRouter(prefix="/api", tags=["testimonials"])
 
 
-@router.post("/testimonials/", response_model=TestimonialOut, status_code=201)
+@router.post("/testimonials/", response_model=TestimonialResponse, status_code=201)
 def create_testimonial(
     payload: TestimonialCreate,
     db: Session = Depends(get_db),
@@ -28,10 +28,12 @@ def create_testimonial(
         mis_no=payload.mis_no,
         subject_cgpa=payload.subject_cgpa,
         overall_cgpa=payload.overall_cgpa,
-        prior_knowledge=payload.prior_knowledge,
-        difficulty=payload.difficulty,
-        workload=payload.workload,
-        cognitive_focus=payload.cognitive_focus,
+        difficulty_level=payload.difficulty_level,
+        workload_level=payload.workload_level,
+        new_field_exploration=payload.new_field_exploration,
+        concept_heavy=payload.concept_heavy,
+        math_heavy=payload.math_heavy,
+        practical_focus=payload.practical_focus,
         written_review=payload.written_review.strip(),
         status="PENDING",
         is_featured=False,
@@ -42,7 +44,7 @@ def create_testimonial(
     return testimonial
 
 
-@router.get("/testimonials/{course_code}", response_model=list[TestimonialOut])
+@router.get("/testimonials/{course_code}", response_model=list[TestimonialResponse])
 def get_public_testimonials(
     course_code: str,
     db: Session = Depends(get_db),
@@ -60,7 +62,7 @@ def get_public_testimonials(
     return testimonials
 
 
-@router.get("/admin/testimonials/pending", response_model=list[TestimonialOut])
+@router.get("/admin/testimonials/pending", response_model=list[TestimonialResponse])
 def get_pending_testimonials(db: Session = Depends(get_db)):
     testimonials = (
         db.query(Testimonial)
@@ -71,7 +73,7 @@ def get_pending_testimonials(db: Session = Depends(get_db)):
     return testimonials
 
 
-@router.get("/admin/testimonials/approved", response_model=list[TestimonialOut])
+@router.get("/admin/testimonials/approved", response_model=list[TestimonialResponse])
 def get_approved_testimonials(db: Session = Depends(get_db)):
     testimonials = (
         db.query(Testimonial)
@@ -82,7 +84,7 @@ def get_approved_testimonials(db: Session = Depends(get_db)):
     return testimonials
 
 
-@router.put("/admin/testimonials/{testimonial_id}/status", response_model=TestimonialOut)
+@router.put("/admin/testimonials/{testimonial_id}/status", response_model=TestimonialResponse)
 def update_testimonial_status(
     testimonial_id: Annotated[int, Path(gt=0)],
     payload: TestimonialStatusUpdate,
@@ -101,7 +103,7 @@ def update_testimonial_status(
     return testimonial
 
 
-@router.put("/admin/testimonials/{testimonial_id}/feature", response_model=TestimonialOut)
+@router.put("/admin/testimonials/{testimonial_id}/feature", response_model=TestimonialResponse)
 def update_testimonial_featured_flag(
     testimonial_id: Annotated[int, Path(gt=0)],
     payload: TestimonialFeatureUpdate,

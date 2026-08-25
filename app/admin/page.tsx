@@ -14,10 +14,12 @@ type AdminTestimonial = {
   mis_no: string;
   subject_cgpa: number;
   overall_cgpa: number;
-  prior_knowledge: number;
-  difficulty: number;
-  workload: number;
-  cognitive_focus: number;
+  difficulty_level: number;
+  workload_level: number;
+  new_field_exploration: number;
+  concept_heavy: number;
+  math_heavy: number;
+  practical_focus: number;
   written_review: string;
   status: TestimonialStatus;
   is_featured: boolean;
