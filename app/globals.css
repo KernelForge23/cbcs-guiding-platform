@@ -26,7 +26,7 @@ body {
 }
 
 .bg-grid-pattern {
-  background-image: linear-gradient(to right, rgba(15, 23, 42, 0.055) 1px, transparent 1px), linear-gradient(to bottom, rgba(15, 23, 42, 0.055) 1px, transparent 1px), radial-gradient(circle at center, rgba(37, 99, 235, 0.14) 1px, transparent 1.5px);
+  background-image: linear-gradient(to right, rgba(148, 163, 184, 0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(148, 163, 184, 0.08) 1px, transparent 1px), radial-gradient(circle at center, rgba(96, 165, 250, 0.16) 1px, transparent 1.5px);
   background-size: 72px 72px, 72px 72px, 24px 24px;
   mask-image: linear-gradient(to bottom, black 0%, rgba(0, 0, 0, 0.65) 42%, transparent 88%);
 }
