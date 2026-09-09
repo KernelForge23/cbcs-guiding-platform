@@ -1,16 +1,18 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
 import {
   AlertCircle,
   ArrowRight,
-  BookOpen,
   ChevronLeft,
   GraduationCap,
   MessageSquareQuote,
   RotateCcw,
   Sparkles,
   Star,
+  Check,
+  Command,
 } from "lucide-react";
 import {
   COURSE_CATEGORIES,
@@ -706,128 +708,44 @@ export default function CBCSElectiveGuide() {
   }
 
   return (
-    <main className="min-h-full bg-gradient-to-b from-slate-50 via-white to-indigo-50/40">
-      <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 sm:py-12 lg:py-16">
+  <main className="min-h-full bg-[#fbfcfe]">
+  <div className="mx-auto max-w-6xl px-5 py-8 sm:px-8 sm:py-12 lg:py-16">
         {/* ── Home View ── */}
-        {view === "home" && (
-          <div className="space-y-8">
-            <header className="space-y-4 text-center">
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-lg shadow-indigo-200">
-                <GraduationCap className="h-7 w-7" />
-              </div>
-              <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-                CBCS Elective Guide
-              </h1>
-              <p className="mx-auto max-w-2xl text-base text-slate-600 sm:text-lg">
-                Find elective courses that match your learning style, workload
-                capacity, and branch — powered by transparent, deterministic
-                matching.
-              </p>
-            </header>
+  {view === "home" && (
+  <div className="relative isolate overflow-hidden">
+    <div className="pointer-events-none absolute inset-0 -z-10 bg-grid-pattern opacity-60" aria-hidden="true" />
+    <div className="pointer-events-none absolute left-[12%] top-24 -z-10 size-2 rounded-full bg-blue-500 shadow-[0_0_0_8px_rgba(59,130,246,0.08),0_0_30px_rgba(59,130,246,0.8)]" aria-hidden="true" />
+    <div className="pointer-events-none absolute right-[18%] top-48 -z-10 size-2 rounded-full bg-cyan-400 shadow-[0_0_0_8px_rgba(34,211,238,0.08),0_0_30px_rgba(34,211,238,0.8)]" aria-hidden="true" />
+    <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55 }} className="flex min-h-[calc(100vh-8rem)] flex-col justify-center py-12 sm:py-20">
+      <div className="mx-auto w-full max-w-5xl">
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }} className="mb-8 flex items-center gap-3 text-sm font-semibold tracking-wide text-blue-700">
+          <span className="flex size-9 items-center justify-center rounded-xl bg-slate-950 text-white"><GraduationCap /></span>
+          CBCS / ACADEMIC NAVIGATION
+        </motion.div>
+        <motion.header initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.16 }} className="max-w-4xl">
+          <h1 className="max-w-4xl text-5xl font-black tracking-[-0.06em] text-slate-950 sm:text-7xl lg:text-[6.5rem] lg:leading-[0.92]">Choose with clarity.<br /><span className="text-blue-600">Build your edge.</span></h1>
+          <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-600 sm:text-xl">CBCS Elective Guide turns your learning preferences into a focused, explainable course path — so every credit moves you forward.</p>
+        </motion.header>
 
-            <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-              <div className="mb-4 flex items-center gap-2">
-                <BookOpen className="h-5 w-5 text-indigo-600" />
-                <h2 className="text-lg font-semibold text-slate-900">
-                  How to Use This Guide
-                </h2>
-              </div>
-              <ol className="space-y-3 text-sm leading-relaxed text-slate-600 sm:text-base">
-                <li className="flex gap-3">
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-xs font-bold text-indigo-700">
-                    1
-                  </span>
-                  Enter your name and branch, then start the preference wizard.
-                </li>
-                <li className="flex gap-3">
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-xs font-bold text-indigo-700">
-                    2
-                  </span>
-                  Answer six short statements about your learning preferences
-                  using a four-point scale from Strongly Disagree to Strongly
-                  Agree.
-                </li>
-                <li className="flex gap-3">
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-xs font-bold text-indigo-700">
-                    3
-                  </span>
-                  Review ranked course recommendations with fit scores,
-                  explanations, and peer testimonials.
-                </li>
-              </ol>
-            </section>
-
-            <div className="flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
-              <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-amber-600" />
-              <p>
-                <strong>Disclaimer:</strong> This is a guidance tool, not an
-                official recommendation.
-              </p>
-            </div>
-
-            <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-              <div className="grid gap-5 sm:grid-cols-2">
-                <div>
-                  <label
-                    htmlFor="student-name"
-                    className="mb-1.5 block text-sm font-medium text-slate-700"
-                  >
-                    Name
-                  </label>
-                  <input
-                    id="student-name"
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Your full name"
-                    className="w-full rounded-xl border border-slate-300 px-4 py-2.5 text-slate-900 placeholder:text-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="student-branch"
-                    className="mb-1.5 block text-sm font-medium text-slate-700"
-                  >
-                    Branch
-                  </label>
-                  <select
-                    id="student-branch"
-                    value={branch}
-                    onChange={(e) => setBranch(e.target.value as Branch | "")}
-                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-slate-900 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
-                  >
-                    <option value="">Select your branch</option>
-                    {BRANCHES.map((b) => (
-                      <option key={b} value={b}>
-                        {b}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                <button
-                  type="button"
-                  onClick={handleStartWizard}
-                  disabled={!name.trim() || !branch}
-                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-indigo-600 px-6 py-3 text-sm font-semibold text-white shadow-md shadow-indigo-200 transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                  Start Wizard
-                  <ArrowRight className="h-4 w-4" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setView("testimonial_login")}
-                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
-                >
-                  <MessageSquareQuote className="h-4 w-4" />
-                  Share a Testimonial
-                </button>
-              </div>
-            </section>
+        <motion.section initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.28 }} className="mt-12 rounded-2xl border border-slate-200 bg-white p-2 shadow-[0_20px_70px_rgba(15,23,42,0.12)] sm:p-3">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-end">
+            <div className="flex-1 px-4 py-3 sm:px-5"><label htmlFor="student-name" className="mb-2 block text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500">Your name</label><input id="student-name" type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Aditi Sharma" className="w-full border-0 bg-transparent p-0 text-lg font-semibold text-slate-950 outline-none placeholder:text-slate-400 focus:ring-0" /></div>
+            <div className="hidden h-12 w-px bg-slate-200 sm:block" />
+            <div className="flex-1 px-4 py-3 sm:px-5"><label htmlFor="student-branch" className="mb-2 block text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500">Your branch</label><select id="student-branch" value={branch} onChange={(e) => setBranch(e.target.value as Branch | "")} className="w-full border-0 bg-transparent p-0 text-lg font-semibold text-slate-950 outline-none focus:ring-0"><option value="">Select your branch</option>{BRANCHES.map((b) => <option key={b} value={b}>{b}</option>)}</select></div>
+            <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} type="button" onClick={handleStartWizard} disabled={!name.trim() || !branch} className="group inline-flex h-16 items-center justify-center gap-3 rounded-xl bg-slate-950 px-7 text-base font-bold text-white transition hover:bg-blue-600 disabled:cursor-not-allowed disabled:opacity-40 sm:min-w-52">Start Wizard <ArrowRight className="transition-transform group-hover:translate-x-1" /></motion.button>
           </div>
-        )}
+        </motion.section>
+        <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-500"><span className="inline-flex items-center gap-2"><Check className="text-blue-600" /> Explainable matching</span><span className="inline-flex items-center gap-2"><Check className="text-blue-600" /> Built for CBCS</span><button type="button" onClick={() => setView("testimonial_login")} className="inline-flex items-center gap-2 font-semibold text-slate-700 hover:text-blue-600"><MessageSquareQuote /> Share a testimonial</button></div>
+
+        <motion.section initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.42 }} className="mt-24 border-t border-slate-200 pt-8">
+          <div className="mb-8 flex items-end justify-between gap-6"><div><p className="text-xs font-bold uppercase tracking-[0.18em] text-blue-600">The student journey</p><h2 className="mt-2 text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">From uncertainty to a confident pick.</h2></div><Command className="hidden size-8 text-slate-300 sm:block" /></div>
+          <div className="grid gap-8 md:grid-cols-3 md:gap-0">{[{ number: "01", title: "Set your direction", text: "Tell us who you are and where you study." }, { number: "02", title: "Map your preferences", text: "Six quick signals reveal how you learn best." }, { number: "03", title: "See your fit", text: "Explore ranked electives with transparent reasoning." }].map((step, index) => <motion.div key={step.number} initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.5 + index * 0.12 }} className="relative border-l-2 border-slate-200 pl-6 md:border-l-0 md:border-t-2 md:pl-0 md:pr-8 md:pt-6"><span className="absolute -left-[7px] top-0 size-3 rounded-full border-2 border-white bg-blue-600 md:-top-[7px] md:left-0" /><p className="font-mono text-sm font-bold text-blue-600">{step.number}</p><h3 className="mt-3 text-lg font-bold text-slate-950">{step.title}</h3><p className="mt-2 max-w-xs text-sm leading-6 text-slate-500">{step.text}</p></motion.div>)}</div>
+        </motion.section>
+        <div className="mt-12 flex items-start gap-3 border-t border-slate-200 pt-5 text-xs leading-5 text-slate-500"><AlertCircle className="mt-0.5 size-4 shrink-0" /><p><strong className="text-slate-700">A guidance tool, not an official recommendation.</strong> Use your judgement alongside faculty and peers.</p></div>
+      </div>
+    </motion.div>
+  </div>
+  )}
 
         {/* ── Wizard View ── */}
         {view === "wizard" && (
