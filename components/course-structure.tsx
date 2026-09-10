@@ -92,7 +92,7 @@ function CourseNode({ course }: { course: Course }) {
     <motion.div layout initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className={`relative rounded-2xl border px-4 py-3 ${course.unavailable ? "border-white/10 bg-white/[0.02] opacity-60" : "border-slate-200 bg-white shadow-xl shadow-slate-200/40 dark:border-white/10 dark:bg-white/[0.04] dark:shadow-black/20 hover:border-blue-400/40 hover:bg-white/[0.08]"}`}>
       <span className="absolute -left-2 top-1/2 size-3 -translate-y-1/2 rounded-full border-2 border-slate-950 bg-blue-400" aria-hidden="true" />
       <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0"><p className="text-sm font-medium leading-5 text-slate-800 dark:text-slate-200">{course.name}</p>{course.department && <span className="mt-2 inline-flex rounded-full border border-blue-400/20 bg-blue-900/30 px-2 py-0.5 text-[11px] font-medium text-blue-300">{course.department}</span>}</div>
+        <div className="min-w-0"><p className="text-sm font-medium leading-5 text-slate-800 dark:text-slate-200">{course.name}</p>{course.department && <span className="mt-2 inline-flex rounded-full border border-blue-300 bg-blue-50 px-2 py-0.5 text-[11px] font-semibold text-blue-700 dark:border-blue-400/20 dark:bg-blue-900/30 dark:text-blue-300">{course.department}</span>}</div>
         <span title={course.unavailable || (restricted ? "Home Branch Restricted" : "Open to all branches")} className="shrink-0 text-slate-600 dark:text-slate-400">{restricted ? <LockKeyhole className="size-4" aria-label="Home Branch Restricted" /> : <Globe2 className="size-4" aria-label="Open to all branches" />}</span>
       </div>
     </motion.div>
