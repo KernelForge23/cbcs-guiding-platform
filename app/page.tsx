@@ -23,6 +23,7 @@ import {
 import { formatCourseCodeForDisplay } from "./lib/courseCode";
 import courseCatalog from "../api/courses.json";
 import { CourseStructure } from "../components/course-structure";
+import { ThemeToggle } from "../components/theme-toggle";
 
 type View =
   | "home"
@@ -303,7 +304,7 @@ function RatingScale({
           onClick={() => onChange(option.value)}
           className={`rounded-xl border px-3 py-2 text-xs font-semibold transition sm:text-sm ${
             value === option.value
-              ? "border-indigo-600 bg-indigo-600 text-white"
+              ? "border-indigo-600 bg-indigo-600 text-slate-900 dark:text-white"
               : "border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
           }`}
           aria-pressed={value === option.value}
@@ -711,8 +712,9 @@ export default function CBCSElectiveGuide() {
   }
 
   return (
-  <main className="min-h-full bg-slate-950">
-  <div className="mx-auto max-w-6xl px-5 py-8 text-slate-100 sm:px-8 sm:py-12 lg:py-16">
+  <main className="min-h-full bg-slate-50 dark:bg-slate-950">
+  <div className="mx-auto max-w-6xl px-5 py-8 text-slate-900 dark:text-slate-100 sm:px-8 sm:py-12 lg:py-16">
+    <nav className="mb-4 flex justify-end" aria-label="Appearance settings"><ThemeToggle /></nav>
         {/* ── Home View ── */}
   {view === "home" && (
   <div className="relative isolate overflow-hidden">
@@ -720,31 +722,31 @@ export default function CBCSElectiveGuide() {
     <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55 }} className="flex min-h-[calc(100vh-8rem)] flex-col justify-center py-12 sm:py-20">
       <div className="mx-auto w-full max-w-5xl">
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }} className="mb-8 flex items-center gap-3 text-sm font-semibold tracking-wide text-blue-400">
-          <span className="flex size-9 items-center justify-center rounded-xl bg-blue-600 text-white"><GraduationCap /></span>
+          <span className="flex size-9 items-center justify-center rounded-xl bg-blue-600 text-slate-900 dark:text-white"><GraduationCap /></span>
           CBCS / ACADEMIC NAVIGATION
         </motion.div>
         <motion.header initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.16 }} className="max-w-4xl">
-          <h1 className="max-w-4xl text-5xl font-bold tracking-[-0.045em] text-white sm:text-6xl lg:text-7xl">CBCS Guiding Platform</h1>
-          <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-400 sm:text-xl">Turn your learning preferences into a focused, explainable course path — so every credit moves you forward.</p>
+          <h1 className="max-w-4xl text-5xl font-bold tracking-[-0.045em] text-slate-900 dark:text-white sm:text-6xl lg:text-7xl">CBCS Guiding Platform</h1>
+          <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-400 sm:text-xl">Turn your learning preferences into a focused, explainable course path — so every credit moves you forward.</p>
         </motion.header>
 
-        <motion.section initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.28 }} className="mt-12 rounded-3xl border border-white/10 bg-white/5 p-3 shadow-2xl shadow-black/30 backdrop-blur-xl sm:p-5">
+        <motion.section initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.28 }} className="mt-12 rounded-3xl border border-slate-200 bg-white dark:border-white/10 dark:bg-white/5 p-3 shadow-2xl shadow-black/30 backdrop-blur-xl sm:p-5">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
-            <div className="flex-1 rounded-2xl border border-transparent px-5 py-4 transition focus-within:border-blue-400/40 focus-within:bg-blue-400/5"><label htmlFor="student-name" className="mb-2 block text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400">Your name</label><input id="student-name" type="text" value={name} onChange={(e) => setName(e.target.value)} className="w-full border-0 bg-transparent p-0 text-lg font-semibold text-white outline-none focus:ring-0" /></div>
+            <div className="flex-1 rounded-2xl border border-transparent px-5 py-4 transition focus-within:border-blue-400/40 focus-within:bg-blue-400/5"><label htmlFor="student-name" className="mb-2 block text-[11px] font-bold uppercase tracking-[0.14em] text-slate-600 dark:text-slate-400">Your name</label><input id="student-name" type="text" value={name} onChange={(e) => setName(e.target.value)} className="w-full border-0 bg-transparent p-0 text-lg font-semibold text-slate-900 dark:text-white outline-none focus:ring-0" /></div>
             <div className="hidden h-14 w-px bg-white/10 sm:block" />
-            <div className="relative flex-1 rounded-2xl border border-transparent px-5 py-4 transition focus-within:border-blue-400/40 focus-within:bg-blue-400/5"><label id="student-branch-label" className="mb-2 block text-[11px] font-bold uppercase tracking-[0.14em] text-slate-300">Your branch</label><button id="student-branch" type="button" aria-haspopup="listbox" aria-expanded={isBranchMenuOpen} aria-labelledby="student-branch-label" onClick={() => setIsBranchMenuOpen((open) => !open)} className="flex w-full items-center justify-between gap-3 bg-transparent p-0 text-left text-lg font-semibold text-white outline-none"><span className={branch ? "" : "text-slate-400"}>{branch || "Select your branch"}</span><ChevronDown className="size-5 text-slate-400" /></button>{isBranchMenuOpen && <div role="listbox" aria-labelledby="student-branch-label" className="absolute left-3 right-3 top-full z-20 mt-3 max-h-72 overflow-y-auto rounded-2xl border border-white/15 bg-slate-900 p-2 shadow-2xl shadow-black/40">{BRANCHES.map((b) => <button key={b} type="button" role="option" aria-selected={branch === b} onClick={() => { setBranch(b); setIsBranchMenuOpen(false); }} className="w-full rounded-xl px-3 py-2.5 text-left text-sm font-medium text-slate-200 transition hover:bg-blue-500/20 hover:text-white">{b}</button>)}</div>}</div>
-            <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }} type="button" onClick={handleStartWizard} disabled={!name.trim() || !branch} className="group inline-flex h-16 items-center justify-center gap-3 rounded-2xl bg-blue-600 px-7 text-base font-bold text-white shadow-lg shadow-blue-600/25 transition hover:bg-indigo-600 disabled:cursor-not-allowed disabled:opacity-40 sm:min-w-52">Start Wizard <ArrowRight className="transition-transform group-hover:translate-x-1" /></motion.button>
+            <div className="relative flex-1 rounded-2xl border border-transparent px-5 py-4 transition focus-within:border-blue-400/40 focus-within:bg-blue-400/5"><label id="student-branch-label" className="mb-2 block text-[11px] font-bold uppercase tracking-[0.14em] text-slate-300">Your branch</label><button id="student-branch" type="button" aria-haspopup="listbox" aria-expanded={isBranchMenuOpen} aria-labelledby="student-branch-label" onClick={() => setIsBranchMenuOpen((open) => !open)} className="flex w-full items-center justify-between gap-3 bg-transparent p-0 text-left text-lg font-semibold text-slate-900 dark:text-white outline-none"><span className={branch ? "" : "text-slate-600 dark:text-slate-400"}>{branch || "Select your branch"}</span><ChevronDown className="size-5 text-slate-600 dark:text-slate-400" /></button>{isBranchMenuOpen && <div role="listbox" aria-labelledby="student-branch-label" className="absolute left-3 right-3 top-full z-20 mt-3 max-h-72 overflow-y-auto rounded-2xl border border-white/15 bg-slate-900 p-2 shadow-2xl shadow-black/40">{BRANCHES.map((b) => <button key={b} type="button" role="option" aria-selected={branch === b} onClick={() => { setBranch(b); setIsBranchMenuOpen(false); }} className="w-full rounded-xl px-3 py-2.5 text-left text-sm font-medium text-slate-200 transition hover:bg-blue-500/20 hover:text-slate-900 dark:text-white">{b}</button>)}</div>}</div>
+            <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }} type="button" onClick={handleStartWizard} disabled={!name.trim() || !branch} className="group inline-flex h-16 items-center justify-center gap-3 rounded-2xl bg-blue-600 px-7 text-base font-bold text-slate-900 dark:text-white shadow-lg shadow-blue-600/25 transition hover:bg-indigo-600 disabled:cursor-not-allowed disabled:opacity-40 sm:min-w-52">Start Wizard <ArrowRight className="transition-transform group-hover:translate-x-1" /></motion.button>
           </div>
         </motion.section>
-        <div className="mt-5 flex flex-wrap items-center justify-center gap-3"><span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-base font-semibold text-slate-200"><Check className="size-4 text-blue-400" /> Explainable matching</span><span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-base font-semibold text-slate-200"><GraduationCap className="size-5 text-slate-400" /> Built for CBCS</span><span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-base font-semibold text-slate-200"><MessageSquareQuote className="size-5 text-slate-400" /> Peer Course Reviews</span></div>
+        <div className="mt-5 flex flex-wrap items-center justify-center gap-3"><span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white dark:border-white/10 dark:bg-white/5 px-5 py-3 text-base font-semibold text-slate-200"><Check className="size-4 text-blue-400" /> Explainable matching</span><span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white dark:border-white/10 dark:bg-white/5 px-5 py-3 text-base font-semibold text-slate-200"><GraduationCap className="size-5 text-slate-600 dark:text-slate-400" /> Built for CBCS</span><span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white dark:border-white/10 dark:bg-white/5 px-5 py-3 text-base font-semibold text-slate-200"><MessageSquareQuote className="size-5 text-slate-600 dark:text-slate-400" /> Peer Course Reviews</span></div>
 
         <CourseStructure />
 
-        <motion.section initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="mt-12 flex flex-col gap-6 rounded-3xl border border-blue-400/20 bg-blue-500/10 p-6 shadow-2xl shadow-blue-950/20 sm:flex-row sm:items-center sm:justify-between sm:p-8"><div><p className="text-xs font-bold uppercase tracking-[0.18em] text-blue-300">For Seniorrs</p><h2 className="mt-2 max-w-xl text-2xl font-bold tracking-tight text-white">Already taken these courses?</h2><p className="mt-2 max-w-xl text-sm leading-6 text-slate-300">Share your review to help juniors make better choices.</p></div><button type="button" onClick={() => setView("testimonial_login")} className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-bold text-slate-950 transition hover:bg-blue-50"><MessageSquareQuote className="size-4" /> Share a Testimonial</button></motion.section>
+        <motion.section initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="mt-12 flex flex-col gap-6 rounded-3xl border border-blue-400/20 bg-blue-500/10 p-6 shadow-2xl shadow-blue-950/20 sm:flex-row sm:items-center sm:justify-between sm:p-8"><div><p className="text-xs font-bold uppercase tracking-[0.18em] text-blue-300">For Seniorrs</p><h2 className="mt-2 max-w-xl text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Already taken these courses?</h2><p className="mt-2 max-w-xl text-sm leading-6 text-slate-300">Share your review to help juniors make better choices.</p></div><button type="button" onClick={() => setView("testimonial_login")} className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-bold text-slate-950 transition hover:bg-blue-50"><MessageSquareQuote className="size-4" /> Share a Testimonial</button></motion.section>
 
         <motion.section initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.42 }} className="mt-24 border-t border-white/10 pt-8">
-          <div className="mb-8 flex items-end justify-between gap-6"><div><p className="text-xs font-bold uppercase tracking-[0.18em] text-blue-600">How to use this tool</p><h2 className="mt-2 text-2xl font-bold tracking-tight text-white sm:text-3xl">How to use this tool</h2></div><Command className="hidden size-8 text-slate-300 sm:block" /></div>
-          <div className="grid gap-4 md:grid-cols-3">{[{ number: "01", title: "Map your preferences", text: "Answer six quick question that reveal how you learn and what kind of courses suit you.", icon: Command }, { number: "02", title: "See your fit", text: "Explore ranked courses with transparent reasoning.", icon: Sparkles }, { number: "03", title: "Read Seniors' Course Reviews", text: "Verified student course reviews help you in making the right choice.", icon: MessageSquareQuote }].map((step, index) => { const Icon = step.icon; return <motion.div key={step.number} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} whileHover={{ y: -6 }} transition={{ delay: 0.5 + index * 0.12 }} className="group rounded-3xl border border-white/10 bg-white/[0.04] p-6 shadow-sm shadow-black/20 transition-shadow hover:border-blue-400/30 hover:bg-white/[0.07] hover:shadow-xl hover:shadow-blue-950/30"><div className="flex items-start justify-between"><span className="flex size-11 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-lg shadow-blue-600/20"><Icon className="size-5" /></span><span className="font-mono text-sm font-bold text-blue-600">{step.number}</span></div><h3 className="mt-8 text-lg font-bold text-white">{step.title}</h3><p className="mt-2 text-sm leading-6 text-slate-400">{step.text}</p><div className="mt-8 h-1 w-10 rounded-full bg-blue-200 transition-all group-hover:w-16 group-hover:bg-blue-600" /></motion.div>})}</div>
+          <div className="mb-8 flex items-end justify-between gap-6"><div><p className="text-xs font-bold uppercase tracking-[0.18em] text-blue-600">How to use this tool</p><h2 className="mt-2 text-2xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-3xl">How to use this tool</h2></div><Command className="hidden size-8 text-slate-300 sm:block" /></div>
+          <div className="grid gap-4 md:grid-cols-3">{[{ number: "01", title: "Map your preferences", text: "Answer six quick question that reveal how you learn and what kind of courses suit you.", icon: Command }, { number: "02", title: "See your fit", text: "Explore ranked courses with transparent reasoning.", icon: Sparkles }, { number: "03", title: "Read Seniors' Course Reviews", text: "Verified student course reviews help you in making the right choice.", icon: MessageSquareQuote }].map((step, index) => { const Icon = step.icon; return <motion.div key={step.number} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} whileHover={{ y: -6 }} transition={{ delay: 0.5 + index * 0.12 }} className="group rounded-3xl border border-white/10 bg-white/[0.04] p-6 shadow-sm shadow-black/20 transition-shadow hover:border-blue-400/30 hover:bg-white/[0.07] hover:shadow-xl hover:shadow-blue-950/30"><div className="flex items-start justify-between"><span className="flex size-11 items-center justify-center rounded-2xl bg-blue-600 text-slate-900 dark:text-white shadow-lg shadow-blue-600/20"><Icon className="size-5" /></span><span className="font-mono text-sm font-bold text-blue-600">{step.number}</span></div><h3 className="mt-8 text-lg font-bold text-slate-900 dark:text-white">{step.title}</h3><p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">{step.text}</p><div className="mt-8 h-1 w-10 rounded-full bg-blue-200 transition-all group-hover:w-16 group-hover:bg-blue-600" /></motion.div>})}</div>
         </motion.section>
         <div className="mt-12 flex items-start justify-center gap-3 border-t border-white/10 pt-6 text-center text-sm leading-6 text-slate-500"><AlertCircle className="mt-1 size-4 shrink-0 text-slate-600" /><p>This platform provides data-driven guidance based on your learning profile and peer reviews. Please consult official university guidelines before finalizing your course registration.</p></div>
       </div>
@@ -818,7 +820,7 @@ export default function CBCSElectiveGuide() {
                   type="button"
                   onClick={handleGetRecommendations}
                   disabled={isLoadingRecommendations}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-8 py-3 text-sm font-semibold text-white shadow-md shadow-indigo-200 transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-8 py-3 text-sm font-semibold text-slate-900 dark:text-white shadow-md shadow-indigo-200 transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {isLoadingRecommendations
                     ? "Ranking courses..."
@@ -874,7 +876,7 @@ export default function CBCSElectiveGuide() {
                     aria-pressed={activeTab === category}
                     className={`rounded-full px-3 py-1.5 text-sm font-medium transition ${
                       activeTab === category
-                        ? "bg-indigo-600 text-white"
+                        ? "bg-indigo-600 text-slate-900 dark:text-white"
                         : "bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50"
                     }`}
                   >
@@ -914,7 +916,7 @@ export default function CBCSElectiveGuide() {
                 >
                   <div className="border-b border-slate-100 bg-slate-50/60 px-5 py-4 sm:px-6">
                     <div className="flex flex-wrap items-center gap-3">
-                      <span className="flex h-9 w-9 items-center justify-center rounded-full bg-indigo-600 text-sm font-bold text-white">
+                      <span className="flex h-9 w-9 items-center justify-center rounded-full bg-indigo-600 text-sm font-bold text-slate-900 dark:text-white">
                         #{index + 1}
                       </span>
                       <div className="min-w-0 flex-1">
@@ -1048,7 +1050,7 @@ export default function CBCSElectiveGuide() {
                     value={testimonialName}
                     onChange={(e) => setTestimonialName(e.target.value)}
                     placeholder="Your full name"
-                    className="w-full rounded-xl border border-slate-300 px-4 py-2.5 text-slate-900 placeholder:text-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                    className="w-full rounded-xl border border-slate-300 px-4 py-2.5 text-slate-900 placeholder:text-slate-600 dark:text-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
                   />
                 </div>
                 <div>
@@ -1064,7 +1066,7 @@ export default function CBCSElectiveGuide() {
                     value={misNumber}
                     onChange={(e) => setMisNumber(e.target.value)}
                     placeholder="e.g. 612512345"
-                    className={`w-full rounded-xl border px-4 py-2.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 ${
+                    className={`w-full rounded-xl border px-4 py-2.5 text-slate-900 placeholder:text-slate-600 dark:text-slate-400 focus:outline-none focus:ring-2 ${
                       isMisNumberValid
                         ? "border-slate-300 focus:border-indigo-500 focus:ring-indigo-200"
                         : "border-red-400 focus:border-red-500 focus:ring-red-100"
@@ -1120,7 +1122,7 @@ export default function CBCSElectiveGuide() {
                     !isMisNumberValid ||
                     !testimonialBranch
                   }
-                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-indigo-200 transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-slate-900 dark:text-white shadow-md shadow-indigo-200 transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   Continue
                   <ArrowRight className="h-4 w-4" />
@@ -1157,7 +1159,7 @@ export default function CBCSElectiveGuide() {
                 <button
                   type="button"
                   onClick={resetAll}
-                  className="mt-6 inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700"
+                  className="mt-6 inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-6 py-2.5 text-sm font-semibold text-slate-900 dark:text-white transition hover:bg-emerald-700"
                 >
                   Return to Home
                 </button>
@@ -1338,7 +1340,7 @@ export default function CBCSElectiveGuide() {
                     required
                     rows={5}
                     placeholder="Share what future students should know..."
-                    className="w-full resize-y rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                    className="w-full resize-y rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 placeholder:text-slate-600 dark:text-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
                   />
                 </div>
 
@@ -1364,7 +1366,7 @@ export default function CBCSElectiveGuide() {
                     type="submit"
                     value="submit_final"
                     disabled={isSubmittingTestimonial}
-                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-indigo-200 transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-slate-900 dark:text-white shadow-md shadow-indigo-200 transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {isSubmittingTestimonial
                       ? "Submitting..."
