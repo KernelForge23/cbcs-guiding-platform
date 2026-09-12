@@ -100,8 +100,7 @@ type CourseCard = {
     | null;
 };
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "";
 const MIS_NUMBER_PATTERN = /^6125\d{5}$/;
 const TESTIMONIAL_COURSES: TestimonialCourse[] = courseCatalog;
 const TESTIMONIAL_CATEGORIES = Array.from(
@@ -593,9 +592,11 @@ export default function CBCSElectiveGuide() {
       setView("results");
     } catch (error) {
       setRecommendationError(
-        error instanceof Error
-          ? error.message
-          : "Failed to fetch recommendations. Please try again.",
+        error instanceof TypeError
+          ? "The recommendations service could not be reached. Check that the Vercel /api deployment is connected and try again."
+          : error instanceof Error
+            ? error.message
+            : "Failed to fetch recommendations. Please try again.",
       );
     } finally {
       setIsLoadingRecommendations(false);

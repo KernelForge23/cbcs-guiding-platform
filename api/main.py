@@ -15,6 +15,11 @@ from api.routers.testimonials import router as testimonials_router
 
 load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
+allowed_origins = [
+    origin.strip()
+    for origin in os.getenv("CORS_ORIGINS", "http://localhost:3000").split(",")
+    if origin.strip()
+]
 
 if not api_key:
     print("WARNING: Gemini API Key not found!")
@@ -27,12 +32,16 @@ Base.metadata.create_all(bind=engine)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 app.include_router(testimonials_router)
+
+@app.get("/api/health")
+def health_check():
+    return {"status": "ok"}
 
 COURSES_PATH = Path(__file__).parent / "courses.json"
 
