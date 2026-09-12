@@ -25,8 +25,7 @@ type AdminTestimonial = {
   is_featured: boolean;
 };
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "";
 const ADMIN_PIN = "1234";
 
 export default function AdminTestimonialsPage() {
