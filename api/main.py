@@ -39,6 +39,7 @@ app.add_middleware(
 )
 app.include_router(testimonials_router)
 
+@app.get("/health")
 @app.get("/api/health")
 def health_check():
     return {"status": "ok"}
@@ -315,6 +316,7 @@ def generate_batch_narratives(top_courses: list[tuple[dict, int, list[dict[str, 
     narratives = _extract_json_array(response.text)
     return [item for item in narratives if isinstance(item, dict)]
 
+@app.post("/recommend")
 @app.post("/api/recommend")
 def get_recommendations(payload: WizardPayload):
     if not client:
@@ -377,6 +379,7 @@ def get_recommendations(payload: WizardPayload):
     return {"courses": course_cards}
 
 
+@app.get("/courses/{course_code}")
 @app.get("/api/courses/{course_code}")
 def get_course_by_code(course_code: CourseCodePath):
     courses = load_courses()
