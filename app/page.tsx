@@ -42,15 +42,15 @@ type View =
   | "testimonial_form";
 
   type Branch = 
-  | "Artificial Intelligence and Machine Learning"
-  | "Civil Engineering"
-  | "Computer Science and Engineering"
-  | "Electrical Engineering"
-  | "Electronic and Telecommunication Engineering"
-  | "Instrumentation and Control Engineering"
-  | "Manufacturing Engineering and Industrial Management"
   | "Mechanical Engineering"
-  | "Metallurgy and Material Engineering";
+  | "Electrical Engineering"
+  | "Computer Engineering"
+  | "AI & Machine Learning"
+  | "Instrumentation & Control"
+  | "Electronics & Telecommunication"
+  | "Manufacturing Science & Engineering"
+  | "Civil Engineering"
+  | "Metallurgical Engineering";
 
 type PreferenceKey =
   | "difficulty_level"
@@ -60,7 +60,7 @@ type PreferenceKey =
   | "math_heavy"
   | "practical_focus";
 
-type StudentAttributes = Record<PreferenceKey, number>;
+export type StudentAttributes = Record<PreferenceKey, number>;
 
 type TestimonialCategory = string;
 
@@ -71,41 +71,55 @@ type TestimonialCourse = {
 };
 
 type CourseTestimonial = {
-  id: number;
-  written_review: string;
-  reviewer_name: string;
+  id?: number;
+  course_code?: string;
+  course_category?: string;
+  reviewer_name?: string;
+  mis_no?: string;
   subject_cgpa: number | null;
-  is_featured: boolean;
+  overall_cgpa?: number | null;
+  difficulty_level?: number;
+  workload_level?: number;
+  new_field_exploration?: number;
+  concept_heavy?: number;
+  math_heavy?: number;
+  practical_focus?: number;
+  written_review: string;
+  status?: string;
+  is_featured?: boolean;
 };
 
 type CourseCard = {
-  rank: number;
+  rank?: number;
   course_code: string;
   course_name: string;
   department?: string;
   branch?: string;
   category: CourseCategory;
-  branch_proximity: number;
+  credits?: string;
+  branch_proximity?: number;
   fit_percentage: number;
-  attributes_used: Array<{
+  attributes_used?: Array<{
     name: string;
     student_value: number | string;
     course_value: number | string;
     score: number;
   }>;
   topic_tags: string[];
+  match_reasons?: string[];
   why_this_fits?: string;
   worth_knowing?: string;
   narrative?: {
     why_this_fits?: string;
     worth_knowing?: string;
   } | null;
+  explanation_points?: string[];
   testimonials: CourseTestimonial[];
   semesterAvailability?: SemesterCode[];
   forbiddenBranches?: StudentBranch[];
   cohortRotation?: CohortRotation;
   calculatedSemesters?: SemesterCode[];
-  evaluation_style_facts:
+  evaluation_style_facts?:
     | {
         theory_exam_pct: number | null;
         lab_is_fully_continuous: boolean;
@@ -115,7 +129,8 @@ type CourseCard = {
 };
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "";
-const MIS_NUMBER_PATTERN = /^6125\d{5}$/;
+const MIS_NUMBER_PATTERN = /^6126\d{5}$/;
+const TESTIMONIAL_MIS_PATTERN = /^6125\d{5}$/;
 const TESTIMONIAL_COURSES: TestimonialCourse[] = courseCatalog;
 const TESTIMONIAL_CATEGORIES = Array.from(
   new Set(TESTIMONIAL_COURSES.map((course) => course.category)),
@@ -126,15 +141,15 @@ type RecommendResponse = {
 };
 
 const BRANCHES: Branch[] = [
-  "Artificial Intelligence and Machine Learning",
-  "Civil Engineering",
-  "Computer Science and Engineering",
-  "Electrical Engineering",
-  "Electronic and Telecommunication Engineering",
-  "Instrumentation and Control Engineering",
-  "Manufacturing Engineering and Industrial Management",
   "Mechanical Engineering",
-  "Metallurgy and Material Engineering"
+  "Electrical Engineering",
+  "Computer Engineering",
+  "AI & Machine Learning",
+  "Instrumentation & Control",
+  "Electronics & Telecommunication",
+  "Manufacturing Science & Engineering",
+  "Civil Engineering",
+  "Metallurgical Engineering"
 ];
 
 const DEFAULT_PREFERENCE_RATINGS: StudentAttributes = {
@@ -491,6 +506,7 @@ export default function CBCSElectiveGuide() {
 
   const [testimonialName, setTestimonialName] = useState("");
   const [misNumber, setMisNumber] = useState("");
+  const [testimonialMisNumber, setTestimonialMisNumber] = useState("");
   const [testimonialBranch, setTestimonialBranch] = useState<Branch | "">("");
   const [testimonialCategory, setTestimonialCategory] = useState<
     TestimonialCategory | ""
@@ -509,6 +525,9 @@ export default function CBCSElectiveGuide() {
     useState("");
   const isMisNumberValid =
     misNumber.trim().length === 0 || MIS_NUMBER_PATTERN.test(misNumber.trim());
+  const isTestimonialMisValid =
+    testimonialMisNumber.trim().length === 0 ||
+    TESTIMONIAL_MIS_PATTERN.test(testimonialMisNumber.trim());
 
   const eligibleCourses = useMemo(() => {
     if (!studentBranch) return [];
@@ -620,6 +639,7 @@ export default function CBCSElectiveGuide() {
     setRecommendationError(null);
     setTestimonialName("");
     setMisNumber("");
+    setTestimonialMisNumber("");
     setTestimonialBranch("");
     setTestimonialCategory("");
     setCourseCode("");
@@ -725,8 +745,8 @@ export default function CBCSElectiveGuide() {
   function handleTestimonialLoginContinue() {
     if (
       !testimonialName.trim() ||
-      !misNumber.trim() ||
-      !MIS_NUMBER_PATTERN.test(misNumber.trim()) ||
+      !testimonialMisNumber.trim() ||
+      !TESTIMONIAL_MIS_PATTERN.test(testimonialMisNumber.trim()) ||
       !testimonialBranch
     )
       return;
@@ -742,13 +762,13 @@ export default function CBCSElectiveGuide() {
       !testimonialCategory ||
       !courseCode ||
       !review.trim() ||
-      !misNumber.trim() ||
-      !MIS_NUMBER_PATTERN.test(misNumber.trim()) ||
+      !testimonialMisNumber.trim() ||
+      !TESTIMONIAL_MIS_PATTERN.test(testimonialMisNumber.trim()) ||
       subjectCgpa === "" ||
       overallCgpa === ""
     ) {
       setTestimonialError(
-        "Please fill all required fields with valid values. MIS Number must start with 6125 and be exactly 9 digits.",
+        "Please fill all required fields with valid values. MIS Number must start with 6125 and be exactly 9 digits (example: 612572001).",
       );
       return;
     }
@@ -788,7 +808,7 @@ export default function CBCSElectiveGuide() {
           course_code: courseCode,
           course_category: testimonialCategory,
           reviewer_name: testimonialName.trim(),
-          mis_no: misNumber.trim(),
+          mis_no: testimonialMisNumber.trim(),
           subject_cgpa: Number(subjectCgpa),
           overall_cgpa: Number(overallCgpa),
           difficulty_level: testimonialRatings.difficulty_level,
@@ -841,12 +861,25 @@ export default function CBCSElectiveGuide() {
           <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-400 sm:text-xl">Turn your learning preferences into a focused, explainable course path — so every credit moves you forward.</p>
         </motion.header>
 
-        <motion.section initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.28 }} className="mt-12 rounded-3xl border border-slate-200 bg-white dark:border-white/10 dark:bg-white/5 p-3 shadow-2xl shadow-black/30 backdrop-blur-xl sm:p-5">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
-            <div className="flex-1 rounded-2xl border border-transparent px-5 py-4 transition focus-within:border-blue-400/40 focus-within:bg-blue-400/5"><label htmlFor="student-name" className="mb-2 block text-[11px] font-bold uppercase tracking-[0.14em] text-slate-600 dark:text-slate-400">Your name</label><input id="student-name" type="text" value={name} onChange={(e) => setName(e.target.value)} className="w-full border-0 bg-transparent p-0 text-lg font-semibold text-slate-900 dark:text-white outline-none focus:ring-0" /></div>
-            <div className="hidden h-14 w-px bg-slate-200 dark:bg-white/10 sm:block" />
-            <div className="flex-1 rounded-2xl border border-transparent px-5 py-4 transition focus-within:border-blue-400/40 focus-within:bg-blue-400/5"><label htmlFor="student-branch" className="mb-2 block text-[11px] font-bold uppercase tracking-[0.14em] text-slate-600 dark:text-slate-300">Your branch</label><select id="student-branch" value={studentBranch} onChange={(event) => { const value = event.target.value as StudentBranch | ""; setStudentBranch(value); setBranch(value ? API_BRANCH_BY_CODE[value] as Branch : ""); }} className="branch-select w-full rounded-xl border border-slate-200 bg-white px-3 py-3 text-lg font-semibold text-slate-900 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 dark:border-white/10 dark:bg-slate-900 dark:text-white"><option value="">Select your branch</option><optgroup label="Group A">{BRANCH_OPTIONS.filter((option) => GROUP_A_BRANCHES.some((value) => value === option.value)).map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</optgroup><optgroup label="Group B">{BRANCH_OPTIONS.filter((option) => GROUP_B_BRANCHES.some((value) => value === option.value)).map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</optgroup></select></div>
-            <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }} type="button" onClick={handleStartWizard} disabled={!name.trim() || !branch} className="group inline-flex h-16 items-center justify-center gap-3 rounded-2xl bg-blue-600 px-7 text-base font-bold text-white shadow-lg shadow-blue-600/25 transition hover:bg-indigo-600 disabled:cursor-not-allowed disabled:opacity-40 sm:min-w-52">Start Wizard <ArrowRight className="transition-transform group-hover:translate-x-1" /></motion.button>
+        <motion.section initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.28 }} className="mt-12 rounded-3xl border border-slate-200 bg-white dark:border-white/10 dark:bg-white/5 p-4 sm:p-6 shadow-2xl shadow-black/30 backdrop-blur-xl">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:items-end">
+            <div className="rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-50/50 dark:bg-white/[0.03] px-4 py-3 transition focus-within:border-blue-400/50 focus-within:bg-blue-400/5">
+              <label htmlFor="student-name" className="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.14em] text-slate-600 dark:text-slate-400">Your name</label>
+              <input id="student-name" type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Full Name" className="w-full border-0 bg-transparent p-0 text-base font-semibold text-slate-900 dark:text-white outline-none focus:ring-0 placeholder:text-slate-400 dark:placeholder:text-slate-600" />
+            </div>
+
+            <div className="rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-50/50 dark:bg-white/[0.03] px-4 py-3 transition focus-within:border-blue-400/50 focus-within:bg-blue-400/5">
+              <label htmlFor="student-mis" className="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.14em] text-slate-600 dark:text-slate-400">MIS Number</label>
+              <input id="student-mis" type="text" value={misNumber} onChange={(e) => setMisNumber(e.target.value)} placeholder="e.g. 612612345" className="w-full border-0 bg-transparent p-0 text-base font-semibold text-slate-900 dark:text-white outline-none focus:ring-0 placeholder:text-slate-400 dark:placeholder:text-slate-600" />
+              {!isMisNumberValid && (<p className="mt-1 text-xs font-semibold text-red-500">Must start with 6126 (9 digits)</p>)}
+            </div>
+
+            <div className="rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-50/50 dark:bg-white/[0.03] px-4 py-3 transition focus-within:border-blue-400/50 focus-within:bg-blue-400/5">
+              <label htmlFor="student-branch" className="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.14em] text-slate-600 dark:text-slate-300">Your branch</label>
+              <select id="student-branch" value={studentBranch} onChange={(event) => { const value = event.target.value as StudentBranch | ""; setStudentBranch(value); setBranch(value ? API_BRANCH_BY_CODE[value] as Branch : ""); }} className="branch-select w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-900 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 dark:border-white/10 dark:bg-slate-900 dark:text-white truncate"><option value="">Select your branch</option><optgroup label="Group A">{BRANCH_OPTIONS.filter((option) => GROUP_A_BRANCHES.some((value) => value === option.value)).map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</optgroup><optgroup label="Group B">{BRANCH_OPTIONS.filter((option) => GROUP_B_BRANCHES.some((value) => value === option.value)).map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</optgroup></select>
+            </div>
+
+            <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} type="button" onClick={handleStartWizard} disabled={!name.trim() || !branch || !misNumber.trim() || !MIS_NUMBER_PATTERN.test(misNumber.trim())} className="group inline-flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-blue-600 px-6 text-base font-bold text-white shadow-lg shadow-blue-600/25 transition hover:bg-indigo-600 disabled:cursor-not-allowed disabled:opacity-40">Start Wizard <ArrowRight className="transition-transform group-hover:translate-x-1" /></motion.button>
           </div>
         </motion.section>
         <div className="mt-5 flex flex-wrap items-center justify-center gap-3"><span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white dark:border-white/10 dark:bg-white/5 px-5 py-3 text-base font-semibold text-slate-700 dark:text-slate-200"><Check className="size-4 text-blue-400" /> Explainable matching</span><span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white dark:border-white/10 dark:bg-white/5 px-5 py-3 text-base font-semibold text-slate-700 dark:text-slate-200"><GraduationCap className="size-5 text-slate-600 dark:text-slate-400" /> Built for CBCS</span><span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white dark:border-white/10 dark:bg-white/5 px-5 py-3 text-base font-semibold text-slate-700 dark:text-slate-200"><MessageSquareQuote className="size-5 text-slate-600 dark:text-slate-400" /> Peer Course Reviews</span></div>
@@ -1163,19 +1196,19 @@ export default function CBCSElectiveGuide() {
                   <input
                     id="mis-number"
                     type="text"
-                    value={misNumber}
-                    onChange={(e) => setMisNumber(e.target.value)}
-                    placeholder="e.g. 612512345"
+                    value={testimonialMisNumber}
+                    onChange={(e) => setTestimonialMisNumber(e.target.value)}
+                    placeholder="e.g. 612572001"
                     className={`w-full rounded-xl border bg-white dark:bg-slate-900 px-4 py-2.5 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 ${
-                      isMisNumberValid
+                      isTestimonialMisValid
                         ? "border-slate-300 dark:border-slate-700 focus:border-indigo-500 focus:ring-indigo-200 dark:focus:ring-indigo-900"
                         : "border-red-400 focus:border-red-500 focus:ring-red-100 dark:focus:ring-red-950"
                     }`}
                   />
-                  {!isMisNumberValid && (
+                  {!isTestimonialMisValid && (
                     <p className="mt-1 text-xs font-medium text-red-600 dark:text-red-400">
                       MIS must start with 6125 and be exactly 9 digits (example:
-                      612512345).
+                      612572001).
                     </p>
                   )}
                 </div>
@@ -1218,8 +1251,9 @@ export default function CBCSElectiveGuide() {
                   onClick={handleTestimonialLoginContinue}
                   disabled={
                     !testimonialName.trim() ||
-                    !misNumber.trim() ||
-                    !isMisNumberValid ||
+                    !testimonialMisNumber.trim() ||
+                    !isTestimonialMisValid ||
+                    !TESTIMONIAL_MIS_PATTERN.test(testimonialMisNumber.trim()) ||
                     !testimonialBranch
                   }
                   className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"

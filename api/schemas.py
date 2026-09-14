@@ -9,7 +9,7 @@ class TestimonialBase(BaseModel):
     course_code: str = Field(min_length=1, max_length=128)
     course_category: str = Field(min_length=1, max_length=32)
     reviewer_name: str = Field(min_length=1, max_length=128)
-    mis_no: str = Field(pattern=r"^6125\d{5}$")
+    mis_no: str = Field(pattern=r"^(6125|6126)\d{5}$")
     subject_cgpa: float = Field(ge=0.0, le=10.0)
     overall_cgpa: float = Field(ge=0.0, le=10.0)
     difficulty_level: int = Field(ge=1, le=4)
