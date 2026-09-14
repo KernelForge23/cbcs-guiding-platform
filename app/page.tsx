@@ -23,6 +23,7 @@ import { formatCourseCodeForDisplay } from "./lib/courseCode";
 import courseCatalog from "../api/courses.json";
 import { CourseStructure } from "../components/course-structure";
 import { ThemeToggle } from "../components/theme-toggle";
+import { QuestionnaireWizard } from "../components/questionnaire-wizard";
 import {
   API_BRANCH_BY_CODE,
   BRANCH_OPTIONS,
@@ -394,8 +395,8 @@ function RatingScale({
           onClick={() => onChange(option.value)}
           className={`rounded-xl border px-3 py-2 text-xs font-semibold transition sm:text-sm ${
             value === option.value
-              ? "border-indigo-600 bg-indigo-600 text-slate-900 dark:text-white"
-              : "border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
+              ? "border-indigo-600 bg-indigo-600 text-white shadow-sm"
+              : "border-slate-300 bg-white text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
           }`}
           aria-pressed={value === option.value}
         >
@@ -403,7 +404,7 @@ function RatingScale({
           {option.label}
         </button>
       ))}
-      <div className="col-span-2 text-center text-xs text-slate-500 sm:col-span-4">
+      <div className="col-span-2 text-center text-xs text-slate-500 dark:text-slate-400 sm:col-span-4">
         1 = Strongly Disagree · 4 = Strongly Agree
       </div>
     </div>
@@ -435,7 +436,7 @@ function FitBadge({ percentage }: { percentage: number }) {
           cy={center}
           r={radius}
           fill="none"
-          stroke="#1e293b"
+          className="stroke-slate-200 dark:stroke-slate-800"
           strokeWidth={strokeWidth}
           shapeRendering="geometricPrecision"
         />
@@ -457,7 +458,7 @@ function FitBadge({ percentage }: { percentage: number }) {
           y="50%"
           textAnchor="middle"
           dominantBaseline="middle"
-          className="fill-slate-900 text-[20px] font-bold"
+          className="fill-slate-900 dark:fill-white text-[20px] font-bold"
         >
           {clampedPercentage}%
         </text>
@@ -875,110 +876,41 @@ export default function CBCSElectiveGuide() {
 
         {/* ── Wizard View ── */}
         {view === "wizard" && (
-          <div className="space-y-6">
-            <header className="space-y-2">
-              <p className="text-sm font-medium text-indigo-600">
-                Preference Wizard
-              </p>
-              <h1 className="text-2xl font-bold text-slate-900 sm:text-3xl">
-                Tell us about your learning style
-              </h1>
-              <p className="text-slate-600">
-                Hi {name}! For each statement, choose the option that best
-                reflects you — from Strongly Disagree to Strongly Agree.
-              </p>
-            </header>
-
-            <div className="space-y-5">
-              {WIZARD_QUESTIONS.map((q, idx) => (
-                <div
-                  key={q.key}
-                  className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6"
-                >
-                  <div className="mb-4 flex items-start gap-3">
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-indigo-100 text-xs font-bold text-indigo-700">
-                      {idx + 1}
-                    </span>
-                    <div>
-                      <p className="text-xs font-semibold uppercase tracking-wide text-indigo-600">
-                        {q.group}
-                      </p>
-                      <p className="mt-1 text-sm font-medium text-slate-900 sm:text-base">
-                        {q.text}
-                      </p>
-                    </div>
-                  </div>
-                  <RatingScale
-                    value={wizardRatings[q.key]}
-                    onChange={(value) =>
-                      setWizardRatings((previous) => ({
-                        ...previous,
-                        [q.key]: value,
-                      }))
-                    }
-                  />
-                </div>
-              ))}
-            </div>
-
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <button
-                type="button"
-                onClick={() => setView("home")}
-                disabled={isLoadingRecommendations}
-                className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900 disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                <ChevronLeft className="h-4 w-4" />
-                Back to Home
-              </button>
-              <div className="flex flex-col items-stretch gap-2 sm:items-end">
-                {recommendationError && (
-                  <p className="text-sm text-red-600">{recommendationError}</p>
-                )}
-                <button
-                  type="button"
-                  onClick={handleGetRecommendations}
-                  disabled={isLoadingRecommendations}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-8 py-3 text-sm font-semibold text-slate-900 dark:text-white shadow-md shadow-indigo-200 transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                  {isLoadingRecommendations
-                    ? "Ranking courses..."
-                    : "Get My Recommendations"}
-                  <Sparkles className="h-4 w-4" />
-                </button>
-              </div>
-            </div>
-          </div>
+          <QuestionnaireWizard
+            name={name}
+            ratings={wizardRatings}
+            onRatingChange={(key, value) =>
+              setWizardRatings((prev) => ({
+                ...prev,
+                [key]: value,
+              }))
+            }
+            onBackToHome={() => setView("home")}
+            onSubmit={handleGetRecommendations}
+            isLoading={isLoadingRecommendations}
+            error={recommendationError}
+          />
         )}
-        {isLoadingRecommendations && (
-  <div className="flex flex-col items-center justify-center py-16 animate-pulse">
-    <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4"></div>
-    <p className="text-lg font-medium text-gray-700 dark:text-gray-300">
-      Ranking the courses according to your preferences...
-    </p>
-  </div>
-)}
 
         {/* ── Results View ── */}
         {view === "results" && (
           <div className="space-y-6">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
               <header className="space-y-2">
-                <p className="text-sm font-medium text-indigo-600">
+                <p className="text-sm font-medium text-indigo-600 dark:text-indigo-400">
                   Your Recommendations
                 </p>
-                <h1 className="text-2xl font-bold text-slate-900 sm:text-3xl">
+                <h1 className="text-2xl font-bold text-slate-900 dark:text-white sm:text-3xl">
                   Top matches for {name}
                 </h1>
-                <p className="text-slate-600">
+                <p className="text-slate-600 dark:text-slate-400">
                   {branch} · Based on your preference profile
-                  
                 </p>
               </header>
               <button
                 type="button"
                 onClick={resetAll}
-                className="inline-flex shrink-0 items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
+                className="inline-flex shrink-0 items-center gap-2 rounded-xl border border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 shadow-sm transition hover:bg-slate-50 dark:hover:bg-slate-800"
               >
                 <RotateCcw className="h-4 w-4" />
                 Start Over
@@ -987,7 +919,7 @@ export default function CBCSElectiveGuide() {
 
             <div className="space-y-5">
               {!studentBranch ? (
-                <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-6 text-center text-sm text-amber-800">
+                <div className="rounded-xl border border-amber-200 dark:border-amber-900/50 bg-amber-50 dark:bg-amber-950/40 px-4 py-6 text-center text-sm text-amber-800 dark:text-amber-300">
                   Please select your branch to view eligible courses.
                 </div>
               ) : (
@@ -1009,7 +941,7 @@ export default function CBCSElectiveGuide() {
                               setActiveCategory(category);
                               setSelectedDepartments(null);
                             }}
-                            className={`rounded-full px-3 py-2 text-sm font-semibold transition ${
+                            className={`rounded-full px-3.5 py-2 text-sm font-semibold transition ${
                               activeCategory === category
                                 ? "bg-indigo-600 text-white shadow-sm"
                                 : "bg-white text-slate-800 ring-1 ring-slate-200 hover:bg-slate-50 dark:bg-slate-900 dark:text-slate-200 dark:ring-white/10 dark:hover:bg-white/10"
@@ -1025,18 +957,18 @@ export default function CBCSElectiveGuide() {
                     </div>
 
                     <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                      <h2 className="text-lg font-bold text-slate-900">
+                      <h2 className="text-lg font-bold text-slate-900 dark:text-white">
                         {formatCategoryDisplay(activeCategory, studentBranch)}
                       </h2>
-                      <fieldset className="rounded-xl border border-slate-200 bg-white px-4 py-3">
-                        <legend className="px-1 text-sm font-semibold text-slate-600">
+                      <fieldset className="rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 px-4 py-3">
+                        <legend className="px-1 text-sm font-semibold text-slate-600 dark:text-slate-400">
                           Departments
                         </legend>
                         <div className="flex flex-wrap gap-x-4 gap-y-2">
                           {categoryDepartments.map((department) => (
                             <label
                               key={department}
-                              className="flex items-center gap-2 text-sm text-slate-700"
+                              className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300"
                             >
                               <input
                                 type="checkbox"
@@ -1066,19 +998,19 @@ export default function CBCSElectiveGuide() {
                   {visibleCourses.map((course, index) => (
                 <article
                   key={course.course_code}
-                  className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+                  className="overflow-hidden rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 shadow-sm"
                 >
-                  <div className="border-b border-slate-100 bg-slate-50/60 px-5 py-4 sm:px-6">
+                  <div className="border-b border-slate-100 dark:border-white/10 bg-slate-50/60 dark:bg-slate-800/60 px-5 py-4 sm:px-6">
                     <div className="flex flex-wrap items-center gap-3">
-                      <span className="flex h-9 w-9 items-center justify-center rounded-full bg-indigo-600 text-sm font-bold text-slate-900 dark:text-white">
+                      <span className="flex h-9 w-9 items-center justify-center rounded-full bg-indigo-600 text-sm font-bold text-white">
                         #{index + 1}
                       </span>
                       <div className="min-w-0 flex-1">
-                        <p className="font-mono text-xs font-semibold uppercase tracking-wider text-indigo-600">
+                        <p className="font-mono text-xs font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
                           {formatCourseCodeForDisplay(course.course_code)}
                         </p>
                         <div className="flex flex-wrap items-center gap-2">
-                          <h2 className="text-lg font-bold text-slate-900 sm:text-xl">
+                          <h2 className="text-lg font-bold text-slate-900 dark:text-white sm:text-xl">
                             {course.course_name}
                           </h2>
                           {shouldShowSemesterAvailability(
@@ -1087,7 +1019,7 @@ export default function CBCSElectiveGuide() {
                             (course.cohortRotation === "NONE" ||
                             !course.cohortRotation) &&
                             course.calculatedSemesters?.length === 2 && (
-                              <span className="rounded-full bg-blue-100 px-2.5 py-1 text-xs font-semibold text-blue-800">
+                              <span className="rounded-full bg-blue-100 dark:bg-blue-950/70 px-2.5 py-1 text-xs font-semibold text-blue-800 dark:text-blue-300">
                                 Both sems
                               </span>
                             )}
@@ -1098,7 +1030,7 @@ export default function CBCSElectiveGuide() {
                             !course.cohortRotation) &&
                             course.calculatedSemesters?.length === 1 &&
                             course.calculatedSemesters[0] === "SEM1" && (
-                              <span className="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-800">
+                              <span className="rounded-full bg-emerald-100 dark:bg-emerald-950/70 px-2.5 py-1 text-xs font-semibold text-emerald-800 dark:text-emerald-300">
                                 Sem 1 only
                               </span>
                             )}
@@ -1109,7 +1041,7 @@ export default function CBCSElectiveGuide() {
                             !course.cohortRotation) &&
                             course.calculatedSemesters?.length === 1 &&
                             course.calculatedSemesters[0] === "SEM2" && (
-                              <span className="rounded-full bg-purple-100 px-2.5 py-1 text-xs font-semibold text-purple-800">
+                              <span className="rounded-full bg-purple-100 dark:bg-purple-950/70 px-2.5 py-1 text-xs font-semibold text-purple-800 dark:text-purple-300">
                                 Sem 2 only
                               </span>
                             )}
@@ -1121,7 +1053,7 @@ export default function CBCSElectiveGuide() {
                       {course.topic_tags.map((tag) => (
                         <span
                           key={tag}
-                          className="rounded-full bg-indigo-50 px-2.5 py-0.5 text-xs font-medium text-indigo-700"
+                          className="rounded-full bg-indigo-50 dark:bg-indigo-950/60 px-2.5 py-0.5 text-xs font-medium text-indigo-700 dark:text-indigo-300 dark:border dark:border-indigo-800/50"
                         >
                           {formatTag(tag)}
                         </span>
@@ -1131,11 +1063,11 @@ export default function CBCSElectiveGuide() {
 
                   <div className="space-y-5 px-5 py-5 sm:px-6">
                     <div>
-                      <h3 className="mb-1.5 flex items-center gap-1.5 text-sm font-semibold text-slate-900">
+                      <h3 className="mb-1.5 flex items-center gap-1.5 text-sm font-semibold text-slate-900 dark:text-white">
                         <Star className="h-4 w-4 text-indigo-500" />
                         Why this fits you
                       </h3>
-                      <p className="text-sm leading-relaxed text-slate-600">
+                      <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
                         {course.narrative?.why_this_fits ??
                           course.why_this_fits ??
                           "This course matches your selected preference profile based on its evaluated attributes."}
@@ -1143,11 +1075,11 @@ export default function CBCSElectiveGuide() {
                     </div>
 
                     <div>
-                      <h3 className="mb-1.5 flex items-center gap-1.5 text-sm font-semibold text-slate-900">
+                      <h3 className="mb-1.5 flex items-center gap-1.5 text-sm font-semibold text-slate-900 dark:text-white">
                         <AlertCircle className="h-4 w-4 text-amber-500" />
                         Worth knowing
                       </h3>
-                      <p className="text-sm leading-relaxed text-slate-600">
+                      <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
                         {course.narrative?.worth_knowing ??
                           course.worth_knowing ??
                           "Review the course attributes and testimonials before making your final selection."}
@@ -1157,24 +1089,24 @@ export default function CBCSElectiveGuide() {
                     {course.testimonials.map((testimonial, testimonialIndex) => (
                       <blockquote
                         key={`${course.course_code}-${testimonial.id}-${testimonialIndex}`}
-                        className="rounded-xl border-l-4 border-indigo-300 bg-indigo-50/50 px-4 py-3"
+                        className="rounded-xl border-l-4 border-indigo-400 dark:border-indigo-500 bg-indigo-50/50 dark:bg-indigo-950/30 px-4 py-3"
                       >
                         <div className="mb-2 flex flex-wrap items-center gap-2">
                           {testimonial.is_featured && (
-                            <span className="rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-semibold text-amber-800">
+                            <span className="rounded-full bg-amber-100 dark:bg-amber-950/70 px-2.5 py-0.5 text-xs font-semibold text-amber-800 dark:text-amber-300">
                               ✨ Editor&apos;s Choice
                             </span>
                           )}
                           {testimonial.subject_cgpa !== null && (
-                            <span className="rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-semibold text-emerald-800">
+                            <span className="rounded-full bg-emerald-100 dark:bg-emerald-950/70 px-2.5 py-0.5 text-xs font-semibold text-emerald-800 dark:text-emerald-300">
                               Scored: {testimonial.subject_cgpa.toFixed(1)}
                             </span>
                           )}
                         </div>
-                        <p className="text-sm italic leading-relaxed text-slate-700">
+                        <p className="text-sm italic leading-relaxed text-slate-700 dark:text-slate-200">
                           &ldquo;{testimonial.written_review}&rdquo;
                         </p>
-                        <p className="mt-2 text-xs font-medium text-slate-500">
+                        <p className="mt-2 text-xs font-medium text-slate-500 dark:text-slate-400">
                           — {testimonial.reviewer_name}
                         </p>
                       </blockquote>
@@ -1183,7 +1115,7 @@ export default function CBCSElectiveGuide() {
                 </article>
                   ))}
               {visibleCourses.length === 0 && (
-                <div className="rounded-xl border border-slate-200 bg-white px-4 py-6 text-center text-sm text-slate-600">
+                <div className="rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 px-4 py-6 text-center text-sm text-slate-600 dark:text-slate-300">
                   No courses match this category and department filter.
                 </div>
               )}
@@ -1197,27 +1129,27 @@ export default function CBCSElectiveGuide() {
         {view === "testimonial_login" && (
           <div className="mx-auto w-full space-y-6">
             <header className="space-y-2 text-center">
-              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-100 text-indigo-600">
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-100 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400">
                 <MessageSquareQuote className="h-6 w-6" />
               </div>
-              <h1 className="text-2xl font-bold text-slate-900">
+              <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
                 Share a Testimonial
               </h1>
-              <p className="text-sm text-slate-600">
+              <p className="text-sm text-slate-600 dark:text-slate-400">
                 Help future students by sharing your honest course experience.
                 All submissions are reviewed before going live.
               </p>
             </header>
 
-            <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
-              <p className="mb-5 text-xs font-semibold uppercase tracking-wide text-slate-500">
+            <section className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 p-6 shadow-sm sm:p-8">
+              <p className="mb-5 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
                 Step 1 of 2 — Verify your identity
               </p>
               <div className="space-y-4">
                 <div>
                   <label
                     htmlFor="testimonial-name"
-                    className="mb-1.5 block text-sm font-medium text-slate-700"
+                    className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
                   >
                     Name
                   </label>
@@ -1227,13 +1159,13 @@ export default function CBCSElectiveGuide() {
                     value={testimonialName}
                     onChange={(e) => setTestimonialName(e.target.value)}
                     placeholder="Your full name"
-                    className="w-full rounded-xl border border-slate-300 px-4 py-2.5 text-slate-900 placeholder:text-slate-600 dark:text-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                    className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-2.5 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-900"
                   />
                 </div>
                 <div>
                   <label
                     htmlFor="mis-number"
-                    className="mb-1.5 block text-sm font-medium text-slate-700"
+                    className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
                   >
                     MIS Number
                   </label>
@@ -1243,14 +1175,14 @@ export default function CBCSElectiveGuide() {
                     value={misNumber}
                     onChange={(e) => setMisNumber(e.target.value)}
                     placeholder="e.g. 612512345"
-                    className={`w-full rounded-xl border px-4 py-2.5 text-slate-900 placeholder:text-slate-600 dark:text-slate-400 focus:outline-none focus:ring-2 ${
+                    className={`w-full rounded-xl border bg-white dark:bg-slate-900 px-4 py-2.5 text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 ${
                       isMisNumberValid
-                        ? "border-slate-300 focus:border-indigo-500 focus:ring-indigo-200"
-                        : "border-red-400 focus:border-red-500 focus:ring-red-100"
+                        ? "border-slate-300 dark:border-slate-700 focus:border-indigo-500 focus:ring-indigo-200 dark:focus:ring-indigo-900"
+                        : "border-red-400 focus:border-red-500 focus:ring-red-100 dark:focus:ring-red-950"
                     }`}
                   />
                   {!isMisNumberValid && (
-                    <p className="mt-1 text-xs font-medium text-red-600">
+                    <p className="mt-1 text-xs font-medium text-red-600 dark:text-red-400">
                       MIS must start with 6125 and be exactly 9 digits (example:
                       612512345).
                     </p>
@@ -1259,7 +1191,7 @@ export default function CBCSElectiveGuide() {
                 <div>
                   <label
                     htmlFor="testimonial-branch"
-                    className="mb-1.5 block text-sm font-medium text-slate-700"
+                    className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
                   >
                     Branch
                   </label>
@@ -1269,7 +1201,7 @@ export default function CBCSElectiveGuide() {
                     onChange={(e) =>
                       setTestimonialBranch(e.target.value as Branch | "")
                     }
-                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-slate-900 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                    className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-2.5 text-slate-900 dark:text-white focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-900"
                   >
                     <option value="">Select your branch</option>
                     {BRANCHES.map((b) => (
@@ -1285,7 +1217,7 @@ export default function CBCSElectiveGuide() {
                 <button
                   type="button"
                   onClick={() => setView("home")}
-                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-700"
                 >
                   <ChevronLeft className="h-4 w-4" />
                   Cancel
@@ -1299,7 +1231,7 @@ export default function CBCSElectiveGuide() {
                     !isMisNumberValid ||
                     !testimonialBranch
                   }
-                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-slate-900 dark:text-white shadow-md shadow-indigo-200 transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   Continue
                   <ArrowRight className="h-4 w-4" />
@@ -1313,30 +1245,30 @@ export default function CBCSElectiveGuide() {
         {view === "testimonial_form" && (
           <div className="mx-auto w-full space-y-6">
             <header className="space-y-2 text-center">
-              <h1 className="text-2xl font-bold text-slate-900">
+              <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
                 Course Review
               </h1>
-              <p className="text-sm text-slate-600">
+              <p className="text-sm text-slate-600 dark:text-slate-400">
                 {testimonialName} · {testimonialBranch}
               </p>
             </header>
 
             {testimonialSubmitted ? (
-              <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-8 text-center shadow-sm">
-                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+              <div className="rounded-2xl border border-emerald-200 dark:border-emerald-900/60 bg-emerald-50 dark:bg-emerald-950/40 p-8 text-center shadow-sm">
+                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 dark:bg-emerald-900/60 text-emerald-600 dark:text-emerald-400">
                   <Sparkles className="h-6 w-6" />
                 </div>
-                <h2 className="text-lg font-semibold text-emerald-900">
+                <h2 className="text-lg font-semibold text-emerald-900 dark:text-emerald-200">
                   Submitted for human verification
                 </h2>
-                <p className="mt-2 text-sm text-emerald-700">
+                <p className="mt-2 text-sm text-emerald-700 dark:text-emerald-300">
                   Thank you! Your review will be checked by an administrator
                   before appearing on course cards.
                 </p>
                 <button
                   type="button"
                   onClick={resetAll}
-                  className="mt-6 inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-6 py-2.5 text-sm font-semibold text-slate-900 dark:text-white transition hover:bg-emerald-700"
+                  className="mt-6 inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700"
                 >
                   Return to Home
                 </button>
@@ -1344,18 +1276,18 @@ export default function CBCSElectiveGuide() {
             ) : (
               <form
                 onSubmit={handleTestimonialSubmit}
-                className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8"
+                className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 p-6 shadow-sm sm:p-8"
               >
-                <p className="mb-5 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                <p className="mb-5 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
                   Step 2 of 2 — Rate your course
                 </p>
                 {testimonialSubmissionMessage && (
-                  <div className="mb-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
+                  <div className="mb-5 rounded-xl border border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/40 px-4 py-3 text-sm text-emerald-800 dark:text-emerald-300">
                     {testimonialSubmissionMessage}
                   </div>
                 )}
                 {testimonialError && (
-                  <div className="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                  <div className="mb-5 rounded-xl border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-950/40 px-4 py-3 text-sm text-red-700 dark:text-red-300">
                     {testimonialError}
                   </div>
                 )}
@@ -1364,7 +1296,7 @@ export default function CBCSElectiveGuide() {
                   <div>
                     <label
                       htmlFor="course-category"
-                      className="mb-1.5 block text-sm font-medium text-slate-700"
+                      className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
                     >
                       Course Category
                     </label>
@@ -1373,7 +1305,7 @@ export default function CBCSElectiveGuide() {
                       value={testimonialCategory}
                       onChange={handleTestimonialCategoryChange}
                       required
-                      className="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-slate-900 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                      className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-2.5 text-slate-900 dark:text-white focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-900"
                     >
                       <option value="">Select course category</option>
                       {TESTIMONIAL_CATEGORIES.map((category) => (
@@ -1386,7 +1318,7 @@ export default function CBCSElectiveGuide() {
                   <div>
                     <label
                       htmlFor="course-code"
-                      className="mb-1.5 block text-sm font-medium text-slate-700"
+                      className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
                     >
                       Course Name
                     </label>
@@ -1396,7 +1328,7 @@ export default function CBCSElectiveGuide() {
                       onChange={(e) => setCourseCode(e.target.value)}
                       required
                       disabled={!testimonialCategory}
-                      className="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-slate-900 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                      className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-2.5 text-slate-900 dark:text-white focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-900"
                     >
                       <option value="">
                         {testimonialCategory
@@ -1416,7 +1348,7 @@ export default function CBCSElectiveGuide() {
                   <div>
                     <label
                       htmlFor="subject-cgpa"
-                      className="mb-1.5 block text-sm font-medium text-slate-700"
+                      className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
                     >
                       Subject CGPA (out of 10)
                     </label>
@@ -1433,13 +1365,13 @@ export default function CBCSElectiveGuide() {
                           e.target.value === "" ? "" : Number(e.target.value),
                         )
                       }
-                      className="w-full rounded-xl border border-slate-300 px-4 py-2.5 text-slate-900 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                      className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-2.5 text-slate-900 dark:text-white focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-900"
                     />
                   </div>
                   <div>
                     <label
                       htmlFor="overall-cgpa"
-                      className="mb-1.5 block text-sm font-medium text-slate-700"
+                      className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
                     >
                       Overall CGPA (out of 10)
                     </label>
@@ -1456,7 +1388,7 @@ export default function CBCSElectiveGuide() {
                           e.target.value === "" ? "" : Number(e.target.value),
                         )
                       }
-                      className="w-full rounded-xl border border-slate-300 px-4 py-2.5 text-slate-900 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                      className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-2.5 text-slate-900 dark:text-white focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-900"
                     />
                   </div>
                 </div>
@@ -1465,9 +1397,9 @@ export default function CBCSElectiveGuide() {
                   {TESTIMONIAL_ATTRIBUTES.map((attr) => (
                     <div
                       key={attr.key}
-                      className="rounded-xl border border-slate-100 bg-slate-50/50 p-4"
+                      className="rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 p-4"
                     >
-                      <p className="mb-3 text-sm font-medium text-slate-900">
+                      <p className="mb-3 text-sm font-medium text-slate-900 dark:text-white">
                         {attr.label}
                       </p>
                       <RatingScale
@@ -1486,18 +1418,18 @@ export default function CBCSElectiveGuide() {
                 <div className="mt-6">
                   <label
                     htmlFor="review"
-                    className="mb-1.5 block text-sm font-medium text-slate-700"
+                    className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
                   >
                     Leave Advice for Your Juniors (The Inside Scoop)
                   </label>
-                  <p className="mt-2 text-sm text-slate-600">
+                  <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
                     Don&apos;t just repeat your ratings above! Tell the first-years
                     what the numbers can&apos;t. If you were talking to your junior
                     in the canteen, what is the one secret you would tell them to
                     survive this course?
                     Think about answering at least one of these:
                   </p>
-                  <ul className="ml-5 mt-2 list-disc text-sm text-slate-600">
+                  <ul className="ml-5 mt-2 list-disc text-sm text-slate-600 dark:text-slate-400">
                     <li>
                       How do you actually score marks? (e.g., &quot;Memorize the
                       PYQs,&quot; &quot;The professor is very strict about
@@ -1517,7 +1449,7 @@ export default function CBCSElectiveGuide() {
                     required
                     rows={5}
                     placeholder="Share what future students should know..."
-                    className="w-full resize-y rounded-xl border border-slate-300 px-4 py-3 text-sm text-slate-900 placeholder:text-slate-600 dark:text-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                    className="w-full resize-y rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-3 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-900"
                   />
                 </div>
 
@@ -1525,7 +1457,7 @@ export default function CBCSElectiveGuide() {
                   <button
                     type="button"
                     onClick={() => setView("testimonial_login")}
-                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-700"
                   >
                     <ChevronLeft className="h-4 w-4" />
                     Back
@@ -1534,7 +1466,7 @@ export default function CBCSElectiveGuide() {
                     type="submit"
                     value="submit_add_another"
                     disabled={isSubmittingTestimonial}
-                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-indigo-300 bg-indigo-50 px-4 py-2.5 text-sm font-semibold text-indigo-700 transition hover:bg-indigo-100"
+                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl border border-indigo-300 dark:border-indigo-800 bg-indigo-50 dark:bg-indigo-950/60 px-4 py-2.5 text-sm font-semibold text-indigo-700 dark:text-indigo-300 transition hover:bg-indigo-100 dark:hover:bg-indigo-900"
                   >
                     Submit &amp; Add Another
                     <ArrowRight className="h-4 w-4" />
@@ -1543,7 +1475,7 @@ export default function CBCSElectiveGuide() {
                     type="submit"
                     value="submit_final"
                     disabled={isSubmittingTestimonial}
-                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-slate-900 dark:text-white shadow-md shadow-indigo-200 transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md transition hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {isSubmittingTestimonial
                       ? "Submitting..."

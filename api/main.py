@@ -13,7 +13,11 @@ from pydantic import BaseModel
 from api.database import Base, engine
 from api.routers.testimonials import router as testimonials_router
 
+root_dir = Path(__file__).parent.parent
+load_dotenv(root_dir / ".env.local")
+load_dotenv(root_dir / ".env")
 load_dotenv()
+
 api_key = os.getenv("GEMINI_API_KEY")
 allowed_origins = [
     origin.strip()
@@ -157,12 +161,10 @@ def branch_lookup(student_branch: str, course_branch: str) -> float:
 
 def shortfall_normalized(student_value: float, course_value: float) -> float:
     diff = max(0.0, course_value - student_value)
-    # Exponential curve: small gaps stay near 100%, larger gaps drop off steeply
     return float(math.exp(-0.35 * (diff ** 1.5)))
 
 def distance_normalized(student_value: float, course_value: float) -> float:
     diff = abs(student_value - course_value)
-    # Exponential curve: small gaps stay near 100%, larger gaps drop off steeply
     return float(math.exp(-0.35 * (diff ** 1.5)))
 
 
@@ -268,37 +270,57 @@ def _extract_narrative_fields(payload: dict | None) -> tuple[str | None, str | N
     return why_this_fits.strip(), worth_knowing.strip()
 
 
-def _fallback_narrative_for_course(course: dict) -> tuple[str, str]:
-    why_this_fits, worth_knowing = _extract_narrative_fields(course.get("narrative"))
-    if why_this_fits and worth_knowing:
-        return why_this_fits, worth_knowing
+MODELS_TO_TRY = ["gemini-3.5-flash", "gemini-3.5-flash-lite", "gemini-3.1-flash-lite", "gemini-3.6-flash"]
+
+ATTR_LABELS = {
+    "difficulty_level": "difficulty level",
+    "workload_level": "workload demand",
+    "new_field_exploration": "new field exploration preference",
+    "concept_heavy": "conceptual focus",
+    "math_heavy": "mathematical calculation focus",
+    "practical_focus": "hands-on practical orientation",
+    "branch_proximity": "department alignment",
+}
+
+
+def _normalize_code(code: str | None) -> str:
+    if not code:
+        return ""
+    return re.sub(r"[^A-Za-z0-9]", "", str(code)).upper()
+
+
+def _fallback_narrative_for_course(course: dict, attributes_used: list[dict] | None = None) -> tuple[str, str]:
+    if attributes_used:
+        attr_scores = []
+        for item in attributes_used:
+            name = item.get("name")
+            score = item.get("score")
+            if name and isinstance(score, (int, float)) and name in ATTR_LABELS:
+                attr_scores.append((name, float(score), item.get("student_value"), item.get("course_value")))
+
+        if attr_scores:
+            attr_scores.sort(key=lambda x: x[1], reverse=True)
+            top1 = attr_scores[0]
+            top2 = attr_scores[1] if len(attr_scores) > 1 else None
+            lowest = attr_scores[-1]
+
+            why_parts = [f"Matches your preference for {ATTR_LABELS[top1[0]]}."]
+            if top2 and top2[1] >= 0.5:
+                why_parts.append(f"Also aligns well with your {ATTR_LABELS[top2[0]]}.")
+
+            why_this_fits = " ".join(why_parts)
+
+            if lowest[1] < 0.8:
+                worth_knowing = f"Note: The course demands {ATTR_LABELS[lowest[0]]} (course: {lowest[3]}/4 vs your profile: {lowest[2]}/4). Plan your schedule accordingly."
+            else:
+                worth_knowing = "This course aligns smoothly across all your requested learning preferences."
+
+            return why_this_fits, worth_knowing
 
     course_name = course.get("course_name", "This course")
-    cognitive_focus = course.get("cognitive_focus_justification")
-    practical_focus = course.get("practical_focus_justification")
-    prior_knowledge = course.get("prior_knowledge_justification")
-    difficulty = course.get("difficulty_justification")
-
-    why_parts = [
-        value.strip()
-        for value in (cognitive_focus, practical_focus)
-        if isinstance(value, str) and value.strip()
-    ]
-    worth_parts = [
-        value.strip()
-        for value in (prior_knowledge, difficulty)
-        if isinstance(value, str) and value.strip()
-    ]
-
-    if why_parts and worth_parts:
-        return (
-            " ".join(why_parts),
-            " ".join(worth_parts),
-        )
-
     return (
-        f"{course_name} is recommended based on the course attributes and your preference profile.",
-        "Review the course attributes and testimonials for additional context before selecting it.",
+        f"{course_name} is recommended based on your evaluated learning style and workload capacity.",
+        "Review student testimonials and course details before finalizing your selection.",
     )
 
 
@@ -329,14 +351,26 @@ def generate_batch_narratives(top_courses: list[tuple[dict, int, list[dict[str, 
         f"Input:\n{prompt_payload}"
     )
 
-    response = client.models.generate_content(
-        model="gemini-3.6-flash",
-        contents=prompt,
-    )
-    if not response.text:
-        raise ValueError("Gemini response was empty")
-    narratives = _extract_json_array(response.text)
-    return [item for item in narratives if isinstance(item, dict)]
+    last_error = None
+    for model_name in MODELS_TO_TRY:
+        try:
+            response = client.models.generate_content(
+                model=model_name,
+                contents=prompt,
+            )
+            if response and response.text:
+                narratives = _extract_json_array(response.text)
+                res = [item for item in narratives if isinstance(item, dict)]
+                if res:
+                    print(f"Successfully generated AI narratives via model '{model_name}' for {len(res)} courses")
+                    return res
+        except Exception as e:
+            last_error = e
+            continue
+
+    if last_error:
+        print(f"Warning: Gemini narrative generation failed across models: {last_error}")
+    return []
 
 @app.post("/recommend")
 @app.post("/api/recommend")
@@ -358,24 +392,34 @@ def get_recommendations(payload: WizardPayload):
     ai_narratives: list[dict] = []
     try:
         ai_narratives = generate_batch_narratives(top_courses)
-    except Exception:
+    except Exception as exc:
+        print(f"Failed to generate narratives via Gemini API: {exc}")
         ai_narratives = []
 
-    narratives_dict = {
-        item.get("course_code"): item
-        for item in ai_narratives
-        if isinstance(item, dict) and item.get("course_code")
-    }
+    narratives_by_exact = {}
+    narratives_by_norm = {}
+    for idx, item in enumerate(ai_narratives):
+        if isinstance(item, dict):
+            c_code = item.get("course_code")
+            if c_code:
+                narratives_by_exact[str(c_code).strip()] = item
+                narratives_by_norm[_normalize_code(c_code)] = item
 
     course_cards = []
     for rank, (course, fit_percentage, attributes_used) in enumerate(top_courses, start=1):
         course_code = course.get("course_code")
 
-        why_this_fits, worth_knowing = _extract_narrative_fields(
-            narratives_dict.get(course_code)
-        )
+        ai_item = None
+        if course_code:
+            ai_item = narratives_by_exact.get(str(course_code).strip())
+            if not ai_item:
+                ai_item = narratives_by_norm.get(_normalize_code(course_code))
+        if not ai_item and (rank - 1) < len(ai_narratives) and isinstance(ai_narratives[rank - 1], dict):
+            ai_item = ai_narratives[rank - 1]
+
+        why_this_fits, worth_knowing = _extract_narrative_fields(ai_item)
         if not why_this_fits or not worth_knowing:
-            why_this_fits, worth_knowing = _fallback_narrative_for_course(course)
+            why_this_fits, worth_knowing = _fallback_narrative_for_course(course, attributes_used)
 
         card = {
             "rank": rank,
