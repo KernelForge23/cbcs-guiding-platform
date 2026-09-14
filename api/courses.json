@@ -1,9 +1,7 @@
 [
   {
-    "id": "MA_25001",
-    "course_code": "MA(BS)-25001/2/5/6",
-    "course_name": "Matrix Algebra and Calculus & Vector Calculus and Differential Equations",
-    "branch": "Mathematics",
+    "course_code": "26U1BSML002/26U1BSML004",
+    "course_name": "Matrix Algebra and Calculus + Vector Calculus and Differential Equations",
     "category": "BS Mathematics",
     "teaching_scheme": {
       "L": 2.5,
@@ -45,13 +43,18 @@
     "evaluation_style_facts": {
       "theory_exam_pct": null,
       "lab_is_fully_continuous": true
-    }
+    },
+    "semesterAvailability": [
+      "SEM1",
+      "SEM2"
+    ],
+    "forbiddenBranches": [],
+    "cohortRotation": "NONE",
+    "department": "Mathematics"
   },
   {
-    "id": "MA_25003",
-    "course_code": "MA(BS)-25003 / MA(BS)-25007",
-    "course_name": "Linear Algebra and Probability & Statistics",
-    "branch": "Mathematics",
+    "course_code": "26U1BSML001/26U1BSML003",
+    "course_name": "Linear Algebra + Probability and Statistics",
     "category": "BS Mathematics",
     "teaching_scheme": {
       "L": 2.5,
@@ -92,14 +95,19 @@
     "evaluation_style_facts": {
       "theory_exam_pct": null,
       "lab_is_fully_continuous": true
-    }
+    },
+    "semesterAvailability": [
+      "SEM1",
+      "SEM2"
+    ],
+    "forbiddenBranches": [],
+    "cohortRotation": "NONE",
+    "department": "Mathematics"
   },
   {
-    "id": "AS_25001",
-    "course_code": "AS(BS)-25001/2/3/4",
-    "course_name": "Engineering Physics & Engineering Chemistry",
-    "branch": "Applied Science",
-    "category": "BS Applied Science 1",
+    "course_code": "26U1BSPB001/26U1BSCB001",
+    "course_name": "Engineering Physics + Engineering Chemistry",
+    "category": "BS Applied Science I",
     "teaching_scheme": {
       "L": 2,
       "T": 0,
@@ -121,8 +129,8 @@
       "practical_focus": 3
     },
     "prior_knowledge_justification": "This comprehensive, two-semester science sequence relies heavily on a firm grasp of 12th-grade JEE and MHT-CET baselines. Students must be fully comfortable with wave-particle duality to engage with the Quantum Mechanics units, as well as classical wave optics to understand interference and diffraction phenomena. Furthermore, foundational electrochemical cell principles and general chemistry baselines are absolute prerequisites for comprehending advanced battery technologies and corrosion mechanisms. Without a solid high school science foundation, students will struggle with the rapid leap into semiconductor band theory and instrumental chemical analysis.",
-    "difficulty_justification": "The difficulty of this sequence is moderate, successfully balancing abstract physics concepts with descriptive, application-based chemistry. The physics modules present conceptual hurdles with Schrödinger's equations and laser population inversion, but the mathematical rigor is restricted primarily to 1D models and standard derivations. The chemistry modules focus heavily on practical industrial applications, such as water softening techniques and corrosion prevention, which demand memorization and conceptual mapping rather than intense mathematical problem-solving. Thus, it presents a manageable conceptual challenge typical of foundational engineering sciences.",
-    "cognitive_focus_justification": "The curriculum is deeply rooted in theoretical understanding, requiring students to grasp concepts like \"Schrödinger's time dependent and time independent equations\", the \"Mechanisms of corrosion\", and the \"Spontaneous and stimulated emission of radiations\". While the physics modules contain some mathematical elements (like deriving Newton's rings or solving wave equations), the chemistry modules are heavily descriptive (explaining battery technologies or corrosion), meaning the sequence as a whole does not rely on heavy mathematical calculations or logical problem-solving.",
+    "difficulty_justification": "The difficulty of this sequence is moderate, successfully balancing abstract physics concepts with descriptive, application-based chemistry. The physics modules present conceptual hurdles with SchrÃ¶dinger's equations and laser population inversion, but the mathematical rigor is restricted primarily to 1D models and standard derivations. The chemistry modules focus heavily on practical industrial applications, such as water softening techniques and corrosion prevention, which demand memorization and conceptual mapping rather than intense mathematical problem-solving. Thus, it presents a manageable conceptual challenge typical of foundational engineering sciences.",
+    "cognitive_focus_justification": "The curriculum is deeply rooted in theoretical understanding, requiring students to grasp concepts like \"SchrÃ¶dinger's time dependent and time independent equations\", the \"Mechanisms of corrosion\", and the \"Spontaneous and stimulated emission of radiations\". While the physics modules contain some mathematical elements (like deriving Newton's rings or solving wave equations), the chemistry modules are heavily descriptive (explaining battery technologies or corrosion), meaning the sequence as a whole does not rely on heavy mathematical calculations or logical problem-solving.",
     "practical_focus_justification": "The sequence relies heavily on higher-order hands-on application, explicitly instructing students to \"Design and carry out scientific experiments\" and run labs such as pH-metric analysis and determining the wavelengths of light using a diffraction grating.",
     "topic_tags": [
       "Quantum Mechanics",
@@ -137,14 +145,19 @@
     "evaluation_style_facts": {
       "theory_exam_pct": 0.0,
       "lab_is_fully_continuous": true
-    }
+    },
+    "semesterAvailability": [
+      "SEM1",
+      "SEM2"
+    ],
+    "forbiddenBranches": [],
+    "cohortRotation": "NONE",
+    "department": "Physics"
   },
   {
-    "id": "AS_25005",
-    "course_code": "AS(BS)-25001/2/5",
-    "course_name": "Engineering Physics & Quantum Physics",
-    "branch": "Applied Science",
-    "category": "BS Applied Science 1",
+    "course_code": "26U1BSPB001/26U1BSPL001",
+    "course_name": "Engineering Physics + Quantum Physics",
+    "category": "BS Applied Science I",
     "teaching_scheme": {
       "L": 2,
       "T": 0,
@@ -166,12 +179,12 @@
       "practical_focus": 1
     },
     "prior_knowledge_justification": "This physics-intensive sequence requires a strong command of 12th-grade JEE and MHT-CET modern physics and calculus. Students need a solid foundation in wave-particle duality, classical mechanics, and differential calculus to grasp the mathematical formulations in Quantum Physics, such as wave functions, operators, and expectation values. Familiarity with basic classical wave optics is also crucial for the interference and diffraction modules in Engineering Physics. Without this foundational calculus and physics baseline, the leap into formal quantum mechanics will be jarring.",
-    "difficulty_justification": "The inclusion of a dedicated Quantum Physics module significantly elevates the conceptual and mathematical rigor of this track compared to standard applied sciences. While the Engineering Physics modules balance abstract concepts with standard 1D models and laser applications, Quantum Physics introduces complex mathematical derivations. Students must grapple with proofs for Heisenberg's Uncertainty Principle and solve Schrödinger's time-dependent and independent equations for potential barriers, quantum tunneling, and harmonic oscillators. This demanding shift from descriptive physics to rigorous mathematical mechanics justifies a higher difficulty rating.",
-    "cognitive_focus_justification": "This rigorous sequence requires abstract logical reasoning and complex mathematical derivations, moving far beyond standard descriptive physics. Students must solve differential Schrödinger equations, execute commutator algebra, and apply density matrix formalism for qubits. While it contains foundational theoretical concepts like band structures, its heavy reliance on mathematical proofs and quantum mechanical operators elevates it to a highly analytical tier.",
+    "difficulty_justification": "The inclusion of a dedicated Quantum Physics module significantly elevates the conceptual and mathematical rigor of this track compared to standard applied sciences. While the Engineering Physics modules balance abstract concepts with standard 1D models and laser applications, Quantum Physics introduces complex mathematical derivations. Students must grapple with proofs for Heisenberg's Uncertainty Principle and solve SchrÃ¶dinger's time-dependent and independent equations for potential barriers, quantum tunneling, and harmonic oscillators. This demanding shift from descriptive physics to rigorous mathematical mechanics justifies a higher difficulty rating.",
+    "cognitive_focus_justification": "This rigorous sequence requires abstract logical reasoning and complex mathematical derivations, moving far beyond standard descriptive physics. Students must solve differential SchrÃ¶dinger equations, execute commutator algebra, and apply density matrix formalism for qubits. While it contains foundational theoretical concepts like band structures, its heavy reliance on mathematical proofs and quantum mechanical operators elevates it to a highly analytical tier.",
     "practical_focus_justification": "Since the laboratory experiments and quantum platform exercises were not actually conducted, the course relies entirely on pure theory and mathematical calculations, lacking any real hands-on implementation or physical troubleshooting.",
     "topic_tags": [
       "Quantum Mechanics",
-      "Schrödinger's Equation",
+      "SchrÃ¶dinger's Equation",
       "Wave Optics & Lasers",
       "Solid State Physics"
     ],
@@ -182,104 +195,19 @@
     "evaluation_style_facts": {
       "theory_exam_pct": 0.0,
       "lab_is_fully_continuous": true
-    }
-  },
-  {
-    "id": "AS_25007",
-    "course_code": "AS(BS)-25001/2/7/8",
-    "course_name": "Engineering Physics & Semiconductor Physics",
-    "branch": "Applied Science",
-    "category": "BS Applied Science 1",
-    "teaching_scheme": {
-      "L": 2,
-      "T": 0,
-      "P": 2,
-      "self_study": 1,
-      "self_study_is_weekly": true
     },
-    "evaluation_scheme_raw": {
-      "TA": 20,
-      "SLE": 30,
-      "CIE": 50
-    },
-    "attributes": {
-      "difficulty_level": 2,
-      "workload_level": 4,
-      "new_field_exploration": 2,
-      "concept_heavy": 3,
-      "math_heavy": 2,
-      "practical_focus": 3
-    },
-    "prior_knowledge_justification": "This sequence requires a solid foundation in 12th-grade JEE and MHT-CET physics, specifically modern physics and basic semiconductor concepts. Students must already be familiar with basic p-n junctions, wave-particle duality, and classical optics before starting. The course immediately dives into advanced band theory, Fermi-Dirac distributions, and Hall effect calculations, which rely heavily on high school electrostatics and solid-state physics baselines. A firm grasp of these 12th-grade prerequisites is essential to keep up with the pacing.",
-    "difficulty_justification": "The difficulty remains moderate as it effectively bridges abstract physics with tangible electronic applications. While the semiconductor modules introduce detailed mathematical formulations for carrier concentration, diode equations, and energy band structures, they remain grounded in practical device physics (LEDs, photodiodes, transistors) rather than deep quantum mechanics. The engineering physics modules balance this with standard 1D models and optics derivations, presenting a manageable but rigorous foundational challenge without overwhelming mathematical complexity.",
-    "cognitive_focus_justification": "This sequence offers a balanced cognitive load by anchoring mathematical physics in practical device architecture. While students must perform calculations involving Fermi-Dirac distributions, the law of mass action, and diode equations, a significant portion of the syllabus focuses on the conceptual operation of tangible devices like p-n junctions, LEDs, and transistors. Because it leans more heavily on conceptual solid-state models and device characteristics rather than pure mathematical quantum proofs, it sits comfortably as a hybrid 3.",
-    "practical_focus_justification": "The course incorporates high-level, hands-on application by explicitly instructing students to \"design semiconductor devices using semiconductors\" and run labs to determine wavelengths and characterize LEDs and transistors",
-    "topic_tags": [
-      "Semiconductor Physics",
-      "Wave Optics & Lasers",
-      "Electronic Devices",
-      "Solid State Physics"
+    "semesterAvailability": [
+      "SEM1",
+      "SEM2"
     ],
-    "rating_metadata": {
-      "total_votes": 1
-    },
-    "testimonials": [],
-    "evaluation_style_facts": {
-      "theory_exam_pct": 0.0,
-      "lab_is_fully_continuous": true
-    }
+    "forbiddenBranches": [],
+    "cohortRotation": "NONE",
+    "department": "Physics"
   },
   {
-    "id": "AS_25008",
-    "course_code": "AS(BS)-25003/4/7/8",
-    "course_name": "Engineering Chemistry & Semiconductor Physics",
-    "branch": "Applied Science",
-    "category": "BS Applied Science 1",
-    "teaching_scheme": {
-      "L": 2,
-      "T": 0,
-      "P": 2,
-      "self_study": 1,
-      "self_study_is_weekly": true
-    },
-    "evaluation_scheme_raw": {
-      "TA": 20,
-      "SLE": 30,
-      "CIE": 50
-    },
-    "attributes": {
-      "difficulty_level": 2,
-      "workload_level": 4,
-      "new_field_exploration": 2,
-      "concept_heavy": 3,
-      "math_heavy": 2,
-      "practical_focus": 3
-    },
-    "prior_knowledge_justification": "This interdisciplinary sequence requires a solid foundation in 12th-grade JEE and MHT-CET chemistry and physics. Students must be familiar with basic electrochemistry to understand advanced battery technologies and corrosion mechanisms. Similarly, the semiconductor modules demand prior familiarity with p-n junctions and basic solid-state physics to seamlessly transition into advanced band theory and Fermi-Dirac distributions. A firm grasp of these high school prerequisites is essential to keep up with the pacing.",
-    "difficulty_justification": "The difficulty is low to moderate, leaning heavily on descriptive, practical concepts rather than complex mathematical derivations. The chemistry modules (water technology and corrosion) are predominantly qualitative and memory-based. While semiconductor physics introduces formulas for carrier concentration and diode currents, the course stays anchored to practical device behavior (LEDs, transistors) rather than deep quantum mechanics or heavy proofs. This makes it one of the most accessible applied science tracks.",
-    "cognitive_focus_justification": "This sequence leans heavily toward descriptive theory and rote memorization, substituting rigorous physics for qualitative chemistry modules covering corrosion mechanisms, battery types, and water softening. While the semiconductor modules introduce some calculations like carrier concentration and diode equations, the overall focus remains on practical device architecture and conceptual material properties rather than abstract mathematical proofs. Lacking the complex derivations of quantum mechanics, it stands as the least mathematically demanding track in this category.",
-    "practical_focus_justification": "The sequence relies heavily on higher-order, hands-on application, explicitly instructing students to \"Design and carry out scientific experiments\" and \"design semiconductor devices\", backed by physical labs like determining water hardness and characterizing LEDs.",
-    "topic_tags": [
-      "Electrochemistry & Corrosion",
-      "Analytical Chemistry",
-      "Semiconductor Physics",
-      "Electronic Devices"
-    ],
-    "rating_metadata": {
-      "total_votes": 1
-    },
-    "testimonials": [],
-    "evaluation_style_facts": {
-      "theory_exam_pct": 0.0,
-      "lab_is_fully_continuous": true
-    }
-  },
-  {
-    "id": "AS(BS)-25009",
-    "course_code": "AS(BS)-25009",
+    "course_code": "26U1BSPL002",
     "course_name": "Electromagnetism",
-    "branch": "Applied Science",
-    "category": "BS Applied Science 2",
+    "category": "BS Applied Science II",
     "teaching_scheme": {
       "L": 2,
       "T": 0,
@@ -300,7 +228,7 @@
       "practical_focus": 1
     },
     "prior_knowledge_justification": "While the syllabus officially introduces advanced 3D vector calculus in Unit 1, the grueling 6-hour pacing realistically demands prior college-level mathematical maturity. To successfully navigate this course, students effectively need prior or concurrent exposure to a college-level Vector Calculus course to survive the rapid application of gradient, divergence, curl, and Stokes' theorem. Relying solely on a 12th-grade calculus baseline will leave students immediately overwhelmed by the mathematical prerequisites required for Maxwell's equations.",
-    "difficulty_justification": "Despite being a 1-credit course, the conceptual and mathematical rigor is very high. Students must rapidly master abstract 3D vector calculus—including the Gauss-Divergence and Stokes theorems—and apply them to derive Maxwell's equations in differential form. Transitioning from standard high-school integral laws to advanced electrodynamics and electromagnetic wave equations (referencing advanced texts like Griffiths) makes this a mathematically heavy and conceptually challenging module.",
+    "difficulty_justification": "Despite being a 1-credit course, the conceptual and mathematical rigor is very high. Students must rapidly master abstract 3D vector calculusâ€”including the Gauss-Divergence and Stokes theoremsâ€”and apply them to derive Maxwell's equations in differential form. Transitioning from standard high-school integral laws to advanced electrodynamics and electromagnetic wave equations (referencing advanced texts like Griffiths) makes this a mathematically heavy and conceptually challenging module.",
     "cognitive_focus_justification": "This course operates at the absolute peak of mathematical rigor and spatial reasoning, acting effectively as an applied vector calculus class. Students must master 3D spatial operators (gradient, divergence, curl) and complex theorems (Gauss-Divergence, Stokes) to mathematically derive Maxwell's wave equations from scratch. With zero descriptive padding and reliance on heavily analytical texts like Griffiths and Jackson, it requires pure computational logic.",
     "practical_focus_justification": "A Bloom's Taxonomy analysis reveals that the course relies exclusively on theoretical and lower-order verbs such as \"Understand,\" \"Derive,\" and \"Calculate,\" and contains absolutely no laboratory, coding, or physical troubleshooting components.",
     "topic_tags": [
@@ -316,14 +244,19 @@
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    }
+    },
+    "semesterAvailability": [
+      "SEM1",
+      "SEM2"
+    ],
+    "forbiddenBranches": [],
+    "cohortRotation": "GROUP_A_SEM1_GROUP_B_SEM2",
+    "department": "Physics"
   },
   {
-    "id": "AS(BS)-25010",
-    "course_code": "AS(BS)-25010",
-    "course_name": "Solid State Physics",
-    "branch": "Applied Science",
-    "category": "BS Applied Science 2",
+    "course_code": "26U1BSPL003",
+    "course_name": "Semiconductor Physics",
+    "category": "BS Applied Science II",
     "teaching_scheme": {
       "L": 2,
       "T": 0,
@@ -360,58 +293,19 @@
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    }
-  },
-  {
-    "id": "AS(BS)-25011",
-    "course_code": "AS(BS)-25011",
-    "course_name": "Statistical Thermodynamics",
-    "branch": "Applied Science",
-    "category": "BS Applied Science 2",
-    "teaching_scheme": {
-      "L": 2,
-      "T": 0,
-      "P": 0,
-      "self_study": 1,
-      "self_study_is_weekly": true
     },
-    "evaluation_scheme_raw": {
-      "CIE": 20,
-      "ESE": 30
-    },
-    "attributes": {
-      "difficulty_level": 3,
-      "workload_level": 1,
-      "new_field_exploration": 2,
-      "concept_heavy": 3,
-      "math_heavy": 3,
-      "practical_focus": 1
-    },
-    "prior_knowledge_justification": "This course necessitates a strong 11th and 12th-grade JEE foundation in classical thermodynamics and probability. Students must enter with a clear understanding of the basic laws of thermodynamics, entropy, and Gibbs free energy from high school physics and chemistry. Furthermore, high school combinatorics and probability baselines are required to successfully transition into calculating microstates, macrostates, and statistical distribution functions.",
-    "difficulty_justification": "Despite its 1-credit weight, the conceptual rigor of this course is exceptionally high. Statistical mechanics is notoriously abstract, requiring students to bridge microscopic quantum states with macroscopic thermodynamic variables using complex mathematical tools like partition functions and ensembles. Compressing advanced topics like Fermi-Dirac and Bose-Einstein statistics into just 12 lecture hours creates a steep and heavily abstract learning curve, justifying a top difficulty rating.",
-    "cognitive_focus_justification": "This course leans heavily into abstract mathematical frameworks and rigorous analytical reasoning. Students must calculate complex partition functions, differentiate between Maxwell-Boltzmann, Bose-Einstein, and Fermi-Dirac statistics, and conceptually map microstates to macrostates. Deriving thermodynamic variables like entropy, Helmholtz, and Gibbs free energy from these statistical postulates requires a high degree of logical derivation, making it highly analytical.",
-    "practical_focus_justification": "A Bloom's Taxonomy analysis of the course outcomes reveals an exclusive reliance on the lower-order theoretical verb \"Understand,\" and with zero laboratory hours in the teaching scheme, the course completely lacks any hands-on application or physical troubleshooting.",
-    "topic_tags": [
-      "Statistical Mechanics",
-      "Thermodynamics",
-      "Quantum Statistics",
-      "Ensembles"
+    "semesterAvailability": [
+      "SEM1",
+      "SEM2"
     ],
-    "rating_metadata": {
-      "total_votes": 1
-    },
-    "testimonials": [],
-    "evaluation_style_facts": {
-      "theory_exam_pct": 1.0,
-      "lab_is_fully_continuous": true
-    }
+    "forbiddenBranches": [],
+    "cohortRotation": "GROUP_A_SEM1_GROUP_B_SEM2",
+    "department": "Physics"
   },
   {
-    "id": "AS(BS)-25012",
-    "course_code": "AS(BS)-25012",
+    "course_code": "26U1BSBL001",
     "course_name": "Biology for Engineers",
-    "branch": "Applied Science",
-    "category": "BS Applied Science 2",
+    "category": "BS Applied Science II",
     "teaching_scheme": {
       "L": 2,
       "T": 0,
@@ -448,14 +342,19 @@
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    }
+    },
+    "semesterAvailability": [
+      "SEM1",
+      "SEM2"
+    ],
+    "forbiddenBranches": [],
+    "cohortRotation": "GROUP_A_SEM1_GROUP_B_SEM2",
+    "department": "Biology"
   },
   {
-    "id": "AS(BS)-25013",
-    "course_code": "AS(BS)-25013",
+    "course_code": "26U1BSCL001",
     "course_name": "Emerging Technologies in Energy Storage",
-    "branch": "Applied Science",
-    "category": "BS Applied Science 2",
+    "category": "BS Applied Science II",
     "teaching_scheme": {
       "L": 2,
       "T": 0,
@@ -492,14 +391,19 @@
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    }
+    },
+    "semesterAvailability": [
+      "SEM1",
+      "SEM2"
+    ],
+    "forbiddenBranches": [],
+    "cohortRotation": "GROUP_A_SEM1_GROUP_B_SEM2",
+    "department": "Chemistry"
   },
   {
-    "id": "AS(BS)-25014",
-    "course_code": "AS(BS)-25014",
+    "course_code": "26U1BSCL002",
     "course_name": "Nanomaterials in Emerging Technologies",
-    "branch": "Applied Science",
-    "category": "BS Applied Science 2",
+    "category": "BS Applied Science II",
     "teaching_scheme": {
       "L": 2,
       "T": 0,
@@ -521,7 +425,7 @@
     },
     "prior_knowledge_justification": "This course relies on a general high school science background (basic understanding of atoms and materials) but builds the specific domain of nanotechnology entirely from scratch. The syllabus explicitly begins with a broad introduction and classification of nanomaterials, meaning students are not expected to have any prior specialized knowledge of nanostructures or synthesis techniques.",
     "difficulty_justification": "The course is heavily qualitative and descriptive, focusing on classification, synthesis approaches (top-down and bottom-up), and broad applications across different industries (electronics, sensors, medicine). There are no rigorous mathematical derivations or complex quantum mechanical models involved in this introductory 1-credit scope. The straightforward, application-based nature of the content makes it highly accessible, requiring mostly conceptual mapping and rote memorization.",
-    "cognitive_focus_justification": "This course is purely theoretical and descriptive, requiring no mathematical computation or algorithmic logic. Students are expected to memorize the classification, properties, and synthesis techniques—such as top-down and bottom-up approaches—of various nanomaterials. The cognitive load relies on broad conceptual understanding, mapping these materials to qualitative applications across electronics, sensors, and medicine.",
+    "cognitive_focus_justification": "This course is purely theoretical and descriptive, requiring no mathematical computation or algorithmic logic. Students are expected to memorize the classification, properties, and synthesis techniquesâ€”such as top-down and bottom-up approachesâ€”of various nanomaterials. The cognitive load relies on broad conceptual understanding, mapping these materials to qualitative applications across electronics, sensors, and medicine.",
     "practical_focus_justification": "While the course utilizes the mid-level cognitive verb \"Analyze,\" it applies this strictly to theoretical functional behaviors and potential applications rather than requiring students to physically build, implement, or troubleshoot nanotechnology systems.  ",
     "topic_tags": [
       "Nanomaterials",
@@ -536,822 +440,19 @@
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    }
-  },
-  {
-    "id": "AS(BS)-25015",
-    "course_code": "AS(BS)-25015",
-    "course_name": "Polymeric Materials in Engineering",
-    "branch": "Applied Science",
-    "category": "BS Applied Science 2",
-    "teaching_scheme": {
-      "L": 2,
-      "T": 0,
-      "P": 0,
-      "self_study": 1,
-      "self_study_is_weekly": true
     },
-    "evaluation_scheme_raw": {
-      "CIE": 20,
-      "ESE": 30
-    },
-    "attributes": {
-      "difficulty_level": 2,
-      "workload_level": 1,
-      "new_field_exploration": 2,
-      "concept_heavy": 3,
-      "math_heavy": 2,
-      "practical_focus": 2
-    },
-    "prior_knowledge_justification": "This course relies directly on the foundational concepts covered in the 12th-grade JEE/MHT-CET chemistry 'Polymers' chapter. Students must already be familiar with basic terminologies such as monomers, degree of polymerization, types of polymerization, and common structural classifications. The syllabus immediately builds on this high school baseline to explore advanced properties like glass transition temperatures, tacticity, and conducting polymers.",
-    "difficulty_justification": "The course is primarily qualitative and descriptive, focusing on structure-property relationships, material classifications, and sustainable engineering applications (e.g., biodegradable polymers and reinforced plastics). While it introduces technical concepts like molecular weight distributions and glass transition thermodynamics, it lacks the heavy mathematical proofs, complex computational logic, or abstract calculus found in harder tiers, keeping its difficulty comfortably at a 2.",
-    "cognitive_focus_justification": "While primarily theoretical, this course introduces structural chemistry and mildly quantitative foundational concepts. Understanding spatial arrangements like tacticity and crosslinking, along with variables like degree of polymerization and molecular weight, requires basic structural visualization and procedural logic rather than just rote memorization.",
-    "practical_focus_justification": "While the course utilizes the higher-level cognitive verb \"Evaluate,\" this is strictly applied to assessing the theoretical relevance and environmental impact of polymers rather than involving any hands-on building, implementation, or physical troubleshooting.",
-    "topic_tags": [
-      "Polymer Science",
-      "Materials Engineering",
-      "Conducting Polymers",
-      "Sustainable Materials"
+    "semesterAvailability": [
+      "SEM1",
+      "SEM2"
     ],
-    "rating_metadata": {
-      "total_votes": 1
-    },
-    "testimonials": [],
-    "evaluation_style_facts": {
-      "theory_exam_pct": 1.0,
-      "lab_is_fully_continuous": true
-    }
+    "forbiddenBranches": [],
+    "cohortRotation": "GROUP_A_SEM1_GROUP_B_SEM2",
+    "department": "Chemistry"
   },
   {
-    "id": "AS(BS)-25016",
-    "course_code": "AS(BS)-25016",
-    "course_name": "Foundation of Quantum Physics",
-    "branch": "Applied Science",
-    "category": "BS Applied Science 2",
-    "teaching_scheme": {
-      "L": 2,
-      "T": 0,
-      "P": 0,
-      "self_study": 1,
-      "self_study_is_weekly": true
-    },
-    "evaluation_scheme_raw": {
-      "CIE": 20,
-      "ESE": 30
-    },
-    "attributes": {
-      "difficulty_level": 3,
-      "workload_level": 1,
-      "new_field_exploration": 3,
-      "concept_heavy": 3,
-      "math_heavy": 3,
-      "practical_focus": 1
-    },
-    "prior_knowledge_justification": "This course demands a strong, rigorous college-level mathematical baseline, specifically requiring prior familiarity with differential equations, linear algebra, and complex numbers to understand wave functions, operators, and eigenvalues. While it touches on de Broglie waves and Heisenberg's uncertainty principle from 12th-grade physics, the rapid transition into solving differential Schrödinger equations means students effectively need prior or concurrent college math maturity.",
-    "difficulty_justification": "The conceptual and mathematical rigor is very high, dealing directly with abstract quantum mechanics. Students must master differential wave equations, operator algebra, expectation values, and solve boundary value problems like finite/infinite potential wells and harmonic oscillators. Referencing heavyweights like Schiff and Beiser, this course requires intense abstract thinking and mathematical manipulation, easily earning a difficulty rating of 4.",
-    "cognitive_focus_justification": "This rigorous course demands high analytical problem-solving, requiring students to mathematically derive and solve time-dependent and time-independent Schrödinger differential equations. The syllabus relies entirely on applying abstract operators to calculate eigenvalues, expectation values, and quantum states for various potential wells and harmonic oscillators. By focusing purely on complex wave mechanics and mathematical models rather than qualitative memorization, it aligns perfectly with the highly analytical score of 4 established in the larger quantum tracks.",
-    "practical_focus_justification": "A Bloom's Taxonomy analysis of the course outcomes reveals an exclusive reliance on mathematical and theoretical verbs like \"Derive,\" \"Solve,\" and \"Explain,\" with absolutely no hands-on building, coding, or physical implementation.",
-    "topic_tags": [
-      "Quantum Mechanics",
-      "Wave Mechanics",
-      "Schrödinger Equation",
-      "Potential Wells"
-    ],
-    "rating_metadata": {
-      "total_votes": 1
-    },
-    "testimonials": [],
-    "evaluation_style_facts": {
-      "theory_exam_pct": 1.0,
-      "lab_is_fully_continuous": true
-    }
-  },
-  {
-    "id": "CE(VS)-25001",
-    "course_code": "CE(VS)-25001",
-    "course_name": "Geomatic Engineering",
-    "branch": "Civil Engineering",
-    "category": "VSEC",
-    "teaching_scheme": {
-      "L": 1,
-      "T": 0,
-      "P": 2,
-      "self_study": 1,
-      "self_study_is_weekly": true
-    },
-    "evaluation_scheme_raw": {
-      "TA": 20,
-      "CIE": 50,
-      "ESE": 30
-    },
-    "attributes": {
-      "difficulty_level": 2,
-      "workload_level": 2,
-      "new_field_exploration": 1,
-      "concept_heavy": 2,
-      "math_heavy": 2,
-      "practical_focus": 4
-    },
-    "prior_knowledge_justification": "This vocational course introduces surveying and mapping from the ground up, assuming no prior exposure to civil engineering or geomatics. Because VSEC modules are designed to be accessible to all branches, the syllabus starts with foundational concepts like map types, scales, and basic instrument introductions, requiring zero prerequisite technical knowledge.",
-    "difficulty_justification": "The curriculum is highly practical and descriptive, focusing heavily on hands-on field skills such as leveling, setting up a Total Station, and basic AutoCAD drafting. While it avoids complex mathematical derivations or abstract physics, students still must invest effort into memorizing instrument mechanics, surveying procedures, and software commands, which naturally elevates the effort required above an absolute baseline of 1.",
-    "cognitive_focus_justification": "This course strikes a practical balance between spatial mathematical reasoning and procedural fieldwork. While devoid of abstract calculus or complex derivations, students must apply geometric and trigonometric logic to measure heights, distances, angles, and areas, as well as perform resection using a Total Station. Furthermore, comprehending Cartesian and geographical coordinate systems, map projections, and translating those into engineering drawings using AutoCAD demands a high degree of spatial visualization and structural logic. This blend of applied mathematical geometry and hands-on execution makes it a solid mid-tier hybrid.",
-    "practical_focus_justification": "A Bloom's Taxonomy analysis of the course outcomes reveals higher-order, hands-on verbs like \"Apply\" and \"Create,\" explicitly instructing students to actively collect field data and generate engineering drawings using AutoCAD software.",
-    "topic_tags": [
-      "Surveying",
-      "Total Station",
-      "AutoCAD",
-      "Mapping"
-    ],
-    "rating_metadata": {
-      "total_votes": 1
-    },
-    "testimonials": [],
-    "evaluation_style_facts": {
-      "theory_exam_pct": 0.6,
-      "lab_is_fully_continuous": true
-    }
-  },
-  {
-    "id": "CE(VS)-25002",
-    "course_code": "CE(VS)-25002",
-    "course_name": "Fundamentals of Construction Practices",
-    "branch": "Civil Engineering",
-    "category": "VSEC",
-    "teaching_scheme": {
-      "L": 1,
-      "T": 0,
-      "P": 2,
-      "self_study": 1,
-      "self_study_is_weekly": true
-    },
-    "evaluation_scheme_raw": {
-      "TA": 20,
-      "CIE": 50,
-      "ESE": 30
-    },
-    "attributes": {
-      "difficulty_level": 2,
-      "workload_level": 2,
-      "new_field_exploration": 1,
-      "concept_heavy": 4,
-      "math_heavy": 1,
-      "practical_focus": 3
-    },
-    "prior_knowledge_justification": "This course is structured as an absolute beginner's introduction to construction, assuming no prior engineering or technical background. It starts at the ground level with identifying Personal Protective Equipment (PPE), the basic ingredients of concrete, and the general scope of construction, making it fully accessible to all branches.",
-    "difficulty_justification": "While completely devoid of math or abstract theory, this course requires active memorization of technical specifications such as concrete grades, cement-sand mortar ratios, and various masonry types. The laboratory assignments are highly practical, involving site visits, drawing simple layouts, and creating charts. The need to memorize material properties and maintenance procedures elevates it slightly above a baseline 1.",
-    "cognitive_focus_justification": "This course is highly descriptive and procedural, requiring practically zero mathematical computation or abstract structural logic. The cognitive load focuses on rote memorization and qualitative observation, asking students to identify construction tools, classify masonry types, and understand the basic ingredients and mixing methods for concrete. The laboratory assignments—which involve creating safety posters, drawing simple site layouts, and visually identifying building cracks—are heavily observation-based and conceptual rather than analytical.",
-    "practical_focus_justification": "A Bloom's Taxonomy analysis of the course outcomes reveals applied verbs like \"Demonstrate\" and \"Evaluate,\" explicitly instructing students to safely use physical tools and actively assess real-world building defects rather than just learning the theor",
-    "topic_tags": [
-      "Construction Practices",
-      "Concrete & Masonry",
-      "Building Maintenance",
-      "Site Safety"
-    ],
-    "rating_metadata": {
-      "total_votes": 1
-    },
-    "testimonials": [],
-    "evaluation_style_facts": {
-      "theory_exam_pct": 0.6,
-      "lab_is_fully_continuous": true
-    }
-  },
-  {
-    "id": "CT(VS)-25001",
-    "course_code": "CT(VS)-25001",
-    "course_name": "Programming for problem solving",
-    "branch": "Computer Engineering",
-    "category": "VSEC",
-    "teaching_scheme": {
-      "L": 1,
-      "T": 0,
-      "P": 2,
-      "self_study": 1,
-      "self_study_is_weekly": true
-    },
-    "evaluation_scheme_raw": {
-      "TA": 20,
-      "CIE": 50,
-      "ESE": 30
-    },
-    "attributes": {
-      "difficulty_level": 3,
-      "workload_level": 2,
-      "new_field_exploration": 1,
-      "concept_heavy": 2,
-      "math_heavy": 3,
-      "practical_focus": 4
-    },
-    "prior_knowledge_justification": "The syllabus begins with the absolute basics, starting with an 'Introduction and Overview of C programming Language' and simple I/O statements. It expects zero prior coding experience, making it fully accessible for students from non-computing backgrounds, such as those who opted for bi-focal Electronics in high school, to begin learning from scratch.",
-    "difficulty_justification": "For a student with absolutely zero programming background, the learning curve here is exceptionally steep. The course expects students to transition from basic syntax to abstract, notoriously difficult concepts like pointer arithmetic, memory referencing, and linked lists within a highly compressed 12-hour theory window. C is an unforgiving language for beginners, and mastering algorithmic logic alongside manual memory management justifies a high difficulty rating.",
-    "cognitive_focus_justification": "This course demands a high level of abstract algorithmic logic and procedural execution, completely devoid of descriptive memorization. Students are required to mentally model control flows, manipulate memory directly using pointer arithmetic, and design complex data structures like linked lists. Furthermore, translating mathematical problems—such as computing sine functions, finding the roots of quadratic equations, and generating the Fibonacci sequence—into functional C code requires rigorous analytical problem-solving.",
-    "practical_focus_justification": ": A Bloom's Taxonomy analysis of the course outcomes reveals applied, higher-order verbs like \"Solve\" and \"Design,\" explicitly requiring students to actively break down problems and code modular solutions using a programming language.",
-    "topic_tags": [
-      "C Programming",
-      "Data Structures",
-      "Pointers",
-      "Algorithms"
-    ],
-    "rating_metadata": {
-      "total_votes": 1
-    },
-    "testimonials": [],
-    "evaluation_style_facts": {
-      "theory_exam_pct": 0.6,
-      "lab_is_fully_continuous": true
-    }
-  },
-  {
-    "id": "CT(VS)-25002",
-    "course_code": "CT(VS)-25002",
-    "course_name": "Web Design",
-    "branch": "Computer Engineering",
-    "category": "VSEC",
-    "teaching_scheme": {
-      "L": 1,
-      "T": 0,
-      "P": 2,
-      "self_study": 1,
-      "self_study_is_weekly": true
-    },
-    "evaluation_scheme_raw": {
-      "TA": 20,
-      "CIE": 50,
-      "ESE": 30
-    },
-    "attributes": {
-      "difficulty_level": 2,
-      "workload_level": 2,
-      "new_field_exploration": 1,
-      "concept_heavy": 2,
-      "math_heavy": 2,
-      "practical_focus": 4
-    },
-    "prior_knowledge_justification": "The syllabus begins with fundamental concepts such as the 'Basics of the Internet and the Web' and setting up a basic HTML page. It requires zero prior programming or web development experience, starting from the very first step of installing a text editor like VS Code.",
-    "difficulty_justification": "While the initial units on HTML and CSS are highly accessible and focus on visual formatting like the 'box model,' the difficulty ramps up significantly in Unit 4. Students from non-programming backgrounds must suddenly grasp JavaScript control flow, DOM manipulation, and basic server-side programming using Node.js to handle GET and POST methods. This transition from simple descriptive markup to backend server logic elevates the overall difficulty for an absolute beginner.",
-    "cognitive_focus_justification": "his course balances structural design with procedural logic, earning a solid mid-tier score. Students must grasp the descriptive syntax and spatial box models of HTML and CSS to structure and style web pages visually. However, the inclusion of JavaScript for control flow, DOM manipulation, and form validation, alongside setting up a Node.js server to handle GET and POST requests, introduces algorithmic thinking and client-server problem-solving. While less abstractly rigorous than pointer arithmetic or linked lists in C programming, it still demands active coding, event-driven logic, and structural execution.",
-    "practical_focus_justification": "A Bloom's Taxonomy analysis of the course outcomes reveals high-order, hands-on verbs like \"Design\" and \"Demonstrate,\" explicitly requiring students to actively build functional web pages, manipulate live DOM elements, and configure operational web servers.",
-    "topic_tags": [
-      "HTML & CSS",
-      "JavaScript",
-      "Node.js",
-      "Frontend Development"
-    ],
-    "rating_metadata": {
-      "total_votes": 1
-    },
-    "testimonials": [],
-    "evaluation_style_facts": {
-      "theory_exam_pct": 0.6,
-      "lab_is_fully_continuous": true
-    }
-  },
-  {
-    "id": "CT(VS)-25003",
-    "course_code": "CT(VS)-25003",
-    "course_name": "Python Programming",
-    "branch": "Computer Engineering",
-    "category": "VSEC",
-    "teaching_scheme": {
-      "L": 1,
-      "T": 0,
-      "P": 2,
-      "self_study": 1,
-      "self_study_is_weekly": true
-    },
-    "evaluation_scheme_raw": {
-      "TA": 20,
-      "CIE": 50,
-      "ESE": 30
-    },
-    "attributes": {
-      "difficulty_level": 2,
-      "workload_level": 2,
-      "new_field_exploration": 1,
-      "concept_heavy": 2,
-      "math_heavy": 2,
-      "practical_focus": 4
-    },
-    "prior_knowledge_justification": "The course is designed for absolute beginners, starting explicitly from 'Introduction to Python' and 'Setting up the environment'. It requires zero prior exposure to coding or computer science, making it highly accessible for students from non-CS backgrounds.",
-    "difficulty_justification": "Unlike C programming, Python has a highly readable and forgiving syntax that abstract away complex memory management. The syllabus sticks strictly to foundational concepts like loops, conditionals, basic data structures (lists, dictionaries, sets), and simple functions without delving into object-oriented programming or advanced algorithms. The lab experiments culminate in a straightforward command-line mini-project. While developing programmatic logic for the first time still requires effort, Python's gentle learning curve keeps this comfortably at a 2.",
-    "cognitive_focus_justification": "While this course demands solid algorithmic problem-solving to execute loops, conditional statements, and modular functions, it operates with a slightly lower abstract cognitive load than the C Programming track. Python's high-level abstractions—such as built-in lists, dictionaries, and list comprehensions—remove the need for complex memory management and pointer arithmetic. The laboratory exercises focus on straightforward procedural data manipulation, like calculating student grades using dictionaries, string manipulation, and building a command-line contact management system, firmly placing it as a highly logical but accessible procedural hybrid.",
-    "practical_focus_justification": "A Bloom's Taxonomy analysis of the course outcomes reveals applied, higher-order verbs like \"Solve,\" \"Design,\" and \"Demonstrate,\" explicitly requiring students to actively code, build modular functions, and develop simple command-line programs.",
-    "topic_tags": [
-      "Scripting",
-      "Data Structures",
-      "Control Flow",
-      "Algorithmic Logic"
-    ],
-    "rating_metadata": {
-      "total_votes": 1
-    },
-    "testimonials": [],
-    "evaluation_style_facts": {
-      "theory_exam_pct": 0.6,
-      "lab_is_fully_continuous": true
-    }
-  },
-  {
-    "id": "EE(VS)-25001",
-    "course_code": "EE(VS)-25001",
-    "course_name": "Electrical Maintenance and Safety",
-    "branch": "Electrical Engineering",
-    "category": "VSEC",
-    "teaching_scheme": {
-      "L": 1,
-      "T": 0,
-      "P": 2,
-      "self_study": 1,
-      "self_study_is_weekly": true
-    },
-    "evaluation_scheme_raw": {
-      "TA": 20,
-      "CIE": 50,
-      "ESE": 30
-    },
-    "attributes": {
-      "difficulty_level": 2,
-      "workload_level": 2,
-      "new_field_exploration": 1,
-      "concept_heavy": 3,
-      "math_heavy": 2,
-      "practical_focus": 4
-    },
-    "prior_knowledge_justification": "Explicitly offered to all students as a VSEC, this course assumes no formal background in electrical engineering. It focuses heavily on practical hardware handling, basic wiring, and safety protocols, relying only on general common sense and basic high-school science to grasp how household and industrial electrical systems function.",
-    "difficulty_justification": "The curriculum is entirely descriptive and hands-on, avoiding complex mathematical modeling, abstract circuit analysis, or heavy theoretical physics. Students will need to memorize various safety codes, installation procedures, and troubleshooting steps for equipment like transformers, EV chargers, and solar systems. This practical memorization elevates it slightly above a baseline score of 1, but keeps it highly manageable.",
-    "cognitive_focus_justification": "Procedural execution. Students learn the theory of electrical components and follow standard, fixed steps to wire domestic circuits and test EV chargers.",
-    "practical_focus_justification": "A Bloom's Taxonomy analysis of the course outcomes reveals applied, hands-on action phrases like \"carry out maintenance\" and \"installation wiring,\" explicitly requiring students to actively physically wire and troubleshoot real-world electrical systems.",
-    "topic_tags": [
-      "Industrial Wiring",
-      "Equipment Troubleshooting",
-      "Safety Protocols",
-      "Power Systems"
-    ],
-    "rating_metadata": {
-      "total_votes": 1
-    },
-    "testimonials": [],
-    "evaluation_style_facts": {
-      "theory_exam_pct": 0.6,
-      "lab_is_fully_continuous": true
-    }
-  },
-  {
-    "id": "EE(VS)-25002",
-    "course_code": "EE(VS)-25002",
-    "course_name": "Electrical Workshop",
-    "branch": "Electrical Engineering",
-    "category": "VSEC",
-    "teaching_scheme": {
-      "L": 1,
-      "T": 0,
-      "P": 2,
-      "self_study": 1,
-      "self_study_is_weekly": true
-    },
-    "evaluation_scheme_raw": {
-      "TA": 20,
-      "CIE": 50,
-      "ESE": 30
-    },
-    "attributes": {
-      "difficulty_level": 3,
-      "workload_level": 2,
-      "new_field_exploration": 1,
-      "concept_heavy": 3,
-      "math_heavy": 2,
-      "practical_focus": 4
-    },
-    "prior_knowledge_justification": "As a vocational workshop open to all branches, this course requires zero prior theoretical knowledge of electrical engineering. The focus is entirely on introducing basic tools, components, and standard operating procedures for physical wiring and assembly tasks from the ground up.",
-    "difficulty_justification": "Handling 415V, 3-phase industrial setups and wiring control panels introduces a severe element of physical risk and requires intense situational awareness. For an absolute beginner from a non-electrical background, the pressure of executing high-voltage wiring without error, combined with the meticulous, zero-margin-for-error precision required to fabricate PCBs and wind transformers from scratch, pushes the overall stress and execution difficulty to a very high level.",
-    "cognitive_focus_justification": "Purely procedural, hands-on tasks like winding transformers, etching PCBs, and preparing simple test boards following a fixed guide",
-    "practical_focus_justification": "Bloom's Taxonomy analysis of the course outcomes reveals high-order, hands-on verbs like \"construct,\" \"design,\" and \"install,\" explicitly requiring students to physically build printed circuit boards, wire control panels, and troubleshoot real-world electrical systems",
-    "topic_tags": [
-      "Workshop Practices",
-      "Circuit Fabrication",
-      "Motor Wiring",
-      "PCB Design"
-    ],
-    "rating_metadata": {
-      "total_votes": 1
-    },
-    "testimonials": [],
-    "evaluation_style_facts": {
-      "theory_exam_pct": 0.6,
-      "lab_is_fully_continuous": true
-    }
-  },
-  {
-    "id": "ETC_VSEC_DPI",
-    "course_code": "",
-    "course_name": "Digital Public Infrastructure",
-    "branch": "Electronics and Telecommunication Engineering",
-    "category": "VSEC",
-    "teaching_scheme": {
-      "L": 1,
-      "T": 0,
-      "P": 2,
-      "self_study": 1,
-      "self_study_is_weekly": true
-    },
-    "evaluation_scheme_raw": {
-      "TA": 20,
-      "CIE": 50,
-      "ESE": 30
-    },
-    "attributes": {
-      "difficulty_level": 2,
-      "workload_level": 2,
-      "new_field_exploration": 1,
-      "concept_heavy": 4,
-      "math_heavy": 1,
-      "practical_focus": 3
-    },
-    "prior_knowledge_justification": "The course is designed to introduce the concepts of digital identity, UPI, and consent-based data sharing from the ground up. Even with the lab components, it emphasizes 'familiarization' and uses 'demo platforms' and 'mock APIs', requiring no prior background in public policy or advanced software development.",
-    "difficulty_justification": "The newly provided lab assignments significantly elevate the practical expectations of the course. Students are not just studying policy; they are required to simulate digital KYC, interact with mock APIs (UPI, ONDC, Open Banking), and ultimately develop an integrative mini-project (such as a 'Budget Tracker' app) using these APIs. For a student without a prior programming or web development background, transitioning from theory to actively handling API integrations and prototyping applications represents a solid jump in effort and cognitive load, bumping the difficulty to a 3.",
-    "cognitive_focus_justification": "Functions essentially as a policy and governance class. The curriculum focuses on GDPR, digital identity case studies, and SDG goals. The lab consists of simulating digital KYC and engaging in group debates rather than technical execution.",
-    "practical_focus_justification": "A Bloom's Taxonomy analysis of the laboratory outcomes reveals applied, higher-order verbs like \"Use\" and \"Develop,\" explicitly requiring students to move beyond theory by actively integrating sample APIs and building functional conceptual prototypes.",
-    "topic_tags": [
-      "Digital Identity",
-      "Digital Payments",
-      "API Integration",
-      "Policy & Governance"
-    ],
-    "rating_metadata": {
-      "total_votes": 1
-    },
-    "testimonials": [],
-    "evaluation_style_facts": {
-      "theory_exam_pct": 0.6,
-      "lab_is_fully_continuous": true
-    }
-  },
-  {
-    "id": "ETC(VS)-25001",
-    "course_code": "ETC(VS)-25001",
-    "course_name": "Data Pre-processing and Visualization",
-    "branch": "Electronics and Telecommunication Engineering",
-    "category": "VSEC",
-    "teaching_scheme": {
-      "L": 1,
-      "T": 0,
-      "P": 2,
-      "self_study": 1,
-      "self_study_is_weekly": true
-    },
-    "evaluation_scheme_raw": {
-      "TA": 20,
-      "CIE": 50,
-      "ESE": 30
-    },
-    "attributes": {
-      "difficulty_level": 2,
-      "workload_level": 2,
-      "new_field_exploration": 1,
-      "concept_heavy": 2,
-      "math_heavy": 2,
-      "practical_focus": 4
-    },
-    "prior_knowledge_justification": "The syllabus begins with foundational concepts like the 'Overview of data visualization and its importance'. The lab assignments start with downloading free datasets in Excel format and creating basic charts, gradually moving to UI-based tools like Tableau or Power BI. It requires no prior data science, statistical, or programming experience.",
-    "difficulty_justification": "The course starts gently with theoretical visualization principles, but the practical components introduce a moderate technical learning curve. Students are required to utilize Python libraries such as Matplotlib, Seaborn, and Plotly, as well as install and use WEKA for feature extraction and filtering. Understanding concepts like data normalization, dimensionality reduction, and handling missing data, while transitioning from drag-and-drop dashboards to programmatic visualization tools, elevates the cognitive load. This justifies a score of 3 for students without a programming background.",
-    "cognitive_focus_justification": "Handling real-world data requires statistical logic. Executing dimensionality reduction, feature selection, and data normalization demands mathematical reasoning alongside tool-based visualization.",
-    "practical_focus_justification": "A Bloom's Taxonomy analysis of the laboratory outcomes reveals applied, higher-order verbs like \"Transform,\" \"Prepare,\" and \"Perform,\" explicitly requiring students to actively write Python scripts, build functional dashboards, and execute data pre-processing operations on real-world datasets.",
-    "topic_tags": [
-      "Data Visualization",
-      "Dashboard Design",
-      "Feature Extraction",
-      "Exploratory Data Analysis"
-    ],
-    "rating_metadata": {
-      "total_votes": 1
-    },
-    "testimonials": [],
-    "evaluation_style_facts": {
-      "theory_exam_pct": 0.6,
-      "lab_is_fully_continuous": true
-    }
-  },
-  {
-    "id": "ICE(VS)-25001",
-    "course_code": "ICE(VS)-25001",
-    "course_name": "Fundamentals of Programmable Logic Controllers (PLC)",
-    "branch": "Instrumentation and Control Engineering",
-    "category": "VSEC",
-    "teaching_scheme": {
-      "L": 1,
-      "T": 0,
-      "P": 2,
-      "self_study": 1,
-      "self_study_is_weekly": true
-    },
-    "evaluation_scheme_raw": {
-      "TA": 20,
-      "CIE": 50,
-      "ESE": 30
-    },
-    "attributes": {
-      "difficulty_level": 2,
-      "workload_level": 2,
-      "new_field_exploration": 1,
-      "concept_heavy": 3,
-      "math_heavy": 2,
-      "practical_focus": 4
-    },
-    "prior_knowledge_justification": "The syllabus is structured for an absolute beginner, starting from the basic 'Role of automation in Industries' and the 'History and evolution of PLC'. It assumes no prior knowledge of industrial control systems, introducing even foundational concepts like Boolean logic gates (AND, OR, NAND) from scratch.",
-    "difficulty_justification": "Unlike text-heavy programming languages (like C), Ladder Logic is a highly visual, intuitive programming method originally designed to mimic physical relay circuits so technicians could easily adopt it. The course scope is kept strictly to basics: simple logic gates, timers, and basic applications like tank level control. While grasping relay logic requires a small cognitive shift, the visual nature of the programming and the lack of complex syntax or memory management keeps the overall difficulty very manageable for students from any branch.",
-    "cognitive_focus_justification": "Balances descriptive hardware memorization with the active mathematical logic required to design ladder diagrams and Boolean control systems.",
-    "practical_focus_justification": "Using Bloom's Taxonomy, the course outcomes utilize higher-order, hands-on verbs like \"Develop\" and \"Apply\" to actively create ladder logic programs and solve real-time industrial control applications.",
-    "topic_tags": [
-      "Industrial Automation",
-      "Ladder Logic",
-      "Boolean Logic",
-      "Control Systems"
-    ],
-    "rating_metadata": {
-      "total_votes": 1
-    },
-    "testimonials": [],
-    "evaluation_style_facts": {
-      "theory_exam_pct": 0.6,
-      "lab_is_fully_continuous": true
-    }
-  },
-  {
-    "id": "ME(VS)-25001",
-    "course_code": "ME(VS)-25001",
-    "course_name": "Computer Aided Drafting",
-    "branch": "Mechanical Engineering",
-    "category": "VSEC",
-    "teaching_scheme": {
-      "L": 1,
-      "T": 0,
-      "P": 2,
-      "self_study": 1,
-      "self_study_is_weekly": true
-    },
-    "evaluation_scheme_raw": {
-      "TA": 20,
-      "CIE": 50,
-      "ESE": 30
-    },
-    "attributes": {
-      "difficulty_level": 2,
-      "workload_level": 2,
-      "new_field_exploration": 1,
-      "concept_heavy": 3,
-      "math_heavy": 2,
-      "practical_focus": 4
-    },
-    "prior_knowledge_justification": "The syllabus is structured for absolute beginners, starting from the 'Fundamentals of CAD drawing setup' and explicitly covering the 'Principles of Orthographic Projections'. It assumes zero prior experience with drafting software, coordinate systems, or engineering graphics.",
-    "difficulty_justification": "The course is highly procedural, focusing heavily on executing specific software commands (Draw, Modify, Zoom, Dimensioning) rather than solving complex abstract problems. While Assignment 2 requires translating 2D orthographic views into 3D models—which demands a degree of spatial reasoning—the step-by-step nature of the software and the foundational scope of the mechanical elements keep the cognitive load low.",
-    "cognitive_focus_justification": "Students memorize orthographic projection theory and execute standard draw/modify commands in CAD software to replicate 3D models.",
-    "practical_focus_justification": "Using Bloom's Taxonomy, the course outcomes employ higher-order, hands-on verbs like \"Draw,\" \"Modify,\" and \"Create\" to actively produce digital models and 2D geometric figures.",
-    "topic_tags": [
-      "2D Drafting",
-      "3D Modeling",
-      "Orthographic Projections",
-      "CAD Software"
-    ],
-    "rating_metadata": {
-      "total_votes": 1
-    },
-    "testimonials": [],
-    "evaluation_style_facts": {
-      "theory_exam_pct": 0.6,
-      "lab_is_fully_continuous": true
-    }
-  },
-  {
-    "id": "ME(VS)-25002",
-    "course_code": "ME(VS)-25002",
-    "course_name": "Electric Vehicle architecture",
-    "branch": "Mechanical Engineering",
-    "category": "VSEC",
-    "teaching_scheme": {
-      "L": 1,
-      "T": 0,
-      "P": 2,
-      "self_study": 1,
-      "self_study_is_weekly": true
-    },
-    "evaluation_scheme_raw": {
-      "TA": 20,
-      "CIE": 50,
-      "ESE": 30
-    },
-    "attributes": {
-      "difficulty_level": 2,
-      "workload_level": 2,
-      "new_field_exploration": 1,
-      "concept_heavy": 4,
-      "math_heavy": 1,
-      "practical_focus": 3
-    },
-    "prior_knowledge_justification": "The course starts with fundamental topics such as the 'History and evolution of automobiles' and basic vehicle classifications. The lab assignments focus entirely on 'Familiarization,' 'Study,' and 'Demonstrations,' assuming zero prior automotive or electrical engineering background.",
-    "difficulty_justification": "While the theoretical aspect of the course is highly descriptive, the newly added lab assignments elevate the practical demands. Students are not just observing; they are required to test BLDC/PMSM motors, measure battery State of Charge (SOC), and actively dismantle and assemble critical EV components like the motor, controller, and Battery Management System (BMS). Handling and assembling these components safely requires a higher degree of physical effort, precision, and adherence to procedural steps, bumping the difficulty from a purely theoretical 2 to a practical 3.",
-    "cognitive_focus_justification": "The cognitive load relies on descriptive memorization of EV layouts and battery types. The lab component is strictly observational, focusing on familiarization and demonstration rather than structural engineering.",
-    "practical_focus_justification": "While the primary course objectives rely on lower-order, theoretical verbs like \"understand\" and \"study,\" the laboratory component introduces hands-on, higher-order engagement through tasks like testing motors and dismantling and assembling EV components.",
-    "topic_tags": [
-      "Automobile Basics",
-      "Electric Vehicles",
-      "Battery Technology",
-      "EV Component Assembly"
-    ],
-    "rating_metadata": {
-      "total_votes": 1
-    },
-    "testimonials": [],
-    "evaluation_style_facts": {
-      "theory_exam_pct": 0.6,
-      "lab_is_fully_continuous": true
-    }
-  },
-  {
-    "id": "MM(VS)-25001",
-    "course_code": "MM(VS)-25001",
-    "course_name": "Introduction to Materials Modeling",
-    "branch": "Metallurgical and Materials Engineering",
-    "category": "VSEC",
-    "teaching_scheme": {
-      "L": 1,
-      "T": 0,
-      "P": 2,
-      "self_study": 1,
-      "self_study_is_weekly": true
-    },
-    "evaluation_scheme_raw": {
-      "TA": 20,
-      "CIE": 50,
-      "ESE": 30
-    },
-    "attributes": {
-      "difficulty_level": 4,
-      "workload_level": 2,
-      "new_field_exploration": 3,
-      "concept_heavy": 3,
-      "math_heavy": 3,
-      "practical_focus": 4
-    },
-    "prior_knowledge_justification": "Although framed as an 'Introduction' and offered as a VSEC, the syllabus jumps directly into heavy physical concepts like statistical-mechanics relations, partition functions, and quantum mechanics. It inherently assumes a solid foundation in first-year engineering physics and chemistry to grasp these abstract topics.",
-    "difficulty_justification": "Compressing massive, complex fields like quantum mechanics, statistical thermodynamics, and phase diagrams into a mere 6 hours of lecture creates an intense, unforgiving pace. Expecting students to immediately apply these rapidly acquired concepts to operate research-grade computational tools like VASP (for Density Functional Theory) and LAMMPS (for Molecular Dynamics) pushes the cognitive load to the absolute maximum. The combination of a brutal theoretical pacing and the steep technical learning curve of the software justifies a peak difficulty score of 5.",
-    "cognitive_focus_justification": "Demands rigorous computational physics, requiring students to execute quantum-level Density Functional Theory (DFT) calculations and apply statistical mechanics formulas in software.",
-    "practical_focus_justification": "Applying Bloom's Taxonomy, the course outcomes emphasize higher-order, hands-on verbs such as \"Implement,\" \"Automate,\" and \"Apply\" to build computational models, run molecular simulations, and interpret datasets.",
-    "topic_tags": [
-      "Materials Modeling",
-      "Molecular Dynamics",
-      "Density Functional Theory",
-      "Statistical Mechanics"
-    ],
-    "rating_metadata": {
-      "total_votes": 1
-    },
-    "testimonials": [],
-    "evaluation_style_facts": {
-      "theory_exam_pct": 0.6,
-      "lab_is_fully_continuous": true
-    }
-  },
-  {
-    "id": "MM(VS)-25002",
-    "course_code": "MM(VS)-25002",
-    "course_name": "Modern Chemical Analysis",
-    "branch": "Metallurgical and Materials Engineering",
-    "category": "VSEC",
-    "teaching_scheme": {
-      "L": 1,
-      "T": 0,
-      "P": 2,
-      "self_study": 1,
-      "self_study_is_weekly": true
-    },
-    "evaluation_scheme_raw": {
-      "TA": 20,
-      "CIE": 50,
-      "ESE": 30
-    },
-    "attributes": {
-      "difficulty_level": 2,
-      "workload_level": 2,
-      "new_field_exploration": 1,
-      "concept_heavy": 3,
-      "math_heavy": 2,
-      "practical_focus": 4
-    },
-    "prior_knowledge_justification": "The course begins with 'Fundamentals and Traditional Methods of Analysis', assuming only a standard high school or first-year engineering baseline in basic chemistry. It introduces the principles of titrimetric, gravimetric, and colorimetric techniques from the ground up before advancing to modern instruments.",
-    "difficulty_justification": "The theoretical portion is relatively concise (12 lectures) and descriptive, focusing on the transition from classical to modern methods. However, the laboratory component requires a hands-on transition from basic wet chemistry to operating sensitive analytical equipment like FTIR, UV spectrometers, and Atomic Absorption Spectroscopes (AAS). This emphasis on procedural accuracy, chemical handling, and instrumental operation elevates the practical difficulty to a 3.",
-    "cognitive_focus_justification": "Combines procedural chemistry with analytical math. Students must calculate elemental composition and mass using titration formulas and spectroscopy data.",
-    "practical_focus_justification": "Using Bloom's Taxonomy, the course outcomes feature higher-order, hands-on verbs like \"Design,\" \"Perform,\" and \"Interpret\" to actively conduct elemental analysis experiments using specialized laboratory instruments.",
-    "topic_tags": [
-      "Chemical Analysis",
-      "Spectroscopy",
-      "Metallurgical Testing",
-      "Instrumental Methods"
-    ],
-    "rating_metadata": {
-      "total_votes": 1
-    },
-    "testimonials": [],
-    "evaluation_style_facts": {
-      "theory_exam_pct": 0.6,
-      "lab_is_fully_continuous": true
-    }
-  },
-  {
-    "id": "MFG(VS)-25001",
-    "course_code": "MFG(VS)-25001",
-    "course_name": "Manufacturing Practices and Fab Lab- I (MPF-I)",
-    "branch": "Manufacturing Science and Engineering",
-    "category": "VSEC",
-    "teaching_scheme": {
-      "L": 1,
-      "T": 0,
-      "P": 2,
-      "self_study": 1,
-      "self_study_is_weekly": true
-    },
-    "evaluation_scheme_raw": {
-      "TA": 20,
-      "CIE": 50,
-      "EIE": 30
-    },
-    "attributes": {
-      "difficulty_level": 2,
-      "workload_level": 2,
-      "new_field_exploration": 1,
-      "concept_heavy": 3,
-      "math_heavy": 2,
-      "practical_focus": 4
-    },
-    "prior_knowledge_justification": "The course serves as an absolute introduction to workshop practices. Modules explicitly start with 'Familiarization' and 'Introduction to tools,' assuming no prior experience with manufacturing, carpentry, or heavy machinery.",
-    "difficulty_justification": "While theoretically lightweight, the course is physically and procedurally demanding. Students are required to operate heavy machinery (lathes, milling machines), perform high-heat tasks like arc and gas welding, and execute precise physical operations in carpentry and fitting (filing, chipping). This level of manual dexterity, physical effort, and strict adherence to safety protocols elevates the practical difficulty to a 3.",
-    "cognitive_focus_justification": "Traditional shop floor operations. Students memorize tool safety and execute manual, repetitive tasks like filing, carpentry joining, and basic welding.",
-    "practical_focus_justification": "Evaluating the course outcomes using Bloom's Taxonomy, the use of action-oriented verbs like \"apply,\" \"choose,\" and \"engage in creating\" indicates a highly hands-on approach centered on building physical components and utilizing workshop machinery.",
-    "topic_tags": [
-      "Workshop Practices",
-      "Carpentry & Fitting",
-      "Welding",
-      "PCB Manufacturing"
-    ],
-    "rating_metadata": {
-      "total_votes": 1
-    },
-    "testimonials": [],
-    "evaluation_style_facts": {
-      "theory_exam_pct": 0.0,
-      "lab_is_fully_continuous": true
-    }
-  },
-  {
-    "id": "MFG(VS)-25002",
-    "course_code": "MFG(VS)-25002",
-    "course_name": "Robotics and Drone Operation and Safety",
-    "branch": "Manufacturing Science and Engineering",
-    "category": "VSEC",
-    "teaching_scheme": {
-      "L": 1,
-      "T": 0,
-      "P": 2,
-      "self_study": 1,
-      "self_study_is_weekly": true
-    },
-    "evaluation_scheme_raw": {
-      "TA": 20,
-      "CIE": 50,
-      "ESE": 30
-    },
-    "attributes": {
-      "difficulty_level": 2,
-      "workload_level": 2,
-      "new_field_exploration": 1,
-      "concept_heavy": 4,
-      "math_heavy": 1,
-      "practical_focus": 2
-    },
-    "prior_knowledge_justification": "The syllabus is designed for absolute beginners, starting with the 'Basics of Robotics' (Robot Laws, basic definitions) and an 'Introduction to Drones' covering history and evolution. It assumes no prior experience with automation, programming, or aerodynamics.",
-    "difficulty_justification": "The theoretical units are highly descriptive, focusing on classifications, components, and safety guidelines rather than mathematical kinematics or complex control theory. In the laboratory section, five out of the eight experiments are strictly 'Demonstrations'. While students do get to program a Niryo robot and operate a drone, the heavily guided, observational nature of the majority of the course keeps the cognitive and physical load relatively low.",
-    "cognitive_focus_justification": "Heavily focused on descriptive theory regarding safety regulations, drone classifications, and pre-flight checklists. The labs consist primarily of sensor demonstrations and operating a drone based on established safety guidelines.",
-    "practical_focus_justification": "Evaluating the course outcomes using Bloom's Taxonomy, the heavy reliance on lower-order verbs like \"Understand\" and \"Identify\" indicates a foundational, theoretical approach rather than advanced, hands-on implementation.",
-    "topic_tags": [
-      "Robotics Basics",
-      "Drone Operations",
-      "Robot Programming",
-      "UAV Safety"
-    ],
-    "rating_metadata": {
-      "total_votes": 1
-    },
-    "testimonials": [],
-    "evaluation_style_facts": {
-      "theory_exam_pct": 0.6,
-      "lab_is_fully_continuous": true
-    }
-  },
-  {
-    "id": "CE(ES)-25001",
-    "course_code": "CE(ES)-25001",
+    "course_code": "26U1ESEL001",
     "course_name": "Basics of Civil Engineering",
-    "branch": "Civil",
-    "category": "ESC 1",
+    "category": "ES II(Sem1) and ES IV(Sem2)",
     "teaching_scheme": {
       "L": 3,
       "T": 0,
@@ -1375,7 +476,7 @@
     "prior_knowledge_justification": "This course serves as an entirely introductory overview of the civil engineering domain, requiring absolutely no advanced mathematical or physical theorems. Unlike core engineering subjects, it does not rely on calculus, complex algebra, or deep physics principles typically mastered in the 11th/12th-grade JEE or MHT-CET syllabi. A standard high school understanding of basic physical sciences, general environmental awareness, and basic logic is more than sufficient. Students will draw on everyday general knowledge to grasp foundational topics such as building materials, environmental planning, and basic surveying methodologies without needing any specialized technical background.",
     "difficulty_justification": "The syllabus is primarily theoretical and highly descriptive, completely lacking in complex mathematical derivations, heavy problem-solving, or deep analytical logic. The cognitive load is relatively low, as students mainly need to memorize terminologies, classify various building materials, and understand fundamental surveying principles at a surface level. There are no intricate structural design problems or heavy computational requirements expected from the students. The overall conceptual depth remains at an introductory tier, strategically designed to provide a broad, accessible, and multidisciplinary overview rather than demanding specialized technical proficiency or rigorous academic strain.",
     "cognitive_focus_justification": "This course is fundamentally descriptive and relies almost entirely on rote memorization rather than analytical problem-solving or mathematical rigor. Students are evaluated on their ability to recall broad definitions regarding the branches of civil engineering, theoretical planning principles like Aspect and Roominess, and factual classifications of building materials such as brick, timber, and cement. The curriculum completely lacks structural load calculations, surveying mathematics, or spatial derivations, focusing instead on qualitative case studies and basic conceptual mapping.",
-    "practical_focus_justification": "The course outcomes rely entirely on theoretical evaluation—like demonstrating terminologies and conceptually assessing suitability—completely lacking hands-on execution verbs like \"build\" or \"implement.\"",
+    "practical_focus_justification": "The course outcomes rely entirely on theoretical evaluationâ€”like demonstrating terminologies and conceptually assessing suitabilityâ€”completely lacking hands-on execution verbs like \"build\" or \"implement.\"",
     "topic_tags": [
       "Surveying",
       "Materials",
@@ -1390,14 +491,21 @@
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    }
+    },
+    "semesterAvailability": [
+      "SEM1",
+      "SEM2"
+    ],
+    "forbiddenBranches": [
+      "CIVIL"
+    ],
+    "cohortRotation": "NONE",
+    "department": "Civil"
   },
   {
-    "id": "CE(ES)-25002",
-    "course_code": "CE(ES)-25002",
+    "course_code": "26U1ESEL009",
     "course_name": "Fundamentals of Physical Infrastructure",
-    "branch": "Civil - Planning",
-    "category": "ESC 1",
+    "category": "ES II(Sem1) and ES IV(Sem2)",
     "teaching_scheme": {
       "L": 3,
       "T": 0,
@@ -1437,14 +545,20 @@
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    }
+    },
+    "semesterAvailability": [
+      "SEM2"
+    ],
+    "forbiddenBranches": [
+      "CIVIL"
+    ],
+    "cohortRotation": "NONE",
+    "department": "Civil-Planning"
   },
   {
-    "id": "CT(ES)-25001-AIMA",
-    "course_code": "CT(ES)-25001-AIMA",
+    "course_code": "26U1ESEL002",
     "course_name": "AI for Multidisciplinary Applications",
-    "branch": "Computer",
-    "category": "ESC 1",
+    "category": "ES II(Sem1) and ES IV(Sem2)",
     "teaching_scheme": {
       "L": 3,
       "T": 0,
@@ -1483,60 +597,21 @@
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    }
-  },
-  {
-    "id": "CT(ES)-25001-AEIOT",
-    "course_code": "CT(ES)-25001-AEIOT",
-    "course_name": "Applied Electronics and IoT",
-    "branch": "E&TC",
-    "category": "ESC 1",
-    "teaching_scheme": {
-      "L": 3,
-      "T": 0,
-      "P": 0,
-      "self_study": 1,
-      "self_study_is_weekly": true
     },
-    "evaluation_scheme_raw": {
-      "MSE": 30,
-      "CIE": 20,
-      "ESE": 50
-    },
-    "attributes": {
-      "difficulty_level": 3,
-      "workload_level": 2,
-      "new_field_exploration": 2,
-      "concept_heavy": 3,
-      "math_heavy": 3,
-      "practical_focus": 2
-    },
-    "prior_knowledge_justification": "The foundational principles of this course, specifically PN junction diodes, rectifiers, and basic logic gates covered in the early units, rely directly on the standard 12th-grade Physics syllabus (specifically the Semiconductors and Communication Systems chapters). A standard high school understanding of basic electrical physics is essential to grasp how these analog components function before moving into more complex ICs. However, the latter half of the syllabus involving microcontrollers and IoT protocols requires no specialized prior knowledge and is taught from the ground up.",
-    "difficulty_justification": "While early units offer a relatively accessible foundation, the cognitive load spikes drastically as the syllabus progresses. Moving beyond basic analog components into operational amplifiers, complex digital combinational circuits, and a massive volume of distinct IoT communication protocols (such as MQTT, LoRa, and Zigbee) presents a steep learning curve. The curriculum demands rapid context-switching across entirely different technical domains, forcing students to absorb and contextualize a high volume of unfamiliar, advanced hardware architectures in a highly compressed timeframe.",
-    "cognitive_focus_justification": "This syllabus represents a balanced hybrid of theoretical memorization and moderate logical application. While students must memorize descriptive block diagrams and IoT communication protocols like MQTT and LoRa, they are also required to execute analytical logic to solve number systems, construct truth tables, and configure operational amplifiers. However, explicit constraints in the text such as '(qualitative)' for Boolean simplification and '(concept only)' for AM/FM modulation keep the overall mathematical rigor capped.",
-    "practical_focus_justification": "While the course outcomes include mid-level Bloom's verbs like \"apply\" and \"relate,\" the complete lack of lab hours and reliance on theoretical case studies keeps the focus on conceptual application rather than hands-on building or coding.",
-    "topic_tags": [
-      "Semiconductor Devices",
-      "Operational Amplifiers",
-      "Digital Electronics",
-      "Communication Systems",
-      "Internet Of Things"
+    "semesterAvailability": [
+      "SEM1",
+      "SEM2"
     ],
-    "rating_metadata": {
-      "total_votes": 1
-    },
-    "testimonials": [],
-    "evaluation_style_facts": {
-      "theory_exam_pct": 1.0,
-      "lab_is_fully_continuous": true
-    }
+    "forbiddenBranches": [
+      "COMP_DIV_1_2"
+    ],
+    "cohortRotation": "NONE",
+    "department": "Computer"
   },
   {
-    "id": "EE(ES)-25001",
-    "course_code": "EE(ES)-25001",
+    "course_code": "26U1ESEL003",
     "course_name": "Electrical Energy Utilization",
-    "branch": "Electrical",
-    "category": "ESC 1",
+    "category": "ES II(Sem1) and ES IV(Sem2)",
     "teaching_scheme": {
       "L": 3,
       "T": 0,
@@ -1575,14 +650,74 @@
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    }
+    },
+    "semesterAvailability": [
+      "SEM1",
+      "SEM2"
+    ],
+    "forbiddenBranches": [
+      "ELECT"
+    ],
+    "cohortRotation": "NONE",
+    "department": "Electrical"
   },
   {
-    "id": "ICE(ES)-25001",
-    "course_code": "ICE(ES)-25001",
+    "course_code": "26U1ESEL004",
+    "course_name": "Applied Electronics and IOT",
+    "category": "ES II(Sem1) and ES IV(Sem2)",
+    "teaching_scheme": {
+      "L": 3,
+      "T": 0,
+      "P": 0,
+      "self_study": 1,
+      "self_study_is_weekly": true
+    },
+    "evaluation_scheme_raw": {
+      "MSE": 30,
+      "CIE": 20,
+      "ESE": 50
+    },
+    "attributes": {
+      "difficulty_level": 3,
+      "workload_level": 2,
+      "new_field_exploration": 2,
+      "concept_heavy": 3,
+      "math_heavy": 3,
+      "practical_focus": 2
+    },
+    "prior_knowledge_justification": "The foundational principles of this course, specifically PN junction diodes, rectifiers, and basic logic gates covered in the early units, rely directly on the standard 12th-grade Physics syllabus (specifically the Semiconductors and Communication Systems chapters). A standard high school understanding of basic electrical physics is essential to grasp how these analog components function before moving into more complex ICs. However, the latter half of the syllabus involving microcontrollers and IoT protocols requires no specialized prior knowledge and is taught from the ground up.",
+    "difficulty_justification": "While early units offer a relatively accessible foundation, the cognitive load spikes drastically as the syllabus progresses. Moving beyond basic analog components into operational amplifiers, complex digital combinational circuits, and a massive volume of distinct IoT communication protocols (such as MQTT, LoRa, and Zigbee) presents a steep learning curve. The curriculum demands rapid context-switching across entirely different technical domains, forcing students to absorb and contextualize a high volume of unfamiliar, advanced hardware architectures in a highly compressed timeframe.",
+    "cognitive_focus_justification": "This syllabus represents a balanced hybrid of theoretical memorization and moderate logical application. While students must memorize descriptive block diagrams and IoT communication protocols like MQTT and LoRa, they are also required to execute analytical logic to solve number systems, construct truth tables, and configure operational amplifiers. However, explicit constraints in the text such as '(qualitative)' for Boolean simplification and '(concept only)' for AM/FM modulation keep the overall mathematical rigor capped.",
+    "practical_focus_justification": "While the course outcomes include mid-level Bloom's verbs like \"apply\" and \"relate,\" the complete lack of lab hours and reliance on theoretical case studies keeps the focus on conceptual application rather than hands-on building or coding.",
+    "topic_tags": [
+      "Semiconductor Devices",
+      "Operational Amplifiers",
+      "Digital Electronics",
+      "Communication Systems",
+      "Internet Of Things"
+    ],
+    "rating_metadata": {
+      "total_votes": 1
+    },
+    "testimonials": [],
+    "evaluation_style_facts": {
+      "theory_exam_pct": 1.0,
+      "lab_is_fully_continuous": true
+    },
+    "semesterAvailability": [
+      "SEM1",
+      "SEM2"
+    ],
+    "forbiddenBranches": [
+      "ENTC"
+    ],
+    "cohortRotation": "NONE",
+    "department": "E & TC"
+  },
+  {
+    "course_code": "26U1ESEL005",
     "course_name": "Fundamentals of Measurement and Sensors",
-    "branch": "Instrumentation",
-    "category": "ESC 1",
+    "category": "ES II(Sem1) and ES IV(Sem2)",
     "teaching_scheme": {
       "L": 3,
       "T": 0,
@@ -1621,14 +756,21 @@
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    }
+    },
+    "semesterAvailability": [
+      "SEM1",
+      "SEM2"
+    ],
+    "forbiddenBranches": [
+      "INSTRU"
+    ],
+    "cohortRotation": "NONE",
+    "department": "Instrumentation"
   },
   {
-    "id": "ME(ES)-25001",
-    "course_code": "ME(ES)-25001",
-    "course_name": "Foundations in Mechanical Engineering",
-    "branch": "Mechanical",
-    "category": "ESC 1",
+    "course_code": "26U1ESEL006",
+    "course_name": "Foundation in Mechanical Engineering",
+    "category": "ES II(Sem1) and ES IV(Sem2)",
     "teaching_scheme": {
       "L": 3,
       "T": 0,
@@ -1650,7 +792,7 @@
       "practical_focus": 1
     },
     "prior_knowledge_justification": "This course builds upon standard 11th and 12th-grade physics, specifically requiring a foundational understanding of basic thermodynamics and heat transfer principles. Students should be familiar with general concepts of work, heat, and energy conservation to comfortably grasp the first unit on thermodynamic laws and heat engines.",
-    "difficulty_justification": "While the syllabus explicitly minimizes mathematical rigor—omitting complex derivations and limiting analytical problem-solving to 'elementary numericals'—the difficulty is elevated by a significant memorization burden. Units 4 and 5 demand the retention and descriptive classification of a massive volume of machine elements, bearings, gears, and manufacturing processes. This high volume of theoretical vocabulary and component architecture creates a moderate cognitive load, justifying a balanced difficulty score despite the lack of deep analytical depth.",
+    "difficulty_justification": "While the syllabus explicitly minimizes mathematical rigorâ€”omitting complex derivations and limiting analytical problem-solving to 'elementary numericals'â€”the difficulty is elevated by a significant memorization burden. Units 4 and 5 demand the retention and descriptive classification of a massive volume of machine elements, bearings, gears, and manufacturing processes. This high volume of theoretical vocabulary and component architecture creates a moderate cognitive load, justifying a balanced difficulty score despite the lack of deep analytical depth.",
     "cognitive_focus_justification": "This course is heavily focused on the conceptual memorization of mechanical systems, requiring students to describe classifications for machine elements, manufacturing processes like casting, and power plant constructions. It incorporates mild mathematical application, specifically noting '(Elementary Numericals)' for heat transfer laws and basic thermodynamic principles. However, explicit constraints like '(no derivation)' for composite slabs ensure the cognitive load remains primarily on theoretical knowledge rather than rigorous analytical problem-solving.",
     "practical_focus_justification": "The course outcomes rely exclusively on lower-order, theoretical verbs like \"acquire,\" \"learn,\" and \"observe,\" completely lacking hands-on execution verbs like \"build\" or \"troubleshoot.\"",
     "topic_tags": [
@@ -1667,14 +809,21 @@
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    }
+    },
+    "semesterAvailability": [
+      "SEM1",
+      "SEM2"
+    ],
+    "forbiddenBranches": [
+      "MECH"
+    ],
+    "cohortRotation": "NONE",
+    "department": "Mechanical"
   },
   {
-    "id": "MM(FS)-25001",
-    "course_code": "MM(FS)-25001",
+    "course_code": "26U1ESEL008",
     "course_name": "Nanomaterials",
-    "branch": "Metallurgy",
-    "category": "ESC 1",
+    "category": "ES II(Sem1) and ES IV(Sem2)",
     "teaching_scheme": {
       "L": 3,
       "T": 0,
@@ -1713,14 +862,21 @@
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    }
+    },
+    "semesterAvailability": [
+      "SEM1",
+      "SEM2"
+    ],
+    "forbiddenBranches": [
+      "META"
+    ],
+    "cohortRotation": "NONE",
+    "department": "Metallurgy"
   },
   {
-    "id": "MFG(ES)-25001",
-    "course_code": "MFG(ES)-25001",
+    "course_code": "26U1ESEL007",
     "course_name": "Basics of Manufacturing Technology",
-    "branch": "Manufacturing",
-    "category": "ESC 1",
+    "category": "ES II(Sem1) and ES IV(Sem2)",
     "teaching_scheme": {
       "L": 3,
       "T": 0,
@@ -1742,7 +898,7 @@
       "practical_focus": 1
     },
     "prior_knowledge_justification": "This course requires virtually no advanced mathematical or scientific prerequisites from standard high school curricula. The concepts rely entirely on basic physical intuition rather than rigorous physics or calculus. Students are introduced to fundamental industrial processes from the ground up, making it highly accessible to all engineering branches regardless of their prior background.",
-    "difficulty_justification": "While this course completely bypasses complex mathematical derivations and analytical problem-solving, it presents a steep difficulty curve entirely through an immense memorization burden. Students must absorb, meticulously classify, and retain an exhausting volume of theoretical industrial processes—from obscure casting and welding techniques to specific sheet metal operations and metrology standards. This relentless reliance on rote learning creates a high cognitive load.",
+    "difficulty_justification": "While this course completely bypasses complex mathematical derivations and analytical problem-solving, it presents a steep difficulty curve entirely through an immense memorization burden. Students must absorb, meticulously classify, and retain an exhausting volume of theoretical industrial processesâ€”from obscure casting and welding techniques to specific sheet metal operations and metrology standards. This relentless reliance on rote learning creates a high cognitive load.",
     "cognitive_focus_justification": "This syllabus is heavily dominated by the broad conceptual memorization of industrial methods, requiring students to classify and describe standard procedures like sand casting, milling, and arc welding. However, it includes a mild degree of analytical and spatial application in Units 4 and 6, where students must understand the theory of shear to determine blanking force requirements and apply numerical logic for geometric dimensioning, limits, and tolerances.",
     "practical_focus_justification": "The course outcomes rely exclusively on lower-order cognitive verbs like \"understand,\" \"know,\" and \"become aware,\" completely lacking any hands-on execution or physical application despite the manufacturing subject matter.",
     "topic_tags": [
@@ -1759,14 +915,21 @@
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    }
+    },
+    "semesterAvailability": [
+      "SEM1",
+      "SEM2"
+    ],
+    "forbiddenBranches": [
+      "MFG"
+    ],
+    "cohortRotation": "NONE",
+    "department": "Manufacturing"
   },
   {
-    "id": "CE(ES)-25003",
-    "course_code": "CE(ES)-25003",
+    "course_code": "26U1ESEB001",
     "course_name": "Applied Mechanics",
-    "branch": "Civil",
-    "category": "ESC 2",
+    "category": "ES III(Sem 1)",
     "teaching_scheme": {
       "L": 2,
       "T": 0,
@@ -1805,14 +968,20 @@
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    }
+    },
+    "semesterAvailability": [
+      "SEM1"
+    ],
+    "forbiddenBranches": [
+      "CIVIL"
+    ],
+    "cohortRotation": "NONE",
+    "department": "Civil"
   },
   {
-    "id": "CT(ES)-25002",
-    "course_code": "CT(ES)-25002",
+    "course_code": "26U1ESEB002",
     "course_name": "Fundamentals of Cyber Security",
-    "branch": "Computer Technology",
-    "category": "ESC 2",
+    "category": "ES III(Sem 1)",
     "teaching_scheme": {
       "L": 2,
       "T": 0,
@@ -1834,7 +1003,7 @@
       "practical_focus": 2
     },
     "prior_knowledge_justification": "This course assumes absolutely zero prior technical background. The syllabus is designed for non-specialists, introducing fundamental concepts like 'How the Internet Works', basic IP addressing, and everyday online safety practices from the ground up. No advanced programming, mathematics, or specialized computer science knowledge is required to grasp these introductory topics.",
-    "difficulty_justification": "Conceptually, this is an extremely light course. There is no analytical problem-solving, coding, or mathematical modeling involved. The difficulty maxes out at a 2 simply because it requires some rote memorization—particularly in Unit 4, where you have to retain specific details about the IT Act 2000, intellectual property definitions, and various classifications of cybercrimes. It is a straightforward reading and retention exercise.",
+    "difficulty_justification": "Conceptually, this is an extremely light course. There is no analytical problem-solving, coding, or mathematical modeling involved. The difficulty maxes out at a 2 simply because it requires some rote memorizationâ€”particularly in Unit 4, where you have to retain specific details about the IT Act 2000, intellectual property definitions, and various classifications of cybercrimes. It is a straightforward reading and retention exercise.",
     "cognitive_focus_justification": "This syllabus is fundamentally descriptive and theoretical, requiring basic conceptual awareness and rote memorization rather than algorithmic logic or mathematical problem-solving. The course outcomes strictly use lower-order cognitive verbs like 'Explain', 'Understand', and 'Describe'. Modules focus on high-level definitions of the CIA triad, basic networking terminology like DNS and IP addressing, and conceptual overviews of cyber laws and personal hygiene. There are no requirements for mathematical cryptography, coding, or rigorous technical implementations, making it purely a foundational awareness course.",
     "practical_focus_justification": "Even though the teaching scheme indicates some practical hours, the course outcomes overwhelmingly rely on lower-order cognitive verbs like \"explain,\" \"understand,\" and \"describe,\" limiting any hands-on work to basic safety practices rather than actively coding or troubleshooting security systems.",
     "topic_tags": [
@@ -1851,14 +1020,20 @@
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    }
+    },
+    "semesterAvailability": [
+      "SEM1"
+    ],
+    "forbiddenBranches": [
+      "COMP_DIV_1_2"
+    ],
+    "cohortRotation": "NONE",
+    "department": "Computer"
   },
   {
-    "id": "EE(ES)-25002",
-    "course_code": "EE(ES)-25002",
+    "course_code": "26U1ESEB003",
     "course_name": "Basic Electrical Engineering",
-    "branch": "Electrical",
-    "category": "ESC 2",
+    "category": "ES III(Sem 1)",
     "teaching_scheme": {
       "L": 2,
       "T": 0,
@@ -1897,14 +1072,20 @@
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    }
+    },
+    "semesterAvailability": [
+      "SEM1"
+    ],
+    "forbiddenBranches": [
+      "ELECT"
+    ],
+    "cohortRotation": "NONE",
+    "department": "Electrical"
   },
   {
-    "id": "DLD-ESC",
-    "course_code": "Not Specified",
-    "course_name": "Digital Logic Design (Theory + Lab)",
-    "branch": "Not Specified",
-    "category": "ESC 2",
+    "course_code": "26U1ESEB004",
+    "course_name": "Digital Logic Design",
+    "category": "ES III(Sem 1)",
     "teaching_scheme": {
       "L": 2,
       "T": 0,
@@ -1943,14 +1124,18 @@
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    }
+    },
+    "semesterAvailability": [
+      "SEM1"
+    ],
+    "forbiddenBranches": [],
+    "cohortRotation": "NONE",
+    "department": "E & TC"
   },
   {
-    "id": "ME(ES)-25002",
-    "course_code": "ME(ES)-25002",
+    "course_code": "26U1ESEB005",
     "course_name": "Engineering Graphics",
-    "branch": "Mechanical",
-    "category": "ESC 2",
+    "category": "ES III(Sem 1)",
     "teaching_scheme": {
       "L": 2,
       "T": 0,
@@ -1989,60 +1174,20 @@
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    }
-  },
-  {
-    "id": "MM(ES)-25002",
-    "course_code": "MM(ES)-25002",
-    "course_name": "Fundamentals of Corrosion Engineering",
-    "branch": "Metallurgy",
-    "category": "ESC 2",
-    "teaching_scheme": {
-      "L": 2,
-      "T": 0,
-      "P": 2,
-      "self_study": 1,
-      "self_study_is_weekly": true
     },
-    "evaluation_scheme_raw": {
-      "MSE": 30,
-      "CIE": 20,
-      "ESE": 50
-    },
-    "attributes": {
-      "difficulty_level": 2,
-      "workload_level": 4,
-      "new_field_exploration": 2,
-      "concept_heavy": 3,
-      "math_heavy": 2,
-      "practical_focus": 2
-    },
-    "prior_knowledge_justification": "This course relies on a foundational understanding of standard 12th-grade chemistry, specifically electrochemistry. Students need to be reasonably comfortable with the basics of anodic and cathodic reactions, oxidation-reduction, and introductory thermodynamic concepts to properly digest the scientific principles of corrosion outlined in Unit 2.",
-    "difficulty_justification": "The theory portion of this syllabus is relatively concise, spanning only four units with a low 12-hour total lecture footprint. The cognitive load involves a mix of understanding electrochemical mechanisms and memorizing various forms of corrosion and prevention standards. However, the overall effort is pushed up to a 3 by the extensive laboratory component. Executing 10 detailed experiments—involving polarization techniques, electrode potential measurements, and observing stress corrosion cracking—makes the practical workload quite significant compared to the light theory.",
-    "cognitive_focus_justification": "This syllabus is primarily theoretical, focusing on basic conceptual understanding and the qualitative recognition of corrosion mechanisms, types, and prevention strategies. While it relies heavily on descriptive memorization—frequently using constraints like 'introductory description' and 'basic awareness'—it requires a mild degree of scientific deduction. Students must comprehend fundamental electrochemical processes, anodic and cathodic reactions, and basic thermodynamic concepts to logically evaluate material selection and surface protection methods.",
-    "practical_focus_justification": "Even though the 2-0-2-1 teaching scheme allocates practical lab time, the official course outcomes rely entirely on lower-order cognitive verbs like \"understand,\" \"recognize,\" and \"demonstrate awareness\" rather than active, hands-on execution verbs.",
-    "topic_tags": [
-      "Corrosion Science",
-      "Electrochemistry",
-      "Material Protection",
-      "Testing Standards",
-      "Galvanic Corrosion"
+    "semesterAvailability": [
+      "SEM1"
     ],
-    "rating_metadata": {
-      "total_votes": 1
-    },
-    "testimonials": [],
-    "evaluation_style_facts": {
-      "theory_exam_pct": 1.0,
-      "lab_is_fully_continuous": true
-    }
+    "forbiddenBranches": [
+      "MECH"
+    ],
+    "cohortRotation": "NONE",
+    "department": "Mechanical"
   },
   {
-    "id": "MFG(ES)-25002",
-    "course_code": "MFG(ES)-25002",
+    "course_code": "26U1ESEB006",
     "course_name": "Product Prototyping Practices",
-    "branch": "Manufacturing",
-    "category": "ESC 2",
+    "category": "ES III(Sem 1)",
     "teaching_scheme": {
       "L": 2,
       "T": 0,
@@ -2081,14 +1226,20 @@
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    }
+    },
+    "semesterAvailability": [
+      "SEM1"
+    ],
+    "forbiddenBranches": [
+      "MFG"
+    ],
+    "cohortRotation": "NONE",
+    "department": "Manufacturing"
   },
   {
-    "id": "EE-25001",
-    "course_code": "EE-25001",
-    "course_name": "Fundamentals of Electrical Engineering",
-    "branch": "Electrical",
-    "category": "ESC 2",
+    "course_code": "26U1ESEB007",
+    "course_name": "Fundamentals of Corrosion Engineering",
+    "category": "ES III(Sem 1)",
     "teaching_scheme": {
       "L": 2,
       "T": 0,
@@ -2102,23 +1253,23 @@
       "ESE": 50
     },
     "attributes": {
-      "difficulty_level": 3,
+      "difficulty_level": 2,
       "workload_level": 4,
       "new_field_exploration": 2,
-      "concept_heavy": 2,
-      "math_heavy": 3,
-      "practical_focus": 3
+      "concept_heavy": 3,
+      "math_heavy": 2,
+      "practical_focus": 2
     },
-    "prior_knowledge_justification": "This syllabus requires a solid foundation in 12th-grade physics, specifically current electricity and electromagnetism. Students must be comfortable with Kirchhoff's laws, basic circuit elements (R, L, C), and the algebraic manipulation of complex numbers for AC phasor analysis to keep up with the initial units.",
-    "difficulty_justification": "This course demands rigorous analytical problem-solving. Unit 1 introduces complex network theorems (Thevenin, Norton) and DC transients, requiring strong mathematical deduction. Units 2 and 3 dive into abstract AC phasor mathematics and three-phase systems. While Unit 5 adds some descriptive material science to memorize, the heavy computational load of the circuit analysis, combined with demanding lab verifications, keeps the overall cognitive load very high.",
-    "cognitive_focus_justification": "This course demands high-level analytical problem-solving and rigorous mathematical execution for the vast majority of its curriculum. Students must apply complex algebraic logic to solve DC transients in series and parallel circuits, utilize Thevenin and Norton theorems, and perform Star-Delta transformations for three-phase systems. While the final module requires the descriptive memorization of insulating and magnetic materials like SF6 and transformer oil, the primary cognitive load lies in computing transformer efficiency and evaluating AC circuits using polar and rectangular phasor representations.",
-    "practical_focus_justification": "The 2-0-2-1 teaching scheme allocates dedicated laboratory hours, and course outcomes explicitly require students to measure electrical quantities using physical instruments.",
+    "prior_knowledge_justification": "This course relies on a foundational understanding of standard 12th-grade chemistry, specifically electrochemistry. Students need to be reasonably comfortable with the basics of anodic and cathodic reactions, oxidation-reduction, and introductory thermodynamic concepts to properly digest the scientific principles of corrosion outlined in Unit 2.",
+    "difficulty_justification": "The theory portion of this syllabus is relatively concise, spanning only four units with a low 12-hour total lecture footprint. The cognitive load involves a mix of understanding electrochemical mechanisms and memorizing various forms of corrosion and prevention standards. However, the overall effort is pushed up to a 3 by the extensive laboratory component. Executing 10 detailed experimentsâ€”involving polarization techniques, electrode potential measurements, and observing stress corrosion crackingâ€”makes the practical workload quite significant compared to the light theory.",
+    "cognitive_focus_justification": "This syllabus is primarily theoretical, focusing on basic conceptual understanding and the qualitative recognition of corrosion mechanisms, types, and prevention strategies. While it relies heavily on descriptive memorizationâ€”frequently using constraints like 'introductory description' and 'basic awareness'â€”it requires a mild degree of scientific deduction. Students must comprehend fundamental electrochemical processes, anodic and cathodic reactions, and basic thermodynamic concepts to logically evaluate material selection and surface protection methods.",
+    "practical_focus_justification": "Even though the 2-0-2-1 teaching scheme allocates practical lab time, the official course outcomes rely entirely on lower-order cognitive verbs like \"understand,\" \"recognize,\" and \"demonstrate awareness\" rather than active, hands-on execution verbs.",
     "topic_tags": [
-      "Network Theorems",
-      "AC Circuits",
-      "Transformers",
-      "Magnetic Circuits",
-      "Electrical Materials"
+      "Corrosion Science",
+      "Electrochemistry",
+      "Material Protection",
+      "Testing Standards",
+      "Galvanic Corrosion"
     ],
     "rating_metadata": {
       "total_votes": 1
@@ -2127,6 +1278,737 @@
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
-    }
+    },
+    "semesterAvailability": [
+      "SEM1"
+    ],
+    "forbiddenBranches": [
+      "META"
+    ],
+    "cohortRotation": "NONE",
+    "department": "Metallurgy"
+  },
+  {
+    "course_code": "26U1VSEB001",
+    "course_name": "Geomatic Engineering",
+    "category": "VSEC",
+    "teaching_scheme": {
+      "L": 1,
+      "T": 0,
+      "P": 2,
+      "self_study": 1,
+      "self_study_is_weekly": true
+    },
+    "evaluation_scheme_raw": {
+      "TA": 20,
+      "CIE": 50,
+      "ESE": 30
+    },
+    "attributes": {
+      "difficulty_level": 2,
+      "workload_level": 2,
+      "new_field_exploration": 1,
+      "concept_heavy": 2,
+      "math_heavy": 2,
+      "practical_focus": 4
+    },
+    "prior_knowledge_justification": "This vocational course introduces surveying and mapping from the ground up, assuming no prior exposure to civil engineering or geomatics. Because VSEC modules are designed to be accessible to all branches, the syllabus starts with foundational concepts like map types, scales, and basic instrument introductions, requiring zero prerequisite technical knowledge.",
+    "difficulty_justification": "The curriculum is highly practical and descriptive, focusing heavily on hands-on field skills such as leveling, setting up a Total Station, and basic AutoCAD drafting. While it avoids complex mathematical derivations or abstract physics, students still must invest effort into memorizing instrument mechanics, surveying procedures, and software commands, which naturally elevates the effort required above an absolute baseline of 1.",
+    "cognitive_focus_justification": "This course strikes a practical balance between spatial mathematical reasoning and procedural fieldwork. While devoid of abstract calculus or complex derivations, students must apply geometric and trigonometric logic to measure heights, distances, angles, and areas, as well as perform resection using a Total Station. Furthermore, comprehending Cartesian and geographical coordinate systems, map projections, and translating those into engineering drawings using AutoCAD demands a high degree of spatial visualization and structural logic. This blend of applied mathematical geometry and hands-on execution makes it a solid mid-tier hybrid.",
+    "practical_focus_justification": "A Bloom's Taxonomy analysis of the course outcomes reveals higher-order, hands-on verbs like \"Apply\" and \"Create,\" explicitly instructing students to actively collect field data and generate engineering drawings using AutoCAD software.",
+    "topic_tags": [
+      "Surveying",
+      "Total Station",
+      "AutoCAD",
+      "Mapping"
+    ],
+    "rating_metadata": {
+      "total_votes": 1
+    },
+    "testimonials": [],
+    "evaluation_style_facts": {
+      "theory_exam_pct": 0.6,
+      "lab_is_fully_continuous": true
+    },
+    "semesterAvailability": [
+      "SEM1",
+      "SEM2"
+    ],
+    "forbiddenBranches": [
+      "CIVIL"
+    ],
+    "cohortRotation": "GROUP_B_SEM1_GROUP_A_SEM2",
+    "department": "Civil"
+  },
+  {
+    "course_code": "26U1VSEB002",
+    "course_name": "Fundamentals of Construction Practices",
+    "category": "VSEC",
+    "teaching_scheme": {
+      "L": 1,
+      "T": 0,
+      "P": 2,
+      "self_study": 1,
+      "self_study_is_weekly": true
+    },
+    "evaluation_scheme_raw": {
+      "TA": 20,
+      "CIE": 50,
+      "ESE": 30
+    },
+    "attributes": {
+      "difficulty_level": 2,
+      "workload_level": 2,
+      "new_field_exploration": 1,
+      "concept_heavy": 4,
+      "math_heavy": 1,
+      "practical_focus": 3
+    },
+    "prior_knowledge_justification": "This course is structured as an absolute beginner's introduction to construction, assuming no prior engineering or technical background. It starts at the ground level with identifying Personal Protective Equipment (PPE), the basic ingredients of concrete, and the general scope of construction, making it fully accessible to all branches.",
+    "difficulty_justification": "While completely devoid of math or abstract theory, this course requires active memorization of technical specifications such as concrete grades, cement-sand mortar ratios, and various masonry types. The laboratory assignments are highly practical, involving site visits, drawing simple layouts, and creating charts. The need to memorize material properties and maintenance procedures elevates it slightly above a baseline 1.",
+    "cognitive_focus_justification": "This course is highly descriptive and procedural, requiring practically zero mathematical computation or abstract structural logic. The cognitive load focuses on rote memorization and qualitative observation, asking students to identify construction tools, classify masonry types, and understand the basic ingredients and mixing methods for concrete. The laboratory assignmentsâ€”which involve creating safety posters, drawing simple site layouts, and visually identifying building cracksâ€”are heavily observation-based and conceptual rather than analytical.",
+    "practical_focus_justification": "A Bloom's Taxonomy analysis of the course outcomes reveals applied verbs like \"Demonstrate\" and \"Evaluate,\" explicitly instructing students to safely use physical tools and actively assess real-world building defects rather than just learning the theor",
+    "topic_tags": [
+      "Construction Practices",
+      "Concrete & Masonry",
+      "Building Maintenance",
+      "Site Safety"
+    ],
+    "rating_metadata": {
+      "total_votes": 1
+    },
+    "testimonials": [],
+    "evaluation_style_facts": {
+      "theory_exam_pct": 0.6,
+      "lab_is_fully_continuous": true
+    },
+    "semesterAvailability": [
+      "SEM1",
+      "SEM2"
+    ],
+    "forbiddenBranches": [
+      "CIVIL"
+    ],
+    "cohortRotation": "GROUP_B_SEM1_GROUP_A_SEM2",
+    "department": "Civil"
+  },
+  {
+    "course_code": "26U1VSEB003",
+    "course_name": "Programming for Problem Solving",
+    "category": "VSEC",
+    "teaching_scheme": {
+      "L": 1,
+      "T": 0,
+      "P": 2,
+      "self_study": 1,
+      "self_study_is_weekly": true
+    },
+    "evaluation_scheme_raw": {
+      "TA": 20,
+      "CIE": 50,
+      "ESE": 30
+    },
+    "attributes": {
+      "difficulty_level": 3,
+      "workload_level": 2,
+      "new_field_exploration": 1,
+      "concept_heavy": 2,
+      "math_heavy": 3,
+      "practical_focus": 4
+    },
+    "prior_knowledge_justification": "The syllabus begins with the absolute basics, starting with an 'Introduction and Overview of C programming Language' and simple I/O statements. It expects zero prior coding experience, making it fully accessible for students from non-computing backgrounds, such as those who opted for bi-focal Electronics in high school, to begin learning from scratch.",
+    "difficulty_justification": "For a student with absolutely zero programming background, the learning curve here is exceptionally steep. The course expects students to transition from basic syntax to abstract, notoriously difficult concepts like pointer arithmetic, memory referencing, and linked lists within a highly compressed 12-hour theory window. C is an unforgiving language for beginners, and mastering algorithmic logic alongside manual memory management justifies a high difficulty rating.",
+    "cognitive_focus_justification": "This course demands a high level of abstract algorithmic logic and procedural execution, completely devoid of descriptive memorization. Students are required to mentally model control flows, manipulate memory directly using pointer arithmetic, and design complex data structures like linked lists. Furthermore, translating mathematical problemsâ€”such as computing sine functions, finding the roots of quadratic equations, and generating the Fibonacci sequenceâ€”into functional C code requires rigorous analytical problem-solving.",
+    "practical_focus_justification": ": A Bloom's Taxonomy analysis of the course outcomes reveals applied, higher-order verbs like \"Solve\" and \"Design,\" explicitly requiring students to actively break down problems and code modular solutions using a programming language.",
+    "topic_tags": [
+      "C Programming",
+      "Data Structures",
+      "Pointers",
+      "Algorithms"
+    ],
+    "rating_metadata": {
+      "total_votes": 1
+    },
+    "testimonials": [],
+    "evaluation_style_facts": {
+      "theory_exam_pct": 0.6,
+      "lab_is_fully_continuous": true
+    },
+    "semesterAvailability": [
+      "SEM1",
+      "SEM2"
+    ],
+    "forbiddenBranches": [
+      "COMP_DIV_1_2"
+    ],
+    "cohortRotation": "GROUP_B_SEM1_GROUP_A_SEM2",
+    "department": "Computer"
+  },
+  {
+    "course_code": "26U1VSEB004",
+    "course_name": "Web Design",
+    "category": "VSEC",
+    "teaching_scheme": {
+      "L": 1,
+      "T": 0,
+      "P": 2,
+      "self_study": 1,
+      "self_study_is_weekly": true
+    },
+    "evaluation_scheme_raw": {
+      "TA": 20,
+      "CIE": 50,
+      "ESE": 30
+    },
+    "attributes": {
+      "difficulty_level": 2,
+      "workload_level": 2,
+      "new_field_exploration": 1,
+      "concept_heavy": 2,
+      "math_heavy": 2,
+      "practical_focus": 4
+    },
+    "prior_knowledge_justification": "The syllabus begins with fundamental concepts such as the 'Basics of the Internet and the Web' and setting up a basic HTML page. It requires zero prior programming or web development experience, starting from the very first step of installing a text editor like VS Code.",
+    "difficulty_justification": "While the initial units on HTML and CSS are highly accessible and focus on visual formatting like the 'box model,' the difficulty ramps up significantly in Unit 4. Students from non-programming backgrounds must suddenly grasp JavaScript control flow, DOM manipulation, and basic server-side programming using Node.js to handle GET and POST methods. This transition from simple descriptive markup to backend server logic elevates the overall difficulty for an absolute beginner.",
+    "cognitive_focus_justification": "his course balances structural design with procedural logic, earning a solid mid-tier score. Students must grasp the descriptive syntax and spatial box models of HTML and CSS to structure and style web pages visually. However, the inclusion of JavaScript for control flow, DOM manipulation, and form validation, alongside setting up a Node.js server to handle GET and POST requests, introduces algorithmic thinking and client-server problem-solving. While less abstractly rigorous than pointer arithmetic or linked lists in C programming, it still demands active coding, event-driven logic, and structural execution.",
+    "practical_focus_justification": "A Bloom's Taxonomy analysis of the course outcomes reveals high-order, hands-on verbs like \"Design\" and \"Demonstrate,\" explicitly requiring students to actively build functional web pages, manipulate live DOM elements, and configure operational web servers.",
+    "topic_tags": [
+      "HTML & CSS",
+      "JavaScript",
+      "Node.js",
+      "Frontend Development"
+    ],
+    "rating_metadata": {
+      "total_votes": 1
+    },
+    "testimonials": [],
+    "evaluation_style_facts": {
+      "theory_exam_pct": 0.6,
+      "lab_is_fully_continuous": true
+    },
+    "semesterAvailability": [
+      "SEM1",
+      "SEM2"
+    ],
+    "forbiddenBranches": [
+      "COMP_DIV_1_2"
+    ],
+    "cohortRotation": "GROUP_B_SEM1_GROUP_A_SEM2",
+    "department": "Computer"
+  },
+  {
+    "course_code": "26U1VSEB005",
+    "course_name": "Python Programming",
+    "category": "VSEC",
+    "teaching_scheme": {
+      "L": 1,
+      "T": 0,
+      "P": 2,
+      "self_study": 1,
+      "self_study_is_weekly": true
+    },
+    "evaluation_scheme_raw": {
+      "TA": 20,
+      "CIE": 50,
+      "ESE": 30
+    },
+    "attributes": {
+      "difficulty_level": 2,
+      "workload_level": 2,
+      "new_field_exploration": 1,
+      "concept_heavy": 2,
+      "math_heavy": 2,
+      "practical_focus": 4
+    },
+    "prior_knowledge_justification": "The course is designed for absolute beginners, starting explicitly from 'Introduction to Python' and 'Setting up the environment'. It requires zero prior exposure to coding or computer science, making it highly accessible for students from non-CS backgrounds.",
+    "difficulty_justification": "Unlike C programming, Python has a highly readable and forgiving syntax that abstract away complex memory management. The syllabus sticks strictly to foundational concepts like loops, conditionals, basic data structures (lists, dictionaries, sets), and simple functions without delving into object-oriented programming or advanced algorithms. The lab experiments culminate in a straightforward command-line mini-project. While developing programmatic logic for the first time still requires effort, Python's gentle learning curve keeps this comfortably at a 2.",
+    "cognitive_focus_justification": "While this course demands solid algorithmic problem-solving to execute loops, conditional statements, and modular functions, it operates with a slightly lower abstract cognitive load than the C Programming track. Python's high-level abstractionsâ€”such as built-in lists, dictionaries, and list comprehensionsâ€”remove the need for complex memory management and pointer arithmetic. The laboratory exercises focus on straightforward procedural data manipulation, like calculating student grades using dictionaries, string manipulation, and building a command-line contact management system, firmly placing it as a highly logical but accessible procedural hybrid.",
+    "practical_focus_justification": "A Bloom's Taxonomy analysis of the course outcomes reveals applied, higher-order verbs like \"Solve,\" \"Design,\" and \"Demonstrate,\" explicitly requiring students to actively code, build modular functions, and develop simple command-line programs.",
+    "topic_tags": [
+      "Scripting",
+      "Data Structures",
+      "Control Flow",
+      "Algorithmic Logic"
+    ],
+    "rating_metadata": {
+      "total_votes": 1
+    },
+    "testimonials": [],
+    "evaluation_style_facts": {
+      "theory_exam_pct": 0.6,
+      "lab_is_fully_continuous": true
+    },
+    "semesterAvailability": [
+      "SEM1",
+      "SEM2"
+    ],
+    "forbiddenBranches": [
+      "COMP_DIV_1_2"
+    ],
+    "cohortRotation": "GROUP_B_SEM1_GROUP_A_SEM2",
+    "department": "Computer"
+  },
+  {
+    "course_code": "26U1VSEB006",
+    "course_name": "Electrical Maintenance and Safety",
+    "category": "VSEC",
+    "teaching_scheme": {
+      "L": 1,
+      "T": 0,
+      "P": 2,
+      "self_study": 1,
+      "self_study_is_weekly": true
+    },
+    "evaluation_scheme_raw": {
+      "TA": 20,
+      "CIE": 50,
+      "ESE": 30
+    },
+    "attributes": {
+      "difficulty_level": 2,
+      "workload_level": 2,
+      "new_field_exploration": 1,
+      "concept_heavy": 3,
+      "math_heavy": 2,
+      "practical_focus": 4
+    },
+    "prior_knowledge_justification": "Explicitly offered to all students as a VSEC, this course assumes no formal background in electrical engineering. It focuses heavily on practical hardware handling, basic wiring, and safety protocols, relying only on general common sense and basic high-school science to grasp how household and industrial electrical systems function.",
+    "difficulty_justification": "The curriculum is entirely descriptive and hands-on, avoiding complex mathematical modeling, abstract circuit analysis, or heavy theoretical physics. Students will need to memorize various safety codes, installation procedures, and troubleshooting steps for equipment like transformers, EV chargers, and solar systems. This practical memorization elevates it slightly above a baseline score of 1, but keeps it highly manageable.",
+    "cognitive_focus_justification": "Procedural execution. Students learn the theory of electrical components and follow standard, fixed steps to wire domestic circuits and test EV chargers.",
+    "practical_focus_justification": "A Bloom's Taxonomy analysis of the course outcomes reveals applied, hands-on action phrases like \"carry out maintenance\" and \"installation wiring,\" explicitly requiring students to actively physically wire and troubleshoot real-world electrical systems.",
+    "topic_tags": [
+      "Industrial Wiring",
+      "Equipment Troubleshooting",
+      "Safety Protocols",
+      "Power Systems"
+    ],
+    "rating_metadata": {
+      "total_votes": 1
+    },
+    "testimonials": [],
+    "evaluation_style_facts": {
+      "theory_exam_pct": 0.6,
+      "lab_is_fully_continuous": true
+    },
+    "semesterAvailability": [
+      "SEM1"
+    ],
+    "forbiddenBranches": [
+      "ELECT"
+    ],
+    "cohortRotation": "NONE",
+    "department": "Electrical"
+  },
+  {
+    "course_code": "26U1VSEB007",
+    "course_name": "Fundamentals of PLC",
+    "category": "VSEC",
+    "teaching_scheme": {
+      "L": 1,
+      "T": 0,
+      "P": 2,
+      "self_study": 1,
+      "self_study_is_weekly": true
+    },
+    "evaluation_scheme_raw": {
+      "TA": 20,
+      "CIE": 50,
+      "ESE": 30
+    },
+    "attributes": {
+      "difficulty_level": 2,
+      "workload_level": 2,
+      "new_field_exploration": 1,
+      "concept_heavy": 3,
+      "math_heavy": 2,
+      "practical_focus": 4
+    },
+    "prior_knowledge_justification": "The syllabus is structured for an absolute beginner, starting from the basic 'Role of automation in Industries' and the 'History and evolution of PLC'. It assumes no prior knowledge of industrial control systems, introducing even foundational concepts like Boolean logic gates (AND, OR, NAND) from scratch.",
+    "difficulty_justification": "Unlike text-heavy programming languages (like C), Ladder Logic is a highly visual, intuitive programming method originally designed to mimic physical relay circuits so technicians could easily adopt it. The course scope is kept strictly to basics: simple logic gates, timers, and basic applications like tank level control. While grasping relay logic requires a small cognitive shift, the visual nature of the programming and the lack of complex syntax or memory management keeps the overall difficulty very manageable for students from any branch.",
+    "cognitive_focus_justification": "Balances descriptive hardware memorization with the active mathematical logic required to design ladder diagrams and Boolean control systems.",
+    "practical_focus_justification": "Using Bloom's Taxonomy, the course outcomes utilize higher-order, hands-on verbs like \"Develop\" and \"Apply\" to actively create ladder logic programs and solve real-time industrial control applications.",
+    "topic_tags": [
+      "Industrial Automation",
+      "Ladder Logic",
+      "Boolean Logic",
+      "Control Systems"
+    ],
+    "rating_metadata": {
+      "total_votes": 1
+    },
+    "testimonials": [],
+    "evaluation_style_facts": {
+      "theory_exam_pct": 0.6,
+      "lab_is_fully_continuous": true
+    },
+    "semesterAvailability": [
+      "SEM1"
+    ],
+    "forbiddenBranches": [
+      "INSTRU"
+    ],
+    "cohortRotation": "NONE",
+    "department": "Instrumentation"
+  },
+  {
+    "course_code": "26U1VSEB008",
+    "course_name": "Computer Aided Drafting",
+    "category": "VSEC",
+    "teaching_scheme": {
+      "L": 1,
+      "T": 0,
+      "P": 2,
+      "self_study": 1,
+      "self_study_is_weekly": true
+    },
+    "evaluation_scheme_raw": {
+      "TA": 20,
+      "CIE": 50,
+      "ESE": 30
+    },
+    "attributes": {
+      "difficulty_level": 2,
+      "workload_level": 2,
+      "new_field_exploration": 1,
+      "concept_heavy": 3,
+      "math_heavy": 2,
+      "practical_focus": 4
+    },
+    "prior_knowledge_justification": "The syllabus is structured for absolute beginners, starting from the 'Fundamentals of CAD drawing setup' and explicitly covering the 'Principles of Orthographic Projections'. It assumes zero prior experience with drafting software, coordinate systems, or engineering graphics.",
+    "difficulty_justification": "The course is highly procedural, focusing heavily on executing specific software commands (Draw, Modify, Zoom, Dimensioning) rather than solving complex abstract problems. While Assignment 2 requires translating 2D orthographic views into 3D modelsâ€”which demands a degree of spatial reasoningâ€”the step-by-step nature of the software and the foundational scope of the mechanical elements keep the cognitive load low.",
+    "cognitive_focus_justification": "Students memorize orthographic projection theory and execute standard draw/modify commands in CAD software to replicate 3D models.",
+    "practical_focus_justification": "Using Bloom's Taxonomy, the course outcomes employ higher-order, hands-on verbs like \"Draw,\" \"Modify,\" and \"Create\" to actively produce digital models and 2D geometric figures.",
+    "topic_tags": [
+      "2D Drafting",
+      "3D Modeling",
+      "Orthographic Projections",
+      "CAD Software"
+    ],
+    "rating_metadata": {
+      "total_votes": 1
+    },
+    "testimonials": [],
+    "evaluation_style_facts": {
+      "theory_exam_pct": 0.6,
+      "lab_is_fully_continuous": true
+    },
+    "semesterAvailability": [
+      "SEM1",
+      "SEM2"
+    ],
+    "forbiddenBranches": [
+      "MECH"
+    ],
+    "cohortRotation": "GROUP_B_SEM1_GROUP_A_SEM2",
+    "department": "Mechanical"
+  },
+  {
+    "course_code": "26U1VSEB009",
+    "course_name": "EV Architecture",
+    "category": "VSEC",
+    "teaching_scheme": {
+      "L": 1,
+      "T": 0,
+      "P": 2,
+      "self_study": 1,
+      "self_study_is_weekly": true
+    },
+    "evaluation_scheme_raw": {
+      "TA": 20,
+      "CIE": 50,
+      "ESE": 30
+    },
+    "attributes": {
+      "difficulty_level": 2,
+      "workload_level": 2,
+      "new_field_exploration": 1,
+      "concept_heavy": 4,
+      "math_heavy": 1,
+      "practical_focus": 3
+    },
+    "prior_knowledge_justification": "The course starts with fundamental topics such as the 'History and evolution of automobiles' and basic vehicle classifications. The lab assignments focus entirely on 'Familiarization,' 'Study,' and 'Demonstrations,' assuming zero prior automotive or electrical engineering background.",
+    "difficulty_justification": "While the theoretical aspect of the course is highly descriptive, the newly added lab assignments elevate the practical demands. Students are not just observing; they are required to test BLDC/PMSM motors, measure battery State of Charge (SOC), and actively dismantle and assemble critical EV components like the motor, controller, and Battery Management System (BMS). Handling and assembling these components safely requires a higher degree of physical effort, precision, and adherence to procedural steps, bumping the difficulty from a purely theoretical 2 to a practical 3.",
+    "cognitive_focus_justification": "The cognitive load relies on descriptive memorization of EV layouts and battery types. The lab component is strictly observational, focusing on familiarization and demonstration rather than structural engineering.",
+    "practical_focus_justification": "While the primary course objectives rely on lower-order, theoretical verbs like \"understand\" and \"study,\" the laboratory component introduces hands-on, higher-order engagement through tasks like testing motors and dismantling and assembling EV components.",
+    "topic_tags": [
+      "Automobile Basics",
+      "Electric Vehicles",
+      "Battery Technology",
+      "EV Component Assembly"
+    ],
+    "rating_metadata": {
+      "total_votes": 1
+    },
+    "testimonials": [],
+    "evaluation_style_facts": {
+      "theory_exam_pct": 0.6,
+      "lab_is_fully_continuous": true
+    },
+    "semesterAvailability": [
+      "SEM1",
+      "SEM2"
+    ],
+    "forbiddenBranches": [
+      "MECH"
+    ],
+    "cohortRotation": "GROUP_B_SEM1_GROUP_A_SEM2",
+    "department": "Mechanical"
+  },
+  {
+    "course_code": "26U1VSEB010",
+    "course_name": "Manufacturing Practices and Fab Lab",
+    "category": "VSEC",
+    "teaching_scheme": {
+      "L": 1,
+      "T": 0,
+      "P": 2,
+      "self_study": 1,
+      "self_study_is_weekly": true
+    },
+    "evaluation_scheme_raw": {
+      "TA": 20,
+      "CIE": 50,
+      "EIE": 30
+    },
+    "attributes": {
+      "difficulty_level": 2,
+      "workload_level": 2,
+      "new_field_exploration": 1,
+      "concept_heavy": 3,
+      "math_heavy": 2,
+      "practical_focus": 4
+    },
+    "prior_knowledge_justification": "The course serves as an absolute introduction to workshop practices. Modules explicitly start with 'Familiarization' and 'Introduction to tools,' assuming no prior experience with manufacturing, carpentry, or heavy machinery.",
+    "difficulty_justification": "While theoretically lightweight, the course is physically and procedurally demanding. Students are required to operate heavy machinery (lathes, milling machines), perform high-heat tasks like arc and gas welding, and execute precise physical operations in carpentry and fitting (filing, chipping). This level of manual dexterity, physical effort, and strict adherence to safety protocols elevates the practical difficulty to a 3.",
+    "cognitive_focus_justification": "Traditional shop floor operations. Students memorize tool safety and execute manual, repetitive tasks like filing, carpentry joining, and basic welding.",
+    "practical_focus_justification": "Evaluating the course outcomes using Bloom's Taxonomy, the use of action-oriented verbs like \"apply,\" \"choose,\" and \"engage in creating\" indicates a highly hands-on approach centered on building physical components and utilizing workshop machinery.",
+    "topic_tags": [
+      "Workshop Practices",
+      "Carpentry & Fitting",
+      "Welding",
+      "PCB Manufacturing"
+    ],
+    "rating_metadata": {
+      "total_votes": 1
+    },
+    "testimonials": [],
+    "evaluation_style_facts": {
+      "theory_exam_pct": 0.0,
+      "lab_is_fully_continuous": true
+    },
+    "semesterAvailability": [
+      "SEM1",
+      "SEM2"
+    ],
+    "forbiddenBranches": [
+      "MFG"
+    ],
+    "cohortRotation": "GROUP_B_SEM1_GROUP_A_SEM2",
+    "department": "Manufacturing"
+  },
+  {
+    "course_code": "26U1VSEB011",
+    "course_name": "Robotics and Drone Operation and Safety",
+    "category": "VSEC",
+    "teaching_scheme": {
+      "L": 1,
+      "T": 0,
+      "P": 2,
+      "self_study": 1,
+      "self_study_is_weekly": true
+    },
+    "evaluation_scheme_raw": {
+      "TA": 20,
+      "CIE": 50,
+      "ESE": 30
+    },
+    "attributes": {
+      "difficulty_level": 2,
+      "workload_level": 2,
+      "new_field_exploration": 1,
+      "concept_heavy": 4,
+      "math_heavy": 1,
+      "practical_focus": 2
+    },
+    "prior_knowledge_justification": "The syllabus is designed for absolute beginners, starting with the 'Basics of Robotics' (Robot Laws, basic definitions) and an 'Introduction to Drones' covering history and evolution. It assumes no prior experience with automation, programming, or aerodynamics.",
+    "difficulty_justification": "The theoretical units are highly descriptive, focusing on classifications, components, and safety guidelines rather than mathematical kinematics or complex control theory. In the laboratory section, five out of the eight experiments are strictly 'Demonstrations'. While students do get to program a Niryo robot and operate a drone, the heavily guided, observational nature of the majority of the course keeps the cognitive and physical load relatively low.",
+    "cognitive_focus_justification": "Heavily focused on descriptive theory regarding safety regulations, drone classifications, and pre-flight checklists. The labs consist primarily of sensor demonstrations and operating a drone based on established safety guidelines.",
+    "practical_focus_justification": "Evaluating the course outcomes using Bloom's Taxonomy, the heavy reliance on lower-order verbs like \"Understand\" and \"Identify\" indicates a foundational, theoretical approach rather than advanced, hands-on implementation.",
+    "topic_tags": [
+      "Robotics Basics",
+      "Drone Operations",
+      "Robot Programming",
+      "UAV Safety"
+    ],
+    "rating_metadata": {
+      "total_votes": 1
+    },
+    "testimonials": [],
+    "evaluation_style_facts": {
+      "theory_exam_pct": 0.6,
+      "lab_is_fully_continuous": true
+    },
+    "semesterAvailability": [
+      "SEM1",
+      "SEM2"
+    ],
+    "forbiddenBranches": [
+      "MFG"
+    ],
+    "cohortRotation": "GROUP_B_SEM1_GROUP_A_SEM2",
+    "department": "Manufacturing"
+  },
+  {
+    "course_code": "26U1VSEB012",
+    "course_name": "Electrical Workshop",
+    "category": "VSEC",
+    "teaching_scheme": {
+      "L": 1,
+      "T": 0,
+      "P": 2,
+      "self_study": 1,
+      "self_study_is_weekly": true
+    },
+    "evaluation_scheme_raw": {
+      "TA": 20,
+      "CIE": 50,
+      "ESE": 30
+    },
+    "attributes": {
+      "difficulty_level": 3,
+      "workload_level": 2,
+      "new_field_exploration": 1,
+      "concept_heavy": 3,
+      "math_heavy": 2,
+      "practical_focus": 4
+    },
+    "prior_knowledge_justification": "As a vocational workshop open to all branches, this course requires zero prior theoretical knowledge of electrical engineering. The focus is entirely on introducing basic tools, components, and standard operating procedures for physical wiring and assembly tasks from the ground up.",
+    "difficulty_justification": "Handling 415V, 3-phase industrial setups and wiring control panels introduces a severe element of physical risk and requires intense situational awareness. For an absolute beginner from a non-electrical background, the pressure of executing high-voltage wiring without error, combined with the meticulous, zero-margin-for-error precision required to fabricate PCBs and wind transformers from scratch, pushes the overall stress and execution difficulty to a very high level.",
+    "cognitive_focus_justification": "Purely procedural, hands-on tasks like winding transformers, etching PCBs, and preparing simple test boards following a fixed guide",
+    "practical_focus_justification": "Bloom's Taxonomy analysis of the course outcomes reveals high-order, hands-on verbs like \"construct,\" \"design,\" and \"install,\" explicitly requiring students to physically build printed circuit boards, wire control panels, and troubleshoot real-world electrical systems",
+    "topic_tags": [
+      "Workshop Practices",
+      "Circuit Fabrication",
+      "Motor Wiring",
+      "PCB Design"
+    ],
+    "rating_metadata": {
+      "total_votes": 1
+    },
+    "testimonials": [],
+    "evaluation_style_facts": {
+      "theory_exam_pct": 0.6,
+      "lab_is_fully_continuous": true
+    },
+    "semesterAvailability": [
+      "SEM2"
+    ],
+    "forbiddenBranches": [
+      "ELECT"
+    ],
+    "cohortRotation": "NONE",
+    "department": "Electrical"
+  },
+  {
+    "course_code": "26U1VSEB013",
+    "course_name": "Digital Public Infrastructure",
+    "category": "VSEC",
+    "teaching_scheme": {
+      "L": 1,
+      "T": 0,
+      "P": 2,
+      "self_study": 1,
+      "self_study_is_weekly": true
+    },
+    "evaluation_scheme_raw": {
+      "TA": 20,
+      "CIE": 50,
+      "ESE": 30
+    },
+    "attributes": {
+      "difficulty_level": 2,
+      "workload_level": 2,
+      "new_field_exploration": 1,
+      "concept_heavy": 4,
+      "math_heavy": 1,
+      "practical_focus": 3
+    },
+    "prior_knowledge_justification": "The course is designed to introduce the concepts of digital identity, UPI, and consent-based data sharing from the ground up. Even with the lab components, it emphasizes 'familiarization' and uses 'demo platforms' and 'mock APIs', requiring no prior background in public policy or advanced software development.",
+    "difficulty_justification": "The newly provided lab assignments significantly elevate the practical expectations of the course. Students are not just studying policy; they are required to simulate digital KYC, interact with mock APIs (UPI, ONDC, Open Banking), and ultimately develop an integrative mini-project (such as a 'Budget Tracker' app) using these APIs. For a student without a prior programming or web development background, transitioning from theory to actively handling API integrations and prototyping applications represents a solid jump in effort and cognitive load, bumping the difficulty to a 3.",
+    "cognitive_focus_justification": "Functions essentially as a policy and governance class. The curriculum focuses on GDPR, digital identity case studies, and SDG goals. The lab consists of simulating digital KYC and engaging in group debates rather than technical execution.",
+    "practical_focus_justification": "A Bloom's Taxonomy analysis of the laboratory outcomes reveals applied, higher-order verbs like \"Use\" and \"Develop,\" explicitly requiring students to move beyond theory by actively integrating sample APIs and building functional conceptual prototypes.",
+    "topic_tags": [
+      "Digital Identity",
+      "Digital Payments",
+      "API Integration",
+      "Policy & Governance"
+    ],
+    "rating_metadata": {
+      "total_votes": 1
+    },
+    "testimonials": [],
+    "evaluation_style_facts": {
+      "theory_exam_pct": 0.6,
+      "lab_is_fully_continuous": true
+    },
+    "semesterAvailability": [
+      "SEM2"
+    ],
+    "forbiddenBranches": [
+      "ENTC"
+    ],
+    "cohortRotation": "NONE",
+    "department": "E & TC"
+  },
+  {
+    "course_code": "26U1VSEB014",
+    "course_name": "Data Preprocessing and Visualization",
+    "category": "VSEC",
+    "teaching_scheme": {
+      "L": 1,
+      "T": 0,
+      "P": 2,
+      "self_study": 1,
+      "self_study_is_weekly": true
+    },
+    "evaluation_scheme_raw": {
+      "TA": 20,
+      "CIE": 50,
+      "ESE": 30
+    },
+    "attributes": {
+      "difficulty_level": 2,
+      "workload_level": 2,
+      "new_field_exploration": 1,
+      "concept_heavy": 2,
+      "math_heavy": 2,
+      "practical_focus": 4
+    },
+    "prior_knowledge_justification": "The syllabus begins with foundational concepts like the 'Overview of data visualization and its importance'. The lab assignments start with downloading free datasets in Excel format and creating basic charts, gradually moving to UI-based tools like Tableau or Power BI. It requires no prior data science, statistical, or programming experience.",
+    "difficulty_justification": "The course starts gently with theoretical visualization principles, but the practical components introduce a moderate technical learning curve. Students are required to utilize Python libraries such as Matplotlib, Seaborn, and Plotly, as well as install and use WEKA for feature extraction and filtering. Understanding concepts like data normalization, dimensionality reduction, and handling missing data, while transitioning from drag-and-drop dashboards to programmatic visualization tools, elevates the cognitive load. This justifies a score of 3 for students without a programming background.",
+    "cognitive_focus_justification": "Handling real-world data requires statistical logic. Executing dimensionality reduction, feature selection, and data normalization demands mathematical reasoning alongside tool-based visualization.",
+    "practical_focus_justification": "A Bloom's Taxonomy analysis of the laboratory outcomes reveals applied, higher-order verbs like \"Transform,\" \"Prepare,\" and \"Perform,\" explicitly requiring students to actively write Python scripts, build functional dashboards, and execute data pre-processing operations on real-world datasets.",
+    "topic_tags": [
+      "Data Visualization",
+      "Dashboard Design",
+      "Feature Extraction",
+      "Exploratory Data Analysis"
+    ],
+    "rating_metadata": {
+      "total_votes": 1
+    },
+    "testimonials": [],
+    "evaluation_style_facts": {
+      "theory_exam_pct": 0.6,
+      "lab_is_fully_continuous": true
+    },
+    "semesterAvailability": [
+      "SEM2"
+    ],
+    "forbiddenBranches": [
+      "ENTC"
+    ],
+    "cohortRotation": "NONE",
+    "department": "E & TC"
   }
 ]

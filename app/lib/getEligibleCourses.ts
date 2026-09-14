@@ -1,9 +1,9 @@
 export const COURSE_CATEGORIES = [
   "BS Mathematics",
-  "BS Applied Science 1",
-  "BS Applied Science 2",
-  "ESC 1",
-  "ESC 2",
+  "BS Applied Science I",
+  "BS Applied Science II",
+  "ES II(Sem1) and ES IV(Sem2)",
+  "ES III(Sem 1)",
   "VSEC",
 ] as const;
 
@@ -14,8 +14,8 @@ type StudentLike = {
 };
 
 type CourseLike = {
-  category: CourseCategory;
-  branch: string;
+  category: string;
+  department?: string;
 };
 
 export type EligibleCourse<T extends CourseLike> = T & {
@@ -23,18 +23,10 @@ export type EligibleCourse<T extends CourseLike> = T & {
 };
 
 export function getEligibleCourses<T extends CourseLike>(
-  student: StudentLike,
+  _student: StudentLike,
   courses: T[],
 ): EligibleCourse<T>[] {
-  return courses
-    .filter(
-      (course) =>
-        !(
-          (course.category === "ESC 1" || course.category === "ESC 2") &&
-          course.branch === student.branch
-        ),
-    )
-    .map((course) => ({
+  return courses.map((course) => ({
       ...course,
       branch_proximity: 1.0,
     }));

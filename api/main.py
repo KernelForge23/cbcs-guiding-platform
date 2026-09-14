@@ -130,7 +130,7 @@ def getEligibleCourses(student: WizardPayload, courses: list[dict]) -> list[dict
     eligible_courses: list[dict] = []
     for course in courses:
         category = course.get("category")
-        course_branch = course.get("branch")
+        course_branch = course.get("department")
         is_esc_hard_block = (
             category in ESC_CATEGORIES
             and isinstance(course_branch, str)
@@ -187,7 +187,7 @@ def _get_course_attribute(course: dict, key: str) -> float:
 
 
 def _resolve_course_branch(course: dict, student_branch: str) -> str:
-    course_branch = course.get("branch")
+    course_branch = course.get("department")
     if isinstance(course_branch, str) and course_branch:
         return course_branch
     proximity_map = course.get("branch_proximity", {})
@@ -274,9 +274,31 @@ def _fallback_narrative_for_course(course: dict) -> tuple[str, str]:
         return why_this_fits, worth_knowing
 
     course_name = course.get("course_name", "This course")
+    cognitive_focus = course.get("cognitive_focus_justification")
+    practical_focus = course.get("practical_focus_justification")
+    prior_knowledge = course.get("prior_knowledge_justification")
+    difficulty = course.get("difficulty_justification")
+
+    why_parts = [
+        value.strip()
+        for value in (cognitive_focus, practical_focus)
+        if isinstance(value, str) and value.strip()
+    ]
+    worth_parts = [
+        value.strip()
+        for value in (prior_knowledge, difficulty)
+        if isinstance(value, str) and value.strip()
+    ]
+
+    if why_parts and worth_parts:
+        return (
+            " ".join(why_parts),
+            " ".join(worth_parts),
+        )
+
     return (
-        f"AI narrative for {course_name} is currently generating. Please check back shortly.",
-        "No AI caveat is available yet. Review core attributes and testimonials for now.",
+        f"{course_name} is recommended based on the course attributes and your preference profile.",
+        "Review the course attributes and testimonials for additional context before selecting it.",
     )
 
 
@@ -359,8 +381,11 @@ def get_recommendations(payload: WizardPayload):
             "rank": rank,
             "course_code": course_code,
             "course_name": course.get("course_name"),
-            "branch": course.get("branch"),
+            "department": course.get("department"),
             "category": course.get("category"),
+            "semesterAvailability": course.get("semesterAvailability", []),
+            "forbiddenBranches": course.get("forbiddenBranches", []),
+            "cohortRotation": course.get("cohortRotation", "NONE"),
             "branch_proximity": course.get("branch_proximity", 1.0),
             "fit_percentage": fit_percentage,
             "attributes_used": attributes_used,

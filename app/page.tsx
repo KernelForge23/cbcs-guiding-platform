@@ -6,7 +6,6 @@ import {
   AlertCircle,
   ArrowRight,
   ChevronLeft,
-  ChevronDown,
   GraduationCap,
   MessageSquareQuote,
   RotateCcw,
@@ -24,6 +23,15 @@ import { formatCourseCodeForDisplay } from "./lib/courseCode";
 import courseCatalog from "../api/courses.json";
 import { CourseStructure } from "../components/course-structure";
 import { ThemeToggle } from "../components/theme-toggle";
+import {
+  API_BRANCH_BY_CODE,
+  BRANCH_OPTIONS,
+  GROUP_A_BRANCHES,
+  GROUP_B_BRANCHES,
+  type CohortRotation,
+  type SemesterCode,
+  type StudentBranch,
+} from "../constants";
 
 type View =
   | "home"
@@ -73,7 +81,8 @@ type CourseCard = {
   rank: number;
   course_code: string;
   course_name: string;
-  branch: Branch;
+  department?: string;
+  branch?: string;
   category: CourseCategory;
   branch_proximity: number;
   fit_percentage: number;
@@ -91,6 +100,10 @@ type CourseCard = {
     worth_knowing?: string;
   } | null;
   testimonials: CourseTestimonial[];
+  semesterAvailability?: SemesterCode[];
+  forbiddenBranches?: StudentBranch[];
+  cohortRotation?: CohortRotation;
+  calculatedSemesters?: SemesterCode[];
   evaluation_style_facts:
     | {
         theory_exam_pct: number | null;
@@ -131,6 +144,94 @@ const DEFAULT_PREFERENCE_RATINGS: StudentAttributes = {
   math_heavy: 0,
   practical_focus: 0,
 };
+
+function formatCategoryDisplay(category: string, studentBranch: string): string {
+  const isGroupA = GROUP_A_BRANCHES.some((branch) => branch === studentBranch);
+  const isGroupB = GROUP_B_BRANCHES.some((branch) => branch === studentBranch);
+
+  if (category === "VSEC") {
+    if (isGroupB) return "VSEC (Sem 1)";
+    if (isGroupA) return "VSEC (Sem 2)";
+  }
+
+  if (category === "BS Applied Science II") {
+    if (isGroupA) return "BS Applied Science II (Sem 1)";
+    if (isGroupB) return "BS Applied Science II (Sem 2)";
+  }
+
+  return category;
+}
+
+function normalizeCourseCategory(category: string): CourseCategory {
+  const legacyCategoryMap: Record<string, CourseCategory> = {
+    "BS Applied Science 1": "BS Applied Science I",
+    "BS Applied Science 2": "BS Applied Science II",
+    "ESC 1": "ES II(Sem1) and ES IV(Sem2)",
+    "ESC 2": "ES III(Sem 1)",
+    "Engineering Science Elective: ES-2(Sem1) and ES-4(sem2)":
+      "ES II(Sem1) and ES IV(Sem2)",
+    "Engineering Science Elective: ES-II(Sem1 only)": "ES III(Sem 1)",
+    "ES III(Sem 1 or 2 depending on the group of student)": "ES III(Sem 1)",
+  };
+
+  const normalizedCategory = category.trim();
+  return legacyCategoryMap[normalizedCategory] ??
+    (normalizedCategory as CourseCategory);
+}
+
+function getCourseDepartment(course: CourseCard): string {
+  return course.department ?? course.branch ?? "Unknown";
+}
+
+function getStudentHomeDepartment(studentBranch: StudentBranch): string {
+  const departments: Record<StudentBranch, string> = {
+    MECH: "Mechanical",
+    ELECT: "Electrical",
+    COMP_DIV_1_2: "Computer",
+    AIML: "Computer",
+    INSTRU: "Instrumentation",
+    ENTC: "E & TC",
+    MFG: "Manufacturing",
+    COMP_DIV_3_4: "Computer",
+    CIVIL: "Civil",
+    META: "Metallurgy",
+  };
+  return departments[studentBranch];
+}
+
+function isHomeBranchRestrictedCategory(category: CourseCategory): boolean {
+  return (
+    category === "ES II(Sem1) and ES IV(Sem2)" ||
+    category === "ES III(Sem 1)"
+  );
+}
+
+function getRotationalCategorySemester(
+  category: CourseCategory,
+  studentBranch: StudentBranch,
+): SemesterCode | null {
+  const isGroupA = GROUP_A_BRANCHES.some((value) => value === studentBranch);
+  const isGroupB = GROUP_B_BRANCHES.some((value) => value === studentBranch);
+
+  if (category === "VSEC") {
+    return isGroupB ? "SEM1" : isGroupA ? "SEM2" : null;
+  }
+
+  if (category === "BS Applied Science II") {
+    return isGroupA ? "SEM1" : isGroupB ? "SEM2" : null;
+  }
+
+  return null;
+}
+
+function shouldShowSemesterAvailability(category: string): boolean {
+  return ![
+    "BS Mathematics",
+    "BS Applied Science I",
+    "VSEC",
+    "ES III(Sem 1)",
+  ].includes(category);
+}
 
 function normalizeTestimonials(
   rawTestimonials: unknown,
@@ -277,16 +378,6 @@ function formatTag(tag: string): string {
   return tag.startsWith("#") ? tag : `#${tag}`;
 }
 
-function getDepartmentsForCategory(
-  category: CourseCategory,
-  studentBranch: Branch | "",
-): string[] {
-  if ((category === "ESC 1" || category === "ESC 2") && studentBranch) {
-    return BRANCHES.filter((department) => department !== studentBranch);
-  }
-  return [...BRANCHES];
-}
-
 function RatingScale({
   value,
   onChange,
@@ -380,19 +471,22 @@ export default function CBCSElectiveGuide() {
 
   const [name, setName] = useState("");
   const [branch, setBranch] = useState<Branch | "">("");
-  const [isBranchMenuOpen, setIsBranchMenuOpen] = useState(false);
+  const [studentBranch, setStudentBranch] = useState<StudentBranch | "">("");
 
   const [wizardRatings, setWizardRatings] = useState<StudentAttributes>({
     ...DEFAULT_PREFERENCE_RATINGS,
   });
 
   const [courses, setCourses] = useState<CourseCard[]>([]);
+  const [activeCategory, setActiveCategory] =
+    useState<CourseCategory>(COURSE_CATEGORIES[0]);
+  const [selectedDepartments, setSelectedDepartments] = useState<string[] | null>(
+    null,
+  );
   const [isLoadingRecommendations, setIsLoadingRecommendations] = useState(false);
   const [recommendationError, setRecommendationError] = useState<string | null>(
     null,
   );
-  const [activeTab, setActiveTab] = useState<CourseCategory>(COURSE_CATEGORIES[0]);
-  const [selectedDepartments, setSelectedDepartments] = useState<string[]>([]);
 
   const [testimonialName, setTestimonialName] = useState("");
   const [misNumber, setMisNumber] = useState("");
@@ -415,47 +509,85 @@ export default function CBCSElectiveGuide() {
   const isMisNumberValid =
     misNumber.trim().length === 0 || MIS_NUMBER_PATTERN.test(misNumber.trim());
 
-  const eligibleCourses = useMemo(
-    () =>
-      branch
-        ? getEligibleCourses({ branch }, courses)
-        : [],
-    [branch, courses],
-  );
+  const eligibleCourses = useMemo(() => {
+    if (!studentBranch) return [];
 
-  const activeTabCourses = useMemo(
-    () => eligibleCourses.filter((course) => course.category === activeTab),
-    [activeTab, eligibleCourses],
-  );
+    const isGroupA = GROUP_A_BRANCHES.some((value) => value === studentBranch);
+    const isGroupB = GROUP_B_BRANCHES.some((value) => value === studentBranch);
 
-  const hostDepartments = useMemo(
-    () => getDepartmentsForCategory(activeTab, branch),
-    [activeTab, branch],
-  );
+    return getEligibleCourses({ branch: branch ?? "" }, courses)
+      .filter((course) => {
+        if (
+          course.forbiddenBranches &&
+          course.forbiddenBranches.includes(studentBranch)
+        ) {
+          return false;
+        }
 
-  const visibleCourses = useMemo(() => {
-    let filtered = activeTabCourses;
+        let calculatedSemesters = course.semesterAvailability || [];
+        if (course.cohortRotation === "GROUP_A_SEM1_GROUP_B_SEM2") {
+          calculatedSemesters = isGroupA ? ["SEM1"] : isGroupB ? ["SEM2"] : [];
+        } else if (course.cohortRotation === "GROUP_B_SEM1_GROUP_A_SEM2") {
+          calculatedSemesters = isGroupB ? ["SEM1"] : isGroupA ? ["SEM2"] : [];
+        }
 
-    // The CBCS Rule: Hide ESC courses from the student's own department
-    if (activeTab.includes("ESC")) {
-      filtered = filtered.filter((course) => {
-        // Safe fallbacks to prevent crashes if the branch is empty on page load
-        const cBranch = (course.branch || "").toLowerCase();
-        const sBranch = (branch || "").toLowerCase();
-
-        // Catch string variations (e.g. "Computer" vs "Computer Science and Engineering")
-        if (cBranch.includes("computer") && sBranch.includes("computer")) return false;
-        if (cBranch.includes("civil") && sBranch.includes("civil")) return false;
-        if (cBranch.includes("mech") && sBranch.includes("mech")) return false;
-        if (cBranch.includes("electr") && sBranch.includes("electr")) return false;
-        
-        return cBranch !== sBranch; // Fallback for exact matches
+        course.calculatedSemesters = calculatedSemesters || [];
+        const normalizedCategory = normalizeCourseCategory(course.category);
+        if (
+          isHomeBranchRestrictedCategory(normalizedCategory) &&
+          getCourseDepartment(course) === getStudentHomeDepartment(studentBranch)
+        ) {
+          return false;
+        }
+        if (!course.semesterAvailability) {
+          return true;
+        }
+        const categorySemester = getRotationalCategorySemester(
+          normalizedCategory,
+          studentBranch,
+        );
+        if (
+          categorySemester &&
+          !course.calculatedSemesters.includes(categorySemester)
+        ) {
+          return false;
+        }
+        return course.calculatedSemesters.length > 0;
       });
-    }
+  }, [branch, courses, studentBranch]);
 
-    // Notice we completely removed the selectedDepartments bouncer here!
-    return filtered;
-  }, [activeTabCourses, activeTab, branch]);
+  const categoryDepartments = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          eligibleCourses
+          .filter(
+            (course) =>
+              normalizeCourseCategory(course.category) === activeCategory,
+          )
+          .map(getCourseDepartment)
+          .filter(
+            (department) =>
+              !studentBranch ||
+              !isHomeBranchRestrictedCategory(activeCategory) ||
+              department !== getStudentHomeDepartment(studentBranch),
+          )
+            .filter((department): department is string => Boolean(department)),
+        ),
+      ).sort(),
+    [activeCategory, eligibleCourses, studentBranch],
+  );
+
+  const visibleCourses = useMemo(
+    () =>
+      eligibleCourses.filter(
+        (course) =>
+          normalizeCourseCategory(course.category) === activeCategory &&
+          (selectedDepartments === null ||
+            selectedDepartments.includes(getCourseDepartment(course))),
+      ),
+    [activeCategory, eligibleCourses, selectedDepartments],
+  );
 
   const filteredTestimonialCourses = useMemo(
     () =>
@@ -478,8 +610,11 @@ export default function CBCSElectiveGuide() {
     setView("home");
     setName("");
     setBranch("");
+    setStudentBranch("");
     setWizardRatings({ ...DEFAULT_PREFERENCE_RATINGS });
     setCourses([]);
+    setActiveCategory(COURSE_CATEGORIES[0]);
+    setSelectedDepartments(null);
     setIsLoadingRecommendations(false);
     setRecommendationError(null);
     setTestimonialName("");
@@ -495,21 +630,6 @@ export default function CBCSElectiveGuide() {
     setTestimonialError(null);
     setTestimonialSubmitted(false);
     setTestimonialSubmissionMessage("");
-    setActiveTab(COURSE_CATEGORIES[0]);
-    setSelectedDepartments([]);
-  }
-
-  function handleDepartmentToggle(department: string) {
-    setSelectedDepartments((current) =>
-      current.includes(department)
-        ? current.filter((item) => item !== department)
-        : [...current, department],
-    );
-  }
-
-  function handleTabChange(category: CourseCategory) {
-    setActiveTab(category);
-    setSelectedDepartments(getDepartmentsForCategory(category, branch));
   }
 
   function handleStartWizard() {
@@ -585,10 +705,8 @@ export default function CBCSElectiveGuide() {
       );
 
       setCourses(coursesWithLiveTestimonials);
-      setActiveTab(COURSE_CATEGORIES[0]);
-      setSelectedDepartments(
-        getDepartmentsForCategory(COURSE_CATEGORIES[0], branch),
-      );
+      setActiveCategory(COURSE_CATEGORIES[0]);
+      setSelectedDepartments(null);
       setView("results");
     } catch (error) {
       setRecommendationError(
@@ -735,7 +853,7 @@ export default function CBCSElectiveGuide() {
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
             <div className="flex-1 rounded-2xl border border-transparent px-5 py-4 transition focus-within:border-blue-400/40 focus-within:bg-blue-400/5"><label htmlFor="student-name" className="mb-2 block text-[11px] font-bold uppercase tracking-[0.14em] text-slate-600 dark:text-slate-400">Your name</label><input id="student-name" type="text" value={name} onChange={(e) => setName(e.target.value)} className="w-full border-0 bg-transparent p-0 text-lg font-semibold text-slate-900 dark:text-white outline-none focus:ring-0" /></div>
             <div className="hidden h-14 w-px bg-slate-200 dark:bg-white/10 sm:block" />
-            <div className="relative flex-1 rounded-2xl border border-transparent px-5 py-4 transition focus-within:border-blue-400/40 focus-within:bg-blue-400/5"><label id="student-branch-label" className="mb-2 block text-[11px] font-bold uppercase tracking-[0.14em] text-slate-600 dark:text-slate-300">Your branch</label><button id="student-branch" type="button" aria-haspopup="listbox" aria-expanded={isBranchMenuOpen} aria-labelledby="student-branch-label" onClick={() => setIsBranchMenuOpen((open) => !open)} className="flex w-full items-center justify-between gap-3 bg-transparent p-0 text-left text-lg font-semibold text-slate-900 dark:text-white outline-none"><span className={branch ? "" : "text-slate-600 dark:text-slate-400"}>{branch || "Select your branch"}</span><ChevronDown className="size-5 text-slate-600 dark:text-slate-400" /></button>{isBranchMenuOpen && <div role="listbox" aria-labelledby="student-branch-label" className="absolute left-3 right-3 top-full z-20 mt-3 max-h-72 overflow-y-auto rounded-2xl border border-slate-200 bg-white p-2 shadow-2xl shadow-slate-300/40 dark:border-white/15 dark:bg-slate-900 dark:shadow-black/40">{BRANCHES.map((b) => <button key={b} type="button" role="option" aria-selected={branch === b} onClick={() => { setBranch(b); setIsBranchMenuOpen(false); }} className="w-full rounded-xl px-3 py-2.5 text-left text-sm font-medium text-slate-700 dark:text-slate-700 transition hover:bg-blue-50 hover:text-blue-700 dark:text-slate-200 dark:hover:bg-blue-500/20 dark:hover:text-white">{b}</button>)}</div>}</div>
+            <div className="flex-1 rounded-2xl border border-transparent px-5 py-4 transition focus-within:border-blue-400/40 focus-within:bg-blue-400/5"><label htmlFor="student-branch" className="mb-2 block text-[11px] font-bold uppercase tracking-[0.14em] text-slate-600 dark:text-slate-300">Your branch</label><select id="student-branch" value={studentBranch} onChange={(event) => { const value = event.target.value as StudentBranch | ""; setStudentBranch(value); setBranch(value ? API_BRANCH_BY_CODE[value] as Branch : ""); }} className="w-full bg-transparent text-lg font-semibold text-slate-900 outline-none dark:text-white"><option value="">Select your branch</option><optgroup label="Group A">{BRANCH_OPTIONS.filter((option) => GROUP_A_BRANCHES.some((value) => value === option.value)).map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</optgroup><optgroup label="Group B">{BRANCH_OPTIONS.filter((option) => GROUP_B_BRANCHES.some((value) => value === option.value)).map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</optgroup></select></div>
             <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }} type="button" onClick={handleStartWizard} disabled={!name.trim() || !branch} className="group inline-flex h-16 items-center justify-center gap-3 rounded-2xl bg-blue-600 px-7 text-base font-bold text-white shadow-lg shadow-blue-600/25 transition hover:bg-indigo-600 disabled:cursor-not-allowed disabled:opacity-40 sm:min-w-52">Start Wizard <ArrowRight className="transition-transform group-hover:translate-x-1" /></motion.button>
           </div>
         </motion.section>
@@ -867,50 +985,85 @@ export default function CBCSElectiveGuide() {
               </button>
             </div>
 
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-              <div className="flex flex-wrap gap-2">
-                {COURSE_CATEGORIES.map((category) => (
-                  <button
-                    key={category}
-                    type="button"
-                    onClick={() => handleTabChange(category)}
-                    aria-pressed={activeTab === category}
-                    className={`rounded-full px-3 py-1.5 text-sm font-medium transition ${
-                      activeTab === category
-                        ? "bg-indigo-600 text-slate-900 dark:text-white"
-                        : "bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50"
-                    }`}
-                  >
-                    {category}
-                  </button>
-                ))}
-              </div>
-
-              <details className="w-full rounded-xl border border-slate-200 bg-white sm:ml-4 sm:w-80">
-                <summary className="cursor-pointer list-none px-4 py-3 text-sm font-semibold text-slate-900">
-                  Host Department
-                </summary>
-                <div className="space-y-2 border-t border-slate-100 px-4 py-3">
-                  {hostDepartments.map((department) => (
-                    <label
-                      key={department}
-                      className="flex items-center gap-2 text-sm text-slate-700"
-                    >
-                      <input
-                        type="checkbox"
-                        checked={selectedDepartments.includes(department)}
-                        onChange={() => handleDepartmentToggle(department)}
-                        className="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
-                      />
-                      {department}
-                    </label>
-                  ))}
-                </div>
-              </details>
-            </div>
-
             <div className="space-y-5">
-              {visibleCourses.map((course, index) => (
+              {!studentBranch ? (
+                <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-6 text-center text-sm text-amber-800">
+                  Please select your branch to view eligible courses.
+                </div>
+              ) : (
+                <>
+                  <div className="space-y-4">
+                    <div className="flex flex-wrap gap-2" role="tablist" aria-label="Course categories">
+                      {COURSE_CATEGORIES.map((category) => {
+                        const categoryCount = eligibleCourses.filter(
+                          (course) =>
+                            normalizeCourseCategory(course.category) === category,
+                        ).length;
+                        return (
+                          <button
+                            key={category}
+                            type="button"
+                            role="tab"
+                            aria-selected={activeCategory === category}
+                            onClick={() => {
+                              setActiveCategory(category);
+                              setSelectedDepartments(null);
+                            }}
+                            className={`rounded-full px-3 py-2 text-sm font-semibold transition ${
+                              activeCategory === category
+                                ? "bg-indigo-600 text-white shadow-sm"
+                                : "bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50"
+                            }`}
+                          >
+                            {formatCategoryDisplay(category, studentBranch)}
+                            <span className="ml-1.5 text-xs opacity-75">
+                              ({categoryCount})
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                      <h2 className="text-lg font-bold text-slate-900">
+                        {formatCategoryDisplay(activeCategory, studentBranch)}
+                      </h2>
+                      <fieldset className="rounded-xl border border-slate-200 bg-white px-4 py-3">
+                        <legend className="px-1 text-sm font-semibold text-slate-600">
+                          Departments
+                        </legend>
+                        <div className="flex flex-wrap gap-x-4 gap-y-2">
+                          {categoryDepartments.map((department) => (
+                            <label
+                              key={department}
+                              className="flex items-center gap-2 text-sm text-slate-700"
+                            >
+                              <input
+                                type="checkbox"
+                                checked={
+                                  selectedDepartments === null ||
+                                  selectedDepartments.includes(department)
+                                }
+                                onChange={() =>
+                                  setSelectedDepartments((current) => {
+                                    const selected =
+                                      current ?? categoryDepartments;
+                                    return selected.includes(department)
+                                      ? selected.filter((item) => item !== department)
+                                      : [...selected, department];
+                                  })
+                                }
+                                className="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+                              />
+                              {department}
+                            </label>
+                          ))}
+                        </div>
+                      </fieldset>
+                    </div>
+                  </div>
+
+                  {visibleCourses.map((course, index) => (
                 <article
                   key={course.course_code}
                   className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
@@ -924,9 +1077,43 @@ export default function CBCSElectiveGuide() {
                         <p className="font-mono text-xs font-semibold uppercase tracking-wider text-indigo-600">
                           {formatCourseCodeForDisplay(course.course_code)}
                         </p>
-                        <h2 className="text-lg font-bold text-slate-900 sm:text-xl">
-                          {course.course_name}
-                        </h2>
+                        <div className="flex flex-wrap items-center gap-2">
+                          <h2 className="text-lg font-bold text-slate-900 sm:text-xl">
+                            {course.course_name}
+                          </h2>
+                          {shouldShowSemesterAvailability(
+                            normalizeCourseCategory(course.category),
+                          ) &&
+                            (course.cohortRotation === "NONE" ||
+                            !course.cohortRotation) &&
+                            course.calculatedSemesters?.length === 2 && (
+                              <span className="rounded-full bg-blue-100 px-2.5 py-1 text-xs font-semibold text-blue-800">
+                                Both sems
+                              </span>
+                            )}
+                          {shouldShowSemesterAvailability(
+                            normalizeCourseCategory(course.category),
+                          ) &&
+                            (course.cohortRotation === "NONE" ||
+                            !course.cohortRotation) &&
+                            course.calculatedSemesters?.length === 1 &&
+                            course.calculatedSemesters[0] === "SEM1" && (
+                              <span className="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-800">
+                                Sem 1 only
+                              </span>
+                            )}
+                          {shouldShowSemesterAvailability(
+                            normalizeCourseCategory(course.category),
+                          ) &&
+                            (course.cohortRotation === "NONE" ||
+                            !course.cohortRotation) &&
+                            course.calculatedSemesters?.length === 1 &&
+                            course.calculatedSemesters[0] === "SEM2" && (
+                              <span className="rounded-full bg-purple-100 px-2.5 py-1 text-xs font-semibold text-purple-800">
+                                Sem 2 only
+                              </span>
+                            )}
+                        </div>
                       </div>
                       <FitBadge percentage={course.fit_percentage} />
                     </div>
@@ -943,37 +1130,29 @@ export default function CBCSElectiveGuide() {
                   </div>
 
                   <div className="space-y-5 px-5 py-5 sm:px-6">
-                    {course.narrative ? (
-                      <>
-                        <div>
-                          <h3 className="mb-1.5 flex items-center gap-1.5 text-sm font-semibold text-slate-900">
-                            <Star className="h-4 w-4 text-indigo-500" />
-                            Why this fits you
-                          </h3>
-                          <p className="text-sm leading-relaxed text-slate-600">
-                            {course.narrative?.why_this_fits ??
-                              course.why_this_fits ??
-                              "AI narrative currently generating..."}
-                          </p>
-                        </div>
+                    <div>
+                      <h3 className="mb-1.5 flex items-center gap-1.5 text-sm font-semibold text-slate-900">
+                        <Star className="h-4 w-4 text-indigo-500" />
+                        Why this fits you
+                      </h3>
+                      <p className="text-sm leading-relaxed text-slate-600">
+                        {course.narrative?.why_this_fits ??
+                          course.why_this_fits ??
+                          "This course matches your selected preference profile based on its evaluated attributes."}
+                      </p>
+                    </div>
 
-                        <div>
-                          <h3 className="mb-1.5 flex items-center gap-1.5 text-sm font-semibold text-slate-900">
-                            <AlertCircle className="h-4 w-4 text-amber-500" />
-                            Worth knowing
-                          </h3>
-                          <p className="text-sm leading-relaxed text-slate-600">
-                            {course.narrative?.worth_knowing ??
-                              course.worth_knowing ??
-                              "No narrative available."}
-                          </p>
-                        </div>
-                      </>
-                    ) : (
-                      <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">
-                        AI narrative currently generating...
-                      </div>
-                    )}
+                    <div>
+                      <h3 className="mb-1.5 flex items-center gap-1.5 text-sm font-semibold text-slate-900">
+                        <AlertCircle className="h-4 w-4 text-amber-500" />
+                        Worth knowing
+                      </h3>
+                      <p className="text-sm leading-relaxed text-slate-600">
+                        {course.narrative?.worth_knowing ??
+                          course.worth_knowing ??
+                          "Review the course attributes and testimonials before making your final selection."}
+                      </p>
+                    </div>
 
                     {course.testimonials.map((testimonial, testimonialIndex) => (
                       <blockquote
@@ -1002,16 +1181,13 @@ export default function CBCSElectiveGuide() {
                     ))}
                   </div>
                 </article>
-              ))}
-              {activeTabCourses.length > 0 && visibleCourses.length === 0 && (
+                  ))}
+              {visibleCourses.length === 0 && (
                 <div className="rounded-xl border border-slate-200 bg-white px-4 py-6 text-center text-sm text-slate-600">
-                  No courses match the selected Host Department filters.
+                  No courses match this category and department filter.
                 </div>
               )}
-              {activeTabCourses.length === 0 && (
-                <div className="rounded-xl border border-slate-200 bg-white px-4 py-6 text-center text-sm text-slate-600">
-                  No eligible courses found for this category.
-                </div>
+                </>
               )}
             </div>
           </div>
