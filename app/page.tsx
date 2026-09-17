@@ -1513,6 +1513,19 @@ export default function CBCSElectiveGuide() {
           </div>
         )}
       </div>
-    </main>
+    {/* Footer */}
+<footer className="mt-16 border-t border-slate-200 dark:border-white/10 py-8 text-center">
+  <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
+    Developed by{" "}
+    <span className="font-semibold text-slate-700 dark:text-slate-200">Sumedh Shelgaonkar</span>
+    <span className="text-xs text-slate-400 dark:text-slate-500"> (S.Y. CSE)</span>
+    {" "}&{" "}
+    <span className="font-semibold text-slate-700 dark:text-slate-200">Aaditya Shah</span>
+    <span className="text-xs text-slate-400 dark:text-slate-500"> (S.Y. AIML)</span>
+  </p>
+  <p className="mt-2 text-xs text-slate-400 dark:text-slate-500">
+    COEP Technological University · 2026–27
+  </p>
+</footer></main>
   );
 }
