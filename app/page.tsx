@@ -13,6 +13,10 @@ import {
   Star,
   Check,
   Command,
+  User,
+  Sliders,
+  Menu,
+  X,
 } from "lucide-react";
 import {
   COURSE_CATEGORIES,
@@ -484,6 +488,7 @@ function FitBadge({ percentage }: { percentage: number }) {
 
 export default function CBCSElectiveGuide() {
   const [view, setView] = useState<View>("home");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const [name, setName] = useState("");
   const [branch, setBranch] = useState<Branch | "">("");
@@ -845,7 +850,32 @@ export default function CBCSElectiveGuide() {
   return (
   <main className="min-h-full bg-slate-50 dark:bg-slate-950">
   <div className="mx-auto max-w-6xl px-5 py-8 text-slate-900 dark:text-slate-100 sm:px-8 sm:py-12 lg:py-16">
-    <nav className="mb-4 flex justify-end" aria-label="Appearance settings"><ThemeToggle /></nav>
+    <nav className="mb-4 flex items-center justify-end gap-3" aria-label="Global Navigation">
+      <div className="relative">
+        <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="flex size-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 transition hover:bg-slate-50 dark:border-white/10 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
+          aria-label="Open menu"
+        >
+          {isMobileMenuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+        </button>
+        
+        {isMobileMenuOpen && (
+          <div className="absolute right-0 top-12 z-50 w-56 rounded-xl border border-slate-200 bg-white p-2 shadow-xl shadow-slate-200/50 dark:border-white/10 dark:bg-slate-900 dark:shadow-black/50">
+            <button onClick={() => { setIsMobileMenuOpen(false); document.getElementById('how-to-use')?.scrollIntoView({ behavior: 'smooth' }); }} className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800">
+              <Command className="size-4" /> How to Use
+            </button>
+            <button onClick={() => { setIsMobileMenuOpen(false); document.getElementById('course-explorer')?.scrollIntoView({ behavior: 'smooth' }); }} className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800">
+              <Sparkles className="size-4" /> Course Explorer
+            </button>
+            <button onClick={() => { setIsMobileMenuOpen(false); document.getElementById('senior-testimonials')?.scrollIntoView({ behavior: 'smooth' }); }} className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800">
+              <MessageSquareQuote className="size-4" /> Senior Testimonials
+            </button>
+          </div>
+        )}
+      </div>
+      <ThemeToggle />
+    </nav>
         {/* ── Home View ── */}
   {view === "home" && (
   <div className="relative isolate overflow-hidden">
@@ -876,7 +906,7 @@ export default function CBCSElectiveGuide() {
 
             <div className="rounded-2xl border border-slate-200/80 dark:border-white/10 bg-slate-50/50 dark:bg-white/[0.03] px-4 py-3 transition focus-within:border-blue-400/50 focus-within:bg-blue-400/5">
               <label htmlFor="student-branch" className="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.14em] text-slate-600 dark:text-slate-300">Your branch</label>
-              <select id="student-branch" value={studentBranch} onChange={(event) => { const value = event.target.value as StudentBranch | ""; setStudentBranch(value); setBranch(value ? API_BRANCH_BY_CODE[value] as Branch : ""); }} className="branch-select w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-900 outline-none transition focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 dark:border-white/10 dark:bg-slate-900 dark:text-white truncate"><option value="">Select your branch</option><optgroup label="Group A">{BRANCH_OPTIONS.filter((option) => GROUP_A_BRANCHES.some((value) => value === option.value)).map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</optgroup><optgroup label="Group B">{BRANCH_OPTIONS.filter((option) => GROUP_B_BRANCHES.some((value) => value === option.value)).map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</optgroup></select>
+              <select id="student-branch" value={studentBranch} onChange={(event) => { const value = event.target.value as StudentBranch | ""; setStudentBranch(value); setBranch(value ? API_BRANCH_BY_CODE[value] as Branch : ""); }} className="branch-select w-full border-0 bg-transparent p-0 text-base font-semibold text-slate-900 outline-none focus:ring-0 dark:text-white truncate cursor-pointer"><option value="">Select your branch</option><optgroup label="Group A">{BRANCH_OPTIONS.filter((option) => GROUP_A_BRANCHES.some((value) => value === option.value)).map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</optgroup><optgroup label="Group B">{BRANCH_OPTIONS.filter((option) => GROUP_B_BRANCHES.some((value) => value === option.value)).map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}</optgroup></select>
             </div>
 
             <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} type="button" onClick={handleStartWizard} disabled={!name.trim() || !branch || !misNumber.trim() || !MIS_NUMBER_PATTERN.test(misNumber.trim())} className="group inline-flex h-14 w-full items-center justify-center gap-3 rounded-2xl bg-blue-600 px-6 text-base font-bold text-white shadow-lg shadow-blue-600/25 transition hover:bg-indigo-600 disabled:cursor-not-allowed disabled:opacity-40">Start Wizard <ArrowRight className="transition-transform group-hover:translate-x-1" /></motion.button>
@@ -884,14 +914,16 @@ export default function CBCSElectiveGuide() {
         </motion.section>
         <div className="mt-5 flex flex-wrap items-center justify-center gap-3"><span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white dark:border-white/10 dark:bg-white/5 px-5 py-3 text-base font-semibold text-slate-700 dark:text-slate-200"><Check className="size-4 text-blue-400" /> Explainable matching</span><span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white dark:border-white/10 dark:bg-white/5 px-5 py-3 text-base font-semibold text-slate-700 dark:text-slate-200"><GraduationCap className="size-5 text-slate-600 dark:text-slate-400" /> Built for CBCS</span><span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white dark:border-white/10 dark:bg-white/5 px-5 py-3 text-base font-semibold text-slate-700 dark:text-slate-200"><MessageSquareQuote className="size-5 text-slate-600 dark:text-slate-400" /> Peer Course Reviews</span></div>
 
-        <CourseStructure />
-
-        <motion.section initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="mt-12 flex flex-col gap-6 rounded-3xl border border-blue-400/20 bg-blue-500/10 p-6 shadow-2xl shadow-blue-950/20 sm:flex-row sm:items-center sm:justify-between sm:p-8"><div><p className="text-xs font-bold uppercase tracking-[0.18em] text-blue-700 dark:text-blue-300">For Seniors</p><h2 className="mt-2 max-w-xl text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Already taken these courses?</h2><p className="mt-2 max-w-xl text-sm leading-6 text-slate-600 dark:text-slate-300">Share your review to help juniors make better choices.</p></div><button type="button" onClick={() => setView("testimonial_login")} className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-bold text-slate-950 transition hover:bg-blue-50"><MessageSquareQuote className="size-4" /> Share a Testimonial</button></motion.section>
-
-        <motion.section initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.42 }} className="mt-24 border-t border-slate-200 pt-8 dark:border-white/10">
-          <div className="mb-8 flex items-end justify-between gap-6"><div><h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-3xl">How to use this tool</h2></div><Command className="hidden size-8 text-slate-500 dark:text-slate-300 sm:block" /></div>
-          <div className="grid gap-4 md:grid-cols-3">{[{ number: "01", title: "Map your preferences", text: "Answer six quick question that reveal how you learn and what kind of courses suit you.", icon: Command }, { number: "02", title: "See your fit", text: "Explore ranked courses with transparent reasoning.", icon: Sparkles }, { number: "03", title: "Read Seniors' Course Reviews", text: "Verified student course reviews help you in making the right choice.", icon: MessageSquareQuote }].map((step, index) => { const Icon = step.icon; return <motion.div key={step.number} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} whileHover={{ y: -6 }} transition={{ delay: 0.5 + index * 0.12 }} className="group rounded-3xl border border-white/10 bg-white/[0.04] p-6 shadow-sm shadow-black/20 transition-shadow hover:border-blue-400/30 hover:bg-white/[0.07] hover:shadow-xl hover:shadow-blue-950/30"><div className="flex items-start justify-between"><span className="flex size-11 items-center justify-center rounded-2xl bg-blue-600 text-slate-900 dark:text-white shadow-lg shadow-blue-600/20"><Icon className="size-5" /></span><span className="font-mono text-sm font-bold text-blue-600">{step.number}</span></div><h3 className="mt-8 text-lg font-bold text-slate-900 dark:text-white">{step.title}</h3><p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">{step.text}</p><div className="mt-8 h-1 w-10 rounded-full bg-blue-200 transition-all group-hover:w-16 group-hover:bg-blue-600" /></motion.div>})}</div>
+        <motion.section id="how-to-use" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.42 }} className="mt-16 border-t border-slate-200 pt-8 dark:border-white/10">
+          <div className="mb-8 flex items-end justify-between gap-6"><div><h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-3xl">How to use this tool</h2></div></div>
+          <div className="grid gap-4 md:grid-cols-3">{[{ number: "01", title: "Enter Your Details", text: "Simply enter your Name, MIS number, and Branch in the box right above to get started.", icon: User }, { number: "02", title: "Set Your Preferences", text: "Answer 6 quick questions about your ideal workload, difficulty, and study habits. It takes less than a minute.", icon: Sliders }, { number: "03", title: "Discover Your Matches", text: "Instantly see how every course ranks for your specific learning style, backed by raw, honest reviews from seniors.", icon: Sparkles }].map((step, index) => { const Icon = step.icon; return <motion.div key={step.number} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} whileHover={{ y: -6 }} transition={{ delay: 0.5 + index * 0.12 }} className="group rounded-3xl border border-slate-200 bg-white p-6 shadow-sm shadow-slate-200 transition-shadow hover:border-blue-400/50 hover:shadow-xl hover:shadow-blue-900/10 dark:border-white/10 dark:bg-white/[0.04] dark:shadow-black/20 dark:hover:border-blue-400/30 dark:hover:bg-white/[0.07] dark:hover:shadow-blue-950/30"><div className="flex items-start justify-between"><span className="flex size-11 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-lg shadow-blue-600/20"><Icon className="size-5" /></span><span className="font-mono text-sm font-bold text-blue-600">{step.number}</span></div><h3 className="mt-8 text-lg font-bold text-slate-900 dark:text-white">{step.title}</h3><p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">{step.text}</p><div className="mt-8 h-1 w-10 rounded-full bg-blue-200 transition-all group-hover:w-16 group-hover:bg-blue-600" /></motion.div>})}</div>
         </motion.section>
+
+        <div id="course-explorer">
+          <CourseStructure />
+        </div>
+
+        <motion.section id="senior-testimonials" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="mt-12 flex flex-col gap-6 rounded-3xl border border-blue-400/20 bg-blue-500/10 p-6 shadow-2xl shadow-blue-950/20 sm:flex-row sm:items-center sm:justify-between sm:p-8"><div><p className="text-xs font-bold uppercase tracking-[0.18em] text-blue-700 dark:text-blue-300">For Seniors</p><h2 className="mt-2 max-w-xl text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Already taken these courses?</h2><p className="mt-2 max-w-xl text-sm leading-6 text-slate-600 dark:text-slate-300">Share your review to help juniors make better choices.</p></div><button type="button" onClick={() => setView("testimonial_login")} className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-bold text-slate-950 transition hover:bg-blue-50"><MessageSquareQuote className="size-4" /> Share a Testimonial</button></motion.section>
         <div className="mt-12 flex items-start justify-center gap-3 border-t border-slate-200 pt-6 text-center text-sm leading-6 text-slate-600 dark:border-white/10 dark:text-slate-400"><AlertCircle className="mt-1 size-4 shrink-0 text-slate-600" /><p>This platform provides data-driven guidance based on your learning profile and peer reviews. Please consult official university guidelines before finalizing your course registration.</p></div>
       </div>
     </motion.div>

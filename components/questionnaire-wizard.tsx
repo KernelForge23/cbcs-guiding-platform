@@ -278,7 +278,7 @@ export function QuestionnaireWizard({
               </h2>
 
               {/* Solid & Clean Interactive Option Cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 pt-2">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 pt-4">
                 {OPTIONS.map((opt) => {
                   const isSelected = currentValue === opt.value;
 
@@ -286,20 +286,18 @@ export function QuestionnaireWizard({
                     <motion.button
                       key={opt.value}
                       type="button"
-                      whileHover={{ scale: 1.01, y: -1 }}
-                      whileTap={{ scale: 0.99 }}
+                      whileHover={{ scale: 1.03, y: -2 }}
+                      whileTap={{ scale: 0.97 }}
                       onClick={() => handleSelectOption(opt.value)}
-                      className={`group relative flex items-center justify-between p-4 sm:p-5 rounded-2xl border text-left font-semibold text-sm sm:text-base transition-all duration-150 cursor-pointer ${
+                      className={`group relative flex flex-col items-center justify-center gap-3 p-4 sm:p-5 rounded-2xl border text-center font-semibold text-sm sm:text-[15px] leading-snug transition-all duration-150 cursor-pointer ${
                         isSelected
-                          ? "bg-indigo-50 dark:bg-indigo-950/60 border-indigo-600 dark:border-indigo-500 text-indigo-950 dark:text-indigo-100 shadow-sm"
-                          : "bg-slate-50/70 dark:bg-slate-800/40 border-slate-200 dark:border-slate-700/60 text-slate-700 dark:text-slate-300 hover:border-indigo-400 dark:hover:border-indigo-500 hover:bg-slate-100 dark:hover:bg-slate-800"
+                          ? "bg-indigo-50 dark:bg-indigo-950/60 border-indigo-600 dark:border-indigo-500 text-indigo-950 dark:text-indigo-100 shadow-md"
+                          : "bg-slate-50/70 dark:bg-slate-800/40 border-slate-200 dark:border-slate-700/60 text-slate-700 dark:text-slate-300 hover:border-indigo-400 dark:hover:border-indigo-500 hover:bg-slate-100 dark:hover:bg-slate-800 hover:shadow-sm"
                       }`}
                     >
-                      <span className="pr-4">{opt.label}</span>
-
-                      {/* Right Indicator Checkmark */}
+                      {/* Top Indicator Checkmark */}
                       <div
-                        className={`flex items-center justify-center w-6 h-6 rounded-full border transition-all duration-150 ${
+                        className={`flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full border transition-all duration-150 shrink-0 ${
                           isSelected
                             ? "bg-indigo-600 border-indigo-600 text-white shadow-sm"
                             : "border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 group-hover:border-indigo-400"
@@ -311,10 +309,12 @@ export function QuestionnaireWizard({
                             animate={{ scale: 1 }}
                             transition={{ type: "spring", stiffness: 500, damping: 25 }}
                           >
-                            <Check className="w-3.5 h-3.5 stroke-[3]" />
+                            <Check className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[3]" />
                           </motion.div>
                         )}
                       </div>
+                      
+                      <span>{opt.label}</span>
                     </motion.button>
                   );
                 })}
