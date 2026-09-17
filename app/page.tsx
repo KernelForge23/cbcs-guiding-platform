@@ -1513,6 +1513,15 @@ export default function CBCSElectiveGuide() {
           </div>
         )}
       </div>
+      {/* Back to Top */}
+<button
+  type="button"
+  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+  className="fixed bottom-6 right-6 z-50 flex size-11 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-lg transition hover:-translate-y-0.5 hover:bg-blue-50 hover:text-blue-600 dark:border-white/10 dark:bg-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-blue-400"
+  aria-label="Back to top"
+>
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+</button>
     {/* Footer */}
 <footer className="mt-16 border-t border-slate-200 dark:border-white/10 py-8 text-center">
   <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
