@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   AlertCircle,
   ArrowRight,
@@ -12,6 +12,7 @@ import {
   Sparkles,
   Star,
   Check,
+  ChevronDown,
   Command,
   User,
   Sliders,
@@ -89,6 +90,14 @@ type CourseTestimonial = {
   math_heavy?: number;
   practical_focus?: number;
   written_review: string;
+  review_breakdown?: {
+    difficulty?: string;
+    workload?: string;
+    exploration?: string;
+    conceptual?: string;
+    math?: string;
+    practical?: string;
+  };
   status?: string;
   is_featured?: boolean;
 };
@@ -132,7 +141,7 @@ type CourseCard = {
     | null;
 };
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8000";
 const MIS_NUMBER_PATTERN = /^6126\d{5}$/;
 const TESTIMONIAL_MIS_PATTERN = /^6125\d{5}$/;
 const TESTIMONIAL_COURSES: TestimonialCourse[] = courseCatalog;
@@ -309,6 +318,7 @@ function normalizeTestimonials(
             : "Verified Senior",
         subject_cgpa: parsedCgpa,
         is_featured: candidate.is_featured === true,
+        review_breakdown: candidate.review_breakdown,
       };
     })
     .filter((testimonial): testimonial is CourseTestimonial => testimonial !== null);
@@ -431,6 +441,7 @@ function RatingScale({
 }
 
 function FitBadge({ percentage }: { percentage: number }) {
+  const [showTooltip, setShowTooltip] = useState(false);
   const ringColor =
     percentage >= 70 ? "#34d399" : percentage >= 40 ? "#fbbf24" : "#f87171";
   const clampedPercentage = Math.max(0, Math.min(100, percentage));
@@ -443,7 +454,12 @@ function FitBadge({ percentage }: { percentage: number }) {
     circumference - (clampedPercentage / 100) * circumference;
 
   return (
-    <div className="inline-flex h-24 w-24 items-center justify-center">
+    <div 
+      className="relative inline-flex h-24 w-24 items-center justify-center cursor-help"
+      onMouseEnter={() => setShowTooltip(true)}
+      onMouseLeave={() => setShowTooltip(false)}
+      onClick={() => setShowTooltip(!showTooltip)}
+    >
       <svg
         width="100%"
         height="100%"
@@ -482,6 +498,19 @@ function FitBadge({ percentage }: { percentage: number }) {
           {clampedPercentage}%
         </text>
       </svg>
+      
+      {/* Mobile info icon overlay */}
+      <div className="absolute top-0 right-0 sm:hidden flex h-6 w-6 translate-x-1 -translate-y-1 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
+        <span className="text-xs font-bold text-slate-500 dark:text-slate-400">i</span>
+      </div>
+
+      {/* Tooltip */}
+      {showTooltip && (
+        <div className="absolute top-full right-0 z-[100] mt-3 w-56 rounded-xl bg-slate-800 dark:bg-slate-700 px-4 py-3 text-left text-xs leading-relaxed text-white shadow-xl">
+          This score tells us how closely the course matches your selected learning style and preferences.
+          <div className="absolute right-4 bottom-full -mb-px border-[6px] border-transparent border-b-slate-800 dark:border-b-slate-700" />
+        </div>
+      )}
     </div>
   );
 }
@@ -493,6 +522,7 @@ export default function CBCSElectiveGuide() {
   const [name, setName] = useState("");
   const [branch, setBranch] = useState<Branch | "">("");
   const [studentBranch, setStudentBranch] = useState<StudentBranch | "">("");
+  const [expandedTestimonials, setExpandedTestimonials] = useState<Record<string, boolean>>({});
 
   const [wizardRatings, setWizardRatings] = useState<StudentAttributes>({
     ...DEFAULT_PREFERENCE_RATINGS,
@@ -1054,9 +1084,9 @@ export default function CBCSElectiveGuide() {
                   {visibleCourses.map((course, index) => (
                 <article
                   key={course.course_code}
-                  className="overflow-hidden rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 shadow-sm"
+                  className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 shadow-sm"
                 >
-                  <div className="border-b border-slate-100 dark:border-white/10 bg-slate-50/60 dark:bg-slate-800/60 px-5 py-4 sm:px-6">
+                  <div className="rounded-t-2xl border-b border-slate-100 dark:border-white/10 bg-slate-50/60 dark:bg-slate-800/60 px-5 py-4 sm:px-6">
                     <div className="flex flex-wrap items-center gap-3">
                       <span className="flex h-9 w-9 items-center justify-center rounded-full bg-indigo-600 text-sm font-bold text-white">
                         #{index + 1}
@@ -1142,31 +1172,96 @@ export default function CBCSElectiveGuide() {
                       </p>
                     </div>
 
-                    {course.testimonials.map((testimonial, testimonialIndex) => (
-                      <blockquote
-                        key={`${course.course_code}-${testimonial.id}-${testimonialIndex}`}
-                        className="rounded-xl border-l-4 border-indigo-400 dark:border-indigo-500 bg-indigo-50/50 dark:bg-indigo-950/30 px-4 py-3"
-                      >
-                        <div className="mb-2 flex flex-wrap items-center gap-2">
-                          {testimonial.is_featured && (
-                            <span className="rounded-full bg-amber-100 dark:bg-amber-950/70 px-2.5 py-0.5 text-xs font-semibold text-amber-800 dark:text-amber-300">
-                              ✨ Editor&apos;s Choice
-                            </span>
+                    {course.testimonials && course.testimonials.length > 0 && (
+                      <div className="pt-2 border-t border-slate-100 dark:border-white/10">
+                        <button
+                          type="button"
+                          onClick={() => setExpandedTestimonials(prev => ({ ...prev, [course.course_code]: !prev[course.course_code] }))}
+                          className="flex items-center gap-2 text-sm font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 transition"
+                        >
+                          <span className="flex items-center justify-center w-6 h-6 rounded-full bg-indigo-50 dark:bg-indigo-900/50">
+                            🎓
+                          </span>
+                          Reviews by Seniors
+                          <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${expandedTestimonials[course.course_code] ? 'rotate-180' : ''}`} />
+                        </button>
+                        
+                        <AnimatePresence>
+                          {expandedTestimonials[course.course_code] && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              className="overflow-hidden"
+                            >
+                              <div className="pt-4 space-y-4">
+                                {course.testimonials.map((testimonial, testimonialIndex) => (
+                                  <blockquote
+                                    key={`${course.course_code}-${testimonial.id}-${testimonialIndex}`}
+                                    className="rounded-xl border-l-4 border-indigo-400 dark:border-indigo-500 bg-indigo-50/50 dark:bg-indigo-950/30 px-4 py-3 shadow-sm"
+                                  >
+                                    {testimonial.subject_cgpa !== null && (
+                                      <div className="mb-2 flex flex-wrap items-center gap-2">
+                                        <span className="rounded-full bg-emerald-100 dark:bg-emerald-950/70 px-2.5 py-0.5 text-xs font-semibold text-emerald-800 dark:text-emerald-300">
+                                          Scored: {testimonial.subject_cgpa.toFixed(1)}
+                                        </span>
+                                      </div>
+                                    )}
+                                    {testimonial.review_breakdown ? (
+                                      <ul className="space-y-3 mt-2 mb-3 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
+                                        {testimonial.review_breakdown.difficulty && (
+                                          <li className="flex items-start gap-2">
+                                            <span className="text-rose-500 shrink-0">🧗</span>
+                                            <div><strong className="text-slate-900 dark:text-white">Difficulty Level:</strong> {testimonial.review_breakdown.difficulty}</div>
+                                          </li>
+                                        )}
+                                        {testimonial.review_breakdown.workload && (
+                                          <li className="flex items-start gap-2">
+                                            <span className="text-orange-500 shrink-0">⏳</span>
+                                            <div><strong className="text-slate-900 dark:text-white">Workload Demand:</strong> {testimonial.review_breakdown.workload}</div>
+                                          </li>
+                                        )}
+                                        {testimonial.review_breakdown.exploration && (
+                                          <li className="flex items-start gap-2">
+                                            <span className="text-indigo-500 shrink-0">🧭</span>
+                                            <div><strong className="text-slate-900 dark:text-white">New Field Exploration:</strong> {testimonial.review_breakdown.exploration}</div>
+                                          </li>
+                                        )}
+                                        {testimonial.review_breakdown.conceptual && (
+                                          <li className="flex items-start gap-2">
+                                            <span className="text-blue-500 shrink-0">🧠</span>
+                                            <div><strong className="text-slate-900 dark:text-white">Conceptual Focus:</strong> {testimonial.review_breakdown.conceptual}</div>
+                                          </li>
+                                        )}
+                                        {testimonial.review_breakdown.math && (
+                                          <li className="flex items-start gap-2">
+                                            <span className="text-emerald-500 shrink-0">🧮</span>
+                                            <div><strong className="text-slate-900 dark:text-white">Math Heavy:</strong> {testimonial.review_breakdown.math}</div>
+                                          </li>
+                                        )}
+                                        {testimonial.review_breakdown.practical && (
+                                          <li className="flex items-start gap-2">
+                                            <span className="text-amber-500 shrink-0">🛠️</span>
+                                            <div><strong className="text-slate-900 dark:text-white">Practical Focus:</strong> {testimonial.review_breakdown.practical}</div>
+                                          </li>
+                                        )}
+                                      </ul>
+                                    ) : (
+                                      <p className="whitespace-pre-wrap text-sm leading-relaxed text-slate-700 dark:text-slate-200">
+                                        {testimonial.written_review}
+                                      </p>
+                                    )}
+                                    <p className="mt-2 text-xs font-bold text-slate-500 dark:text-slate-400">
+                                      — {testimonial.reviewer_name}
+                                    </p>
+                                  </blockquote>
+                                ))}
+                              </div>
+                            </motion.div>
                           )}
-                          {testimonial.subject_cgpa !== null && (
-                            <span className="rounded-full bg-emerald-100 dark:bg-emerald-950/70 px-2.5 py-0.5 text-xs font-semibold text-emerald-800 dark:text-emerald-300">
-                              Scored: {testimonial.subject_cgpa.toFixed(1)}
-                            </span>
-                          )}
-                        </div>
-                        <p className="text-sm italic leading-relaxed text-slate-700 dark:text-slate-200">
-                          &ldquo;{testimonial.written_review}&rdquo;
-                        </p>
-                        <p className="mt-2 text-xs font-medium text-slate-500 dark:text-slate-400">
-                          — {testimonial.reviewer_name}
-                        </p>
-                      </blockquote>
-                    ))}
+                        </AnimatePresence>
+                      </div>
+                    )}
                   </div>
                 </article>
                   ))}

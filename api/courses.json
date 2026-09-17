@@ -39,7 +39,23 @@
     "rating_metadata": {
       "total_votes": 1
     },
-    "testimonials": [],
+    "testimonials": [
+      {
+        "id": 1,
+        "reviewer_name": "Student Consensus",
+        "subject_cgpa": null,
+        "is_featured": false,
+        "written_review": "• MAC+VCDE is a highly mathematical course that builds heavily on your 11th and 12th-grade calculus and matrix foundations, making a strong prior background essential for a smooth learning experience.\n• The Matrix Algebra and Calculus (MAC) portion is very practice-based and generally considered easier, while Vector Calculus and Differential Equations (VCDE) will push your academic limits with tougher theoretical concepts and theorems that must be learned deeply.\n• Because solving these complex problems requires mastering specific step-by-step methods, you should expect to dedicate a solid amount of time outside of class to solve tutorial sheets and watch helpful YouTube lectures.\n• While the subject is not heavily hands-on in a physical sense, the VCDE portion does introduce some challenging practical lab implementations.\n• Overall, it is a rigorous and highly rewarding course that equips you with powerful mathematical problem-solving skills for your future studies.",
+        "review_breakdown": {
+          "difficulty": "While the Matrix Algebra and Calculus (MAC) portion is very practice-based and generally considered easier, while Vector Calculus and Differential Equations (VCDE) will push your academic limits with tougher theoretical concepts and theorems that must be learned deeply.",
+          "workload": "Because solving these complex problems requires mastering specific step-by-step methods, you should expect to dedicate a solid amount of time outside of class to solve tutorial sheets and watch helpful YouTube lectures.",
+          "exploration": "Overall, it is a rigorous and highly rewarding course that equips you with powerful mathematical problem-solving skills for your future studies.",
+          "conceptual": "MAC+VCDE is a highly mathematical course that builds heavily on your 11th and 12th-grade calculus and matrix foundations, making a strong prior background essential for a smooth learning experience.",
+          "math": "The Matrix Algebra and Calculus (MAC) portion is very practice-based and generally considered easier, while Vector Calculus and Differential Equations (VCDE) will push your academic limits with tougher theoretical concepts and theorems that must be learned deeply.",
+          "practical": "While the subject is not heavily hands-on in a physical sense, the VCDE portion does introduce some challenging practical lab implementations."
+        }
+      }
+    ],
     "evaluation_style_facts": {
       "theory_exam_pct": null,
       "lab_is_fully_continuous": true
@@ -91,7 +107,23 @@
     "rating_metadata": {
       "total_votes": 1
     },
-    "testimonials": [],
+    "testimonials": [
+      {
+        "id": 1,
+        "reviewer_name": "Student Consensus",
+        "subject_cgpa": null,
+        "is_featured": false,
+        "written_review": "LA+PS review breakdown.",
+        "review_breakdown": {
+          "difficulty": "Pushes your academic limits with fresh, logic-based exam questions, though the PS half is more manageable.",
+          "workload": "Requires steady time outside of class to practice and deeply understand the formulas.",
+          "exploration": "Bridges 11th/12th foundations with exciting new fields, particularly in Linear Algebra.",
+          "conceptual": "Emphasizes logical problem-solving rather than memorizing heavy theory.",
+          "math": "Heavily focused on mathematical derivations and step-by-step logical calculations.",
+          "practical": "The mathematical logic learned offers excellent practical applications."
+        }
+      }
+    ],
     "evaluation_style_facts": {
       "theory_exam_pct": null,
       "lab_is_fully_continuous": true
@@ -141,7 +173,23 @@
     "rating_metadata": {
       "total_votes": 1
     },
-    "testimonials": [],
+    "testimonials": [
+      {
+        "id": 1,
+        "reviewer_name": "Student Consensus",
+        "subject_cgpa": null,
+        "is_featured": false,
+        "written_review": "• EP+QP is a fascinating sequence that blends familiar topics with completely new areas of study.\n• The Engineering Physics (EP) portion builds directly on your 11th and 12th-grade foundations, while Quantum Physics (QP) invites you to explore a completely new and complex scientific field.\n• This course is exceptionally theory-focused and requires you to deeply understand complex concepts rather than just memorizing facts.\n• Because it relies heavily on mathematical proofs and logical derivations, mastering the underlying math will make solving the exam problems much easier.\n• You should be prepared for this subject to truly push your academic limits, especially in QP, making it a poor choice if you are simply looking for a quick GPA boost with minimal effort.\n• To succeed, you must dedicate a heavy amount of time outside of class to complete weekly tutorials and build strong fundamentals.\n• While it does not focus heavily on hands-on practical applications, the deep analytical skills and theoretical clarity you gain make it a highly rewarding challenge.",
+        "review_breakdown": {
+          "difficulty": "You should be prepared for this subject to truly push your academic limits, especially in QP, making it a poor choice if you are simply looking for a quick GPA boost with minimal effort.",
+          "workload": "To succeed, you must dedicate a heavy amount of time outside of class to complete weekly tutorials and build strong fundamentals.",
+          "exploration": "The Engineering Physics (EP) portion builds directly on your 11th and 12th-grade foundations, while Quantum Physics (QP) invites you to explore a completely new and complex scientific field.",
+          "conceptual": "This course is exceptionally theory-focused and requires you to deeply understand complex concepts rather than just memorizing facts.",
+          "math": "Because it relies heavily on mathematical proofs and logical derivations, mastering the underlying math will make solving the exam problems much easier.",
+          "practical": "EP+QP is a fascinating sequence that blends familiar topics with completely new areas of study. While it does not focus heavily on hands-on practical applications, the deep analytical skills and theoretical clarity you gain make it a highly rewarding challenge."
+        }
+      }
+    ],
     "evaluation_style_facts": {
       "theory_exam_pct": 0.0,
       "lab_is_fully_continuous": true
@@ -191,7 +239,23 @@
     "rating_metadata": {
       "total_votes": 1
     },
-    "testimonials": [],
+    "testimonials": [
+      {
+        "id": 1,
+        "reviewer_name": "Student Consensus",
+        "subject_cgpa": null,
+        "is_featured": false,
+        "written_review": "• EP+QP is a fascinating sequence that blends familiar topics with completely new areas of study.\n• The Engineering Physics (EP) portion builds directly on your 11th and 12th-grade foundations, while Quantum Physics (QP) invites you to explore a completely new and complex scientific field.\n• This course is exceptionally theory-focused and requires you to deeply understand complex concepts rather than just memorizing facts.\n• Because it relies heavily on mathematical proofs and logical derivations, mastering the underlying math will make solving the exam problems much easier.\n• You should be prepared for this subject to truly push your academic limits, especially in QP, making it a poor choice if you are simply looking for a quick GPA boost with minimal effort.\n• To succeed, you must dedicate a heavy amount of time outside of class to complete weekly tutorials and build strong fundamentals.\n• While it does not focus heavily on hands-on practical applications, the deep analytical skills and theoretical clarity you gain make it a highly rewarding challenge.",
+        "review_breakdown": {
+          "difficulty": "You should be prepared for this subject to truly push your academic limits, especially in QP, making it a poor choice if you are simply looking for a quick GPA boost with minimal effort.",
+          "workload": "To succeed, you must dedicate a heavy amount of time outside of class to complete weekly tutorials and build strong fundamentals.",
+          "exploration": "The Engineering Physics (EP) portion builds directly on your 11th and 12th-grade foundations, while Quantum Physics (QP) invites you to explore a completely new and complex scientific field.",
+          "conceptual": "This course is exceptionally theory-focused and requires you to deeply understand complex concepts rather than just memorizing facts.",
+          "math": "Because it relies heavily on mathematical proofs and logical derivations, mastering the underlying math will make solving the exam problems much easier.",
+          "practical": "While it does not focus heavily on hands-on practical applications, the deep analytical skills and theoretical clarity you gain make it a highly rewarding challenge."
+        }
+      }
+    ],
     "evaluation_style_facts": {
       "theory_exam_pct": 0.0,
       "lab_is_fully_continuous": true
@@ -338,7 +402,23 @@
     "rating_metadata": {
       "total_votes": 1
     },
-    "testimonials": [],
+    "testimonials": [
+      {
+        "id": 1,
+        "reviewer_name": "Student Consensus",
+        "subject_cgpa": null,
+        "is_featured": false,
+        "written_review": "• Biology for Engineers is a uniquely relaxing course that allows you to explore an interesting new field, gently building on just a few basic 11th and 12th-grade foundations.\n• The subject is entirely theoretical, making it an excellent choice if you enjoy deeply understanding and memorizing biological concepts.\n• If you prefer heavy mathematical calculations and logical problem-solving, you might want to look elsewhere, as this course contains absolutely zero math or numericals.\n• It is very simple to grasp and will not aggressively push your academic limits, though you should be aware that because the papers are easy, the relative grading can become quite competitive.\n• You will not need to dedicate a heavy amount of time outside of class, as the overall workload is extremely light and requires very little extra effort to secure a good CGPA.\n• Finally, the course focuses purely on theory with no hands-on practical applications, making it a wonderful, low-stress option for anyone curious about biology.",
+        "review_breakdown": {
+          "difficulty": "It is very simple to grasp and will not aggressively push your academic limits, though you should be aware that because the papers are easy, the relative grading can become quite competitive.",
+          "workload": "You will not need to dedicate a heavy amount of time outside of class, as the overall workload is extremely light and requires very little extra effort to secure a good CGPA.",
+          "exploration": "Biology for Engineers is a uniquely relaxing course that allows you to explore an interesting new field, gently building on just a few basic 11th and 12th-grade foundations.",
+          "conceptual": "The subject is entirely theoretical, making it an excellent choice if you enjoy deeply understanding and memorizing biological concepts.",
+          "math": "If you prefer heavy mathematical calculations and logical problem-solving, you might want to look elsewhere, as this course contains absolutely zero math or numericals.",
+          "practical": "Finally, the course focuses purely on theory with no hands-on practical applications, making it a wonderful, low-stress option for anyone curious about biology."
+        }
+      }
+    ],
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
@@ -387,7 +467,23 @@
     "rating_metadata": {
       "total_votes": 1
     },
-    "testimonials": [],
+    "testimonials": [
+      {
+        "id": 1,
+        "reviewer_name": "Student Consensus",
+        "subject_cgpa": null,
+        "is_featured": false,
+        "written_review": "• ETES is an interesting, industry-focused course that smoothly builds on your 11th and 12th-grade electrochemistry foundations, giving you a noticeable advantage if you have already taken Engineering Chemistry (EC).\n• The subject focuses heavily on theoretical concepts and requires you to comfortably memorize factual information rather than deeply analyzing complex mechanisms.\n• If you prefer heavy mathematical calculations or logical problem-solving, you will find very little of that here.\n• Because the content is simple to grasp, the course will not severely push your academic limits, but you should be prepared for highly competitive relative grading since most students score very well on the predictable exams.\n• You will certainly not need to dedicate a heavy amount of time outside of class, as the overall workload is extremely light and stress-free.\n• While the course teaches you about fascinating real-world industrial applications like battery cells, it does not currently offer any physical, hands-on practical experience in a lab setting.\n• Ultimately, it is a wonderful, low-effort option for improving your overall CGPA.",
+        "review_breakdown": {
+          "difficulty": "Because the content is simple to grasp, the course will not severely push your academic limits, but you should be prepared for highly competitive relative grading since most students score very well on the predictable exams.",
+          "workload": "You will certainly not need to dedicate a heavy amount of time outside of class, as the overall workload is extremely light and stress-free.",
+          "exploration": "ETES is an interesting, industry-focused course that smoothly builds on your 11th and 12th-grade electrochemistry foundations, giving you a noticeable advantage if you have already taken Engineering Chemistry (EC).",
+          "conceptual": "The subject focuses heavily on theoretical concepts and requires you to comfortably memorize factual information rather than deeply analyzing complex mechanisms.",
+          "math": "If you prefer heavy mathematical calculations or logical problem-solving, you will find very little of that here.",
+          "practical": "While the course teaches you about fascinating real-world industrial applications like battery cells, it does not currently offer any physical, hands-on practical experience in a lab setting."
+        }
+      }
+    ],
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
@@ -593,7 +689,23 @@
     "rating_metadata": {
       "total_votes": 1
     },
-    "testimonials": [],
+    "testimonials": [
+      {
+        "id": 1,
+        "reviewer_name": "Student Consensus",
+        "subject_cgpa": null,
+        "is_featured": false,
+        "written_review": "• If you are curious about the exciting world of Artificial Intelligence but want to avoid intense coding, AIMA is a fantastic choice that lets you explore a completely new field without relying on any high school foundations.\n• The course focuses purely on theoretical concepts, teaching you fascinating basics like the history of AI, its various types, and how to effectively prompt AI tools.\n• Because there are no mathematical calculations or logical problem-solving tasks, your success will depend entirely on your ability to deeply memorize content and write well-elaborated, descriptive answers in exams.\n• The difficulty is very manageable and will not aggressively push your academic limits, provided you do continuous, light revision.\n• You will not need to dedicate a heavy amount of time outside of class, as the overall workload is low and assignments give you plenty of time to finish.\n• While the course lacks hands-on, practical coding applications, it is a highly rewarding and low-stress option for students who excel at memorization and want to learn about AI while easily maintaining a strong CGPA.",
+        "review_breakdown": {
+          "difficulty": "The difficulty is very manageable and will not aggressively push your academic limits, provided you do continuous, light revision.",
+          "workload": "You will not need to dedicate a heavy amount of time outside of class, as the overall workload is low and assignments give you plenty of time to finish.",
+          "exploration": "If you are curious about the exciting world of Artificial Intelligence but want to avoid intense coding, AIMA is a fantastic choice that lets you explore a completely new field without relying on any high school foundations.",
+          "conceptual": "The course focuses purely on theoretical concepts, teaching you fascinating basics like the history of AI, its various types, and how to effectively prompt AI tools.",
+          "math": "Because there are no mathematical calculations or logical problem-solving tasks, your success will depend entirely on your ability to deeply memorize content and write well-elaborated, descriptive answers in exams.",
+          "practical": "While the course lacks hands-on, practical coding applications, it is a highly rewarding and low-stress option for students who excel at memorization and want to learn about AI while easily maintaining a strong CGPA."
+        }
+      }
+    ],
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
@@ -699,7 +811,23 @@
     "rating_metadata": {
       "total_votes": 1
     },
-    "testimonials": [],
+    "testimonials": [
+      {
+        "id": 1,
+        "reviewer_name": "Student Consensus",
+        "subject_cgpa": null,
+        "is_featured": false,
+        "written_review": "• If you are genuinely fascinated by hardware and electronics, AEIOT offers a highly rewarding opportunity to get hands-on with real practical applications.\n• The course begins by building directly on your 11th and 12th-grade electrical foundations before branching out to explore exciting, completely new concepts in the world of IoT.\n• You should know that the subject focuses heavily on deep theoretical concepts and requires significant memorization, meaning it is not a great fit if you prefer heavy mathematical calculations or logical problem-solving.\n• Because some of the later topics can be quite complex, the course will certainly push your academic limits.\n• To succeed, you must be willing to dedicate a heavy amount of time outside of class for independent self-study, presentations, and demanding lab work.\n• While the high workload and tough theory make it a challenging subject, it is a fantastic and engaging choice for students who love practical hardware and are willing to put in the effort.",
+        "review_breakdown": {
+          "difficulty": "Because some of the later topics can be quite complex, the course will certainly push your academic limits.",
+          "workload": "To succeed, you must be willing to dedicate a heavy amount of time outside of class for independent self-study, presentations, and demanding lab work.",
+          "exploration": "The course begins by building directly on your 11th and 12th-grade electrical foundations before branching out to explore exciting, completely new concepts in the world of IoT.",
+          "conceptual": "You should know that the subject focuses heavily on deep theoretical concepts and requires significant memorization, meaning it is not a great fit if you prefer heavy mathematical calculations or logical problem-solving.",
+          "math": "While the high workload and tough theory make it a challenging subject, it is a fantastic and engaging choice for students who love practical hardware and are willing to put in the effort.",
+          "practical": "If you are genuinely fascinated by hardware and electronics, AEIOT offers a highly rewarding opportunity to get hands-on with real practical applications."
+        }
+      }
+    ],
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
@@ -752,7 +880,23 @@
     "rating_metadata": {
       "total_votes": 1
     },
-    "testimonials": [],
+    "testimonials": [
+      {
+        "id": 1,
+        "reviewer_name": "Student Consensus",
+        "subject_cgpa": null,
+        "is_featured": false,
+        "written_review": "• If you have a strong curiosity about how sensors work and are eager to explore a completely new field far removed from your 11th and 12th-grade syllabus, FMS is a fascinating but demanding choice.\n• The course features a vast syllabus that focuses heavily on deep theoretical concepts and memorization, meaning you will face very few mathematical calculations or numericals.\n• Because the curriculum is so broad and the exams are challenging, this subject will definitely push your academic limits and requires serious dedication to maintain a strong CGPA.\n• You must be willing to dedicate a heavy amount of time outside of class, as there is a strong emphasis on self-learning and a major project at the end of the semester that demands intense focus.\n• While physical hands-on experiences are mostly limited to virtual labs, the final project gives you a great opportunity to practically apply the theory you have learned.\n• Overall, it is a highly rewarding course for those truly interested in measurement instruments, provided you are ready to tackle a heavy theoretical workload.",
+        "review_breakdown": {
+          "difficulty": "Because the curriculum is so broad and the exams are challenging, this subject will definitely push your academic limits and requires serious dedication to maintain a strong CGPA.",
+          "workload": "You must be willing to dedicate a heavy amount of time outside of class, as there is a strong emphasis on self-learning and a major project at the end of the semester that demands intense focus.",
+          "exploration": "If you have a strong curiosity about how sensors work and are eager to explore a completely new field far removed from your 11th and 12th-grade syllabus, FMS is a fascinating but demanding choice.",
+          "conceptual": "The course features a vast syllabus that focuses heavily on deep theoretical concepts and memorization, meaning you will face very few mathematical calculations or numericals.",
+          "math": "Overall, it is a highly rewarding course for those truly interested in measurement instruments, provided you are ready to tackle a heavy theoretical workload.",
+          "practical": "While physical hands-on experiences are mostly limited to virtual labs, the final project gives you a great opportunity to practically apply the theory you have learned."
+        }
+      }
+    ],
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
@@ -911,7 +1055,23 @@
     "rating_metadata": {
       "total_votes": 1
     },
-    "testimonials": [],
+    "testimonials": [
+      {
+        "id": 1,
+        "reviewer_name": "Student Consensus",
+        "subject_cgpa": null,
+        "is_featured": false,
+        "written_review": "• If you have a strong imagination and enjoy drawing, BMT is a unique course that lets you explore a completely new field far removed from your previous high school knowledge.\n• The subject is entirely focused on deep theoretical concepts, requiring you to clearly visualize manufacturing processes and draw numerous detailed diagrams.\n• Because it relies heavily on memorization and spatial imagination, there are practically no mathematical calculations or logical numericals involved.\n• The difficulty is generally moderate, but the subject will certainly push your academic limits if you struggle with memorizing vast amounts of theory.\n• You should expect to dedicate a fair amount of time outside of class to complete several assignments and practice drawing your diagrams.\n• While the course focuses more on theoretical visualization rather than physical, hands-on practical applications, it offers a highly rewarding mental challenge for students who excel at visual learning and want to understand how things are made.",
+        "review_breakdown": {
+          "difficulty": "The difficulty is generally moderate, but the subject will certainly push your academic limits if you struggle with memorizing vast amounts of theory.",
+          "workload": "You should expect to dedicate a fair amount of time outside of class to complete several assignments and practice drawing your diagrams.",
+          "exploration": "If you have a strong imagination and enjoy drawing, BMT is a unique course that lets you explore a completely new field far removed from your previous high school knowledge.",
+          "conceptual": "The subject is entirely focused on deep theoretical concepts, requiring you to clearly visualize manufacturing processes and draw numerous detailed diagrams.",
+          "math": "Because it relies heavily on memorization and spatial imagination, there are practically no mathematical calculations or logical numericals involved.",
+          "practical": "While the course focuses more on theoretical visualization rather than physical, hands-on practical applications, it offers a highly rewarding mental challenge for students who excel at visual learning and want to understand how things are made."
+        }
+      }
+    ],
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
@@ -964,7 +1124,23 @@
     "rating_metadata": {
       "total_votes": 1
     },
-    "testimonials": [],
+    "testimonials": [
+      {
+        "id": 1,
+        "reviewer_name": "Student Consensus",
+        "subject_cgpa": null,
+        "is_featured": false,
+        "written_review": "• Applied Mechanics is an interesting course that builds right on 11th and 12th-grade physics.\n• You will explore real-world topics like forces, balancing, and Trusses.\n• It involves a lot of math and calculations, making it a great fit if you enjoy solving numerical problems rather than memorizing theory.\n• The notes and questions provided in class are enough to help you get good marks.\n• Because the exams can be long, practicing at home and managing your time well is key to doing your best.\n• The course also includes helpful, hands-on lab sessions that bring the concepts to life.\n• Overall, it is a very practical course that gives you a solid understanding of how physical structures work.",
+        "review_breakdown": {
+          "difficulty": "Because the exams can be long, practicing at home and managing your time well is key to doing your best.",
+          "workload": "The notes and questions provided in class are enough to help you get good marks.",
+          "exploration": "You will explore real-world topics like forces, balancing, and Trusses.",
+          "conceptual": "Applied Mechanics is an interesting course that builds right on 11th and 12th-grade physics.",
+          "math": "It involves a lot of math and calculations, making it a great fit if you enjoy solving numerical problems rather than memorizing theory.",
+          "practical": "The course also includes helpful, hands-on lab sessions that bring the concepts to life."
+        }
+      }
+    ],
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
@@ -1170,7 +1346,23 @@
     "rating_metadata": {
       "total_votes": 1
     },
-    "testimonials": [],
+    "testimonials": [
+      {
+        "id": 1,
+        "reviewer_name": "Student Consensus",
+        "subject_cgpa": null,
+        "is_featured": false,
+        "written_review": "• If you have a passion for design and love creating things visually, Engineering Graphics (EG) is a fantastic, highly practical course that lets you explore an exciting new field without needing any 11th or 12th-grade background.\n• Instead of memorizing heavy theory or solving complex math equations, you will dive deeply into spatial concepts and the art of detailed drawing.\n• The course offers a beautifully immersive experience that will push your academic limits by teaching you real-world discipline and precision.\n• To truly master these skills, you will get to dedicate plenty of time outside of class working on creative, hands-on drawing sheets and lab assignments.\n• Because the subject is so wonderfully practical, success comes naturally if you practice regularly and enjoy keeping your artwork neat and consistent.\n• Ultimately, it is a highly rewarding subject that guarantees great grades for students who love manual drafting and are eager to put in steady, enjoyable effort.",
+        "review_breakdown": {
+          "difficulty": "The course offers a beautifully immersive experience that will push your academic limits by teaching you real-world discipline and precision.",
+          "workload": "To truly master these skills, you will get to dedicate plenty of time outside of class working on creative, hands-on drawing sheets and lab assignments.",
+          "exploration": "If you have a passion for design and love creating things visually, Engineering Graphics (EG) is a fantastic, highly practical course that lets you explore an exciting new field without needing any 11th or 12th-grade background.",
+          "conceptual": "Instead of memorizing heavy theory or solving complex math equations, you will dive deeply into spatial concepts and the art of detailed drawing.",
+          "math": "Ultimately, it is a highly rewarding subject that guarantees great grades for students who love manual drafting and are eager to put in steady, enjoyable effort.",
+          "practical": "Because the subject is so wonderfully practical, success comes naturally if you practice regularly and enjoy keeping your artwork neat and consistent."
+        }
+      }
+    ],
     "evaluation_style_facts": {
       "theory_exam_pct": 1.0,
       "lab_is_fully_continuous": true
@@ -1325,7 +1517,23 @@
     "rating_metadata": {
       "total_votes": 1
     },
-    "testimonials": [],
+    "testimonials": [
+      {
+        "id": 1,
+        "reviewer_name": "Student Consensus",
+        "subject_cgpa": null,
+        "is_featured": false,
+        "written_review": "• Geomatic Engineering offers solid new field exploration into land surveying, map projections, and computer-aided drafting like AutoCAD, but it comes with a strong caveat: it is highly recommended for Civil Engineering students, while those in CS, AIML, or other branches are strongly advised to opt for different courses.\n• It is not particularly concept-heavy or math-heavy, as the theoretical portion is quite easy and can be completely managed using just the professor's PPTs and class notes.\n• However, the overall difficulty is moderate because it is not considered a very scoring subject for non-Civil students, and the vivas often require some external knowledge beyond the provided materials.\n• You should expect a moderate to consistent workload, as there are weekly assignments that must be completed on time and religiously.\n• The course has a massive practical focus, being extremely lab-heavy; while the theory is straightforward, the hands-on lab sessions involving tools like total stations and levels must be taken very sincerely.\n• Overall, it is a highly useful core-building course for Civil students, but a less rewarding elective for everyone else.",
+        "review_breakdown": {
+          "difficulty": "However, the overall difficulty is moderate because it is not considered a very scoring subject for non-Civil students, and the vivas often require some external knowledge beyond the provided materials.",
+          "workload": "You should expect a moderate to consistent workload, as there are weekly assignments that must be completed on time and religiously.",
+          "exploration": "Geomatic Engineering offers solid new field exploration into land surveying, map projections, and computer-aided drafting like AutoCAD, but it comes with a strong caveat: it is highly recommended for Civil Engineering students, while those in CS, AIML, or other branches are strongly advised to opt for different courses.",
+          "conceptual": "It is not particularly concept-heavy or math-heavy, as the theoretical portion is quite easy and can be completely managed using just the professor's PPTs and class notes.",
+          "math": "Overall, it is a highly useful core-building course for Civil students, but a less rewarding elective for everyone else.",
+          "practical": "The course has a massive practical focus, being extremely lab-heavy; while the theory is straightforward, the hands-on lab sessions involving tools like total stations and levels must be taken very sincerely."
+        }
+      }
+    ],
     "evaluation_style_facts": {
       "theory_exam_pct": 0.6,
       "lab_is_fully_continuous": true
@@ -1429,7 +1637,23 @@
     "rating_metadata": {
       "total_votes": 1
     },
-    "testimonials": [],
+    "testimonials": [
+      {
+        "id": 1,
+        "reviewer_name": "Student Consensus",
+        "subject_cgpa": null,
+        "is_featured": false,
+        "written_review": "• Programming for Problem Solving is a foundational, highly scoring course that offers essential new field exploration into the C programming language.\n• You will learn basic programming constructs that are absolute must-haves for students entering the CS and AIML domains.\n• It is a highly concept-heavy and logical subject, though be warned that the specific college exams can sometimes lean slightly toward memorization (mugging up); it relies mostly on logical problem-solving rather than being strictly math-heavy.\n• The overall difficulty ranges from easy to moderate and depends heavily on your background.\n• If you had C or C++ in 11th and 12th grade, you will breeze through the easy exam papers, but complete beginners may find it challenging as it is not always taught from absolute scratch.\n• Consequently, your workload will vary; it is minimal for experienced students but requires significant self-study (up to 60-70%) for newcomers, alongside a consistent moderate workload from weekly lab assignments and vivas.\n• The course maintains a solid practical focus, bridging theory from the provided class PPTs with hands-on coding execution in the labs.\n• Overall, thanks to lenient grading, it is a great GPA booster and a vital stepping stone for your degree, with students highly recommending GeeksforGeeks (GFG) as the best outside resource to master the basics.",
+        "review_breakdown": {
+          "difficulty": "The overall difficulty ranges from easy to moderate and depends heavily on your background. If you had C or C++ in 11th and 12th grade, you will breeze through the easy exam papers, but complete beginners may find it challenging as it is not always taught from absolute scratch.",
+          "workload": "Consequently, your workload will vary; it is minimal for experienced students but requires significant self-study (up to 60-70%) for newcomers, alongside a consistent moderate workload from weekly lab assignments and vivas.",
+          "exploration": "Programming for Problem Solving is a foundational, highly scoring course that offers essential new field exploration into the C programming language. You will learn basic programming constructs that are absolute must-haves for students entering the CS and AIML domains.",
+          "conceptual": "It is a highly concept-heavy and logical subject, though be warned that the specific college exams can sometimes lean slightly toward memorization (mugging up); it relies mostly on logical problem-solving rather than being strictly math-heavy.",
+          "math": "It relies mostly on logical problem-solving rather than being strictly math-heavy.",
+          "practical": "The course maintains a solid practical focus, bridging theory from the provided class PPTs with hands-on coding execution in the labs. Overall, thanks to lenient grading, it is a great GPA booster and a vital stepping stone for your degree, with students highly recommending GeeksforGeeks (GFG) as the best outside resource to master the basics."
+        }
+      }
+    ],
     "evaluation_style_facts": {
       "theory_exam_pct": 0.6,
       "lab_is_fully_continuous": true
@@ -1481,7 +1705,23 @@
     "rating_metadata": {
       "total_votes": 1
     },
-    "testimonials": [],
+    "testimonials": [
+      {
+        "id": 1,
+        "reviewer_name": "Student Consensus",
+        "subject_cgpa": null,
+        "is_featured": false,
+        "written_review": "• Web Design is a very chill, high-scoring course that acts as a gentle introduction to web essentials—or a simple refresher if you already took HTML and CSS in your 11th and 12th grades.\n• It offers straightforward new field exploration for beginners, teaching everything from the basics of how the web works to basic Node.js and DOM manipulation using JavaScript.\n• While you might expect it to be purely hands-on, the course is surprisingly concept-heavy, split roughly into 60% theory and 40% coding.\n• It involves absolutely no math-heavy calculations.\n• The overall difficulty is very low, making it an easy GPA booster for students across all branches.\n• The workload is minimal; the labs are relaxed, and grading focuses heavily on your lab assignments, vivas, and a mini-project.\n• It does have a solid practical focus, but be warned: you will be asked to write lengthy pieces of code by hand during your theory exams.\n• While it is a perfect course to boost your pointer, if your main goal is to master real-world web development, taking a dedicated online course might be a better use of your time.",
+        "review_breakdown": {
+          "difficulty": "The overall difficulty is very low, making it an easy GPA booster for students across all branches.",
+          "workload": "The workload is minimal; the labs are relaxed, and grading focuses heavily on your lab assignments, vivas, and a mini-project.",
+          "exploration": "It offers straightforward new field exploration for beginners, teaching everything from the basics of how the web works to basic Node.js and DOM manipulation using JavaScript.",
+          "conceptual": "While you might expect it to be purely hands-on, the course is surprisingly concept-heavy, split roughly into 60% theory and 40% coding.",
+          "math": "It involves absolutely no math-heavy calculations.",
+          "practical": "Web Design is a very chill, high-scoring course that acts as a gentle introduction to web essentials—or a simple refresher if you already took HTML and CSS in your 11th and 12th grades. It does have a solid practical focus, but be warned: you will be asked to write lengthy pieces of code by hand during your theory exams. While it is a perfect course to boost your pointer, if your main goal is to master real-world web development, taking a dedicated online course might be a better use of your time."
+        }
+      }
+    ],
     "evaluation_style_facts": {
       "theory_exam_pct": 0.6,
       "lab_is_fully_continuous": true
@@ -1533,7 +1773,23 @@
     "rating_metadata": {
       "total_votes": 1
     },
-    "testimonials": [],
+    "testimonials": [
+      {
+        "id": 1,
+        "reviewer_name": "Student Consensus",
+        "subject_cgpa": null,
+        "is_featured": false,
+        "written_review": "• Python Programming is a highly practical and GPA-friendly course that offers excellent new field exploration by introducing you to the world of Python and programming from scratch.\n• You will explore foundational topics like conditional loops, list comprehensions, dictionaries, and string manipulation.\n• It is a concept-heavy course that focuses on logical problem-solving rather than rote memorization.\n• It involves almost no math-heavy calculations, making it a great fit if you prefer active, hands-on coding over solving numerical equations.\n• The overall difficulty is easy to moderate; thanks to a lenient grading system, it is considered an excellent choice for securing a high pointer, even for students from non-CSE branches.\n• Because you are required to complete lab manuals every week—covering experiments like command-line programs and data manipulation—you should expect a consistent workload, but it is highly manageable and rarely requires much studying outside of class hours.\n• The course has a strong practical focus, ensuring that the theoretical concepts taught in lectures never overpower the actual hands-on lab experience.\n• Overall, it is an engaging, beginner-friendly course that gives you a solid practical foundation in Python programming without being overly stressful.",
+        "review_breakdown": {
+          "difficulty": "The overall difficulty is easy to moderate; thanks to a lenient grading system, it is considered an excellent choice for securing a high pointer, even for students from non-CSE branches.",
+          "workload": "Because you are required to complete lab manuals every week—covering experiments like command-line programs and data manipulation—you should expect a consistent workload, but it is highly manageable and rarely requires much studying outside of class hours.",
+          "exploration": "Python Programming is a highly practical and GPA-friendly course that offers excellent new field exploration by introducing you to the world of Python and programming from scratch.",
+          "conceptual": "It is a concept-heavy course that focuses on logical problem-solving rather than rote memorization.",
+          "math": "It involves almost no math-heavy calculations, making it a great fit if you prefer active, hands-on coding over solving numerical equations.",
+          "practical": "The course has a strong practical focus, ensuring that the theoretical concepts taught in lectures never overpower the actual hands-on lab experience."
+        }
+      }
+    ],
     "evaluation_style_facts": {
       "theory_exam_pct": 0.6,
       "lab_is_fully_continuous": true
@@ -1791,7 +2047,23 @@
     "rating_metadata": {
       "total_votes": 1
     },
-    "testimonials": [],
+    "testimonials": [
+      {
+        "id": 1,
+        "reviewer_name": "Student Consensus",
+        "subject_cgpa": null,
+        "is_featured": false,
+        "written_review": "• Manufacturing Practices and Fab Lab (MPFL) is an easy and engaging course that offers excellent new field exploration into basic manufacturing and modern fabrication techniques.\n• You will explore real-world workshop applications ranging from carpentry, welding, and lathe machine operations to advanced 3D printing and PCB fabrication.\n• It is entirely practical rather than concept-heavy, and it contains absolutely no math-heavy numericals, making it a perfect fit if you prefer active, physical work over theoretical lectures.\n• The overall difficulty is very low, provided you have the patience for manual tasks like filing, machining, and knurling.\n• Because it is a purely lab-specific course, there is virtually zero outside workload; although the lab sessions can be time-consuming, all tasks are completed during your scheduled hours, leaving you free afterward.\n• The course has a complete practical focus, offering a totally hands-on experience with industrial tools and equipment.\n• Overall, it is a low-stress, highly rewarding course that is perfect for boosting your pointer if you enjoy hands-on work.",
+        "review_breakdown": {
+          "difficulty": "The overall difficulty is very low, provided you have the patience for manual tasks like filing, machining, and knurling.",
+          "workload": "Because it is a purely lab-specific course, there is virtually zero outside workload; although the lab sessions can be time-consuming, all tasks are completed during your scheduled hours, leaving you free afterward.",
+          "exploration": "Manufacturing Practices and Fab Lab (MPFL) is an easy and engaging course that offers excellent new field exploration into basic manufacturing and modern fabrication techniques.",
+          "conceptual": "It is entirely practical rather than concept-heavy, and it contains absolutely no math-heavy numericals, making it a perfect fit if you prefer active, physical work over theoretical lectures.",
+          "math": "Overall, it is a low-stress, highly rewarding course that is perfect for boosting your pointer if you enjoy hands-on work.",
+          "practical": "You will explore real-world workshop applications ranging from carpentry, welding, and lathe machine operations to advanced 3D printing and PCB fabrication."
+        }
+      }
+    ],
     "evaluation_style_facts": {
       "theory_exam_pct": 0.0,
       "lab_is_fully_continuous": true
@@ -1843,7 +2115,23 @@
     "rating_metadata": {
       "total_votes": 1
     },
-    "testimonials": [],
+    "testimonials": [
+      {
+        "id": 1,
+        "reviewer_name": "Student Consensus",
+        "subject_cgpa": null,
+        "is_featured": false,
+        "written_review": "• Robotics and Drone Operation and Safety is an engaging course that offers complete new field exploration, introducing exciting concepts that are entirely unrelated to 11th or 12th-grade studies.\n• It is a highly concept-heavy subject covering straightforward, logical theory on robot components, programming, and drone regulations.\n• It is also a great choice if you prefer to avoid calculations, as it has virtually no math-heavy numericals.\n• The overall difficulty is very manageable—ranging from easy to moderate—because simply understanding the basic principles is usually enough to perform well.\n• While the course has its share of theory, it shines in its practical focus; the lab sessions go hand-in-hand with the lectures, culminating in a highly rewarding final project where you actually build a live robot model.\n• However, be prepared for a progressive workload.\n• While the workload is minimal at the start, it increases significantly towards the end of the semester due to the final hands-on model and a high volume of assignments.\n• Although the assignments can be time-consuming, they are doable with focused effort.\n• Overall, it is a fun, practical course that is highly recommended for anyone with a genuine interest in robotics.",
+        "review_breakdown": {
+          "difficulty": "The overall difficulty is very manageable—ranging from easy to moderate—because simply understanding the basic principles is usually enough to perform well.",
+          "workload": "While the workload is minimal at the start, it increases significantly towards the end of the semester due to the final hands-on model and a high volume of assignments.",
+          "exploration": "Robotics and Drone Operation and Safety is an engaging course that offers complete new field exploration, introducing exciting concepts that are entirely unrelated to 11th or 12th-grade studies.",
+          "conceptual": "It is a highly concept-heavy subject covering straightforward, logical theory on robot components, programming, and drone regulations.",
+          "math": "It is also a great choice if you prefer to avoid calculations, as it has virtually no math-heavy numericals.",
+          "practical": "While the course has its share of theory, it shines in its practical focus; the lab sessions go hand-in-hand with the lectures, culminating in a highly rewarding final project where you actually build a live robot model."
+        }
+      }
+    ],
     "evaluation_style_facts": {
       "theory_exam_pct": 0.6,
       "lab_is_fully_continuous": true
@@ -1946,7 +2234,23 @@
     "rating_metadata": {
       "total_votes": 1
     },
-    "testimonials": [],
+    "testimonials": [
+      {
+        "id": 1,
+        "reviewer_name": "Student Consensus",
+        "subject_cgpa": null,
+        "is_featured": false,
+        "written_review": "• Digital Public Infrastructure is an incredibly interesting and highly scoring course that offers excellent new field exploration into India's digital frameworks.\n• You will explore real-world software domains and industry-level projects.\n• It is very concept-heavy rather than math-heavy, making it a great fit if you enjoy application-based learning instead of solving numerical equations.\n• The overall difficulty is low, and the PPTs provided in class are entirely sufficient to help you get good marks on the quizzes and exams.\n• However, because it is so scoring, the grading curve is highly competitive; you should expect a moderate workload where putting genuine effort into your submissions is key to doing your best.\n• The course also has a strong practical focus, featuring hands-on activities and engaging class discussions led by experienced faculty that bring the theory to life.\n• Overall, it is a highly rewarding, GPA-friendly course that gives you a valuable understanding of how national digital ecosystems work.",
+        "review_breakdown": {
+          "difficulty": "The overall difficulty is low, and the PPTs provided in class are entirely sufficient to help you get good marks on the quizzes and exams.",
+          "workload": "However, because it is so scoring, the grading curve is highly competitive; you should expect a moderate workload where putting genuine effort into your submissions is key to doing your best.",
+          "exploration": "Digital Public Infrastructure is an incredibly interesting and highly scoring course that offers excellent new field exploration into India's digital frameworks.",
+          "conceptual": "It is very concept-heavy rather than math-heavy, making it a great fit if you enjoy application-based learning instead of solving numerical equations.",
+          "math": "You will explore real-world software domains and industry-level projects.",
+          "practical": "The course also has a strong practical focus, featuring hands-on activities and engaging class discussions led by experienced faculty that bring the theory to life. Overall, it is a highly rewarding, GPA-friendly course that gives you a valuable understanding of how national digital ecosystems work."
+        }
+      }
+    ],
     "evaluation_style_facts": {
       "theory_exam_pct": 0.6,
       "lab_is_fully_continuous": true
