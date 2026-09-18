@@ -30,6 +30,7 @@ import courseCatalog from "../api/courses.json";
 import { CourseStructure } from "../components/course-structure";
 import { ThemeToggle } from "../components/theme-toggle";
 import { QuestionnaireWizard } from "../components/questionnaire-wizard";
+import { StudentConsensus } from "../components/student-consensus";
 import {
   API_BRANCH_BY_CODE,
   BRANCH_OPTIONS,
@@ -1310,79 +1311,58 @@ export default function CBCSElectiveGuide() {
                   </div>
 
                   <div className="space-y-5 px-5 py-5 sm:px-6">
-                    {course.testimonials && course.testimonials.length > 0 && (
-                      <section className="border-t border-slate-100 pt-5 dark:border-white/10" aria-label="Reviews by Seniors">
-                        <h3 className="flex items-center gap-2 text-sm font-bold text-indigo-600 dark:text-indigo-400">
-                          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-indigo-50 dark:bg-indigo-900/50">
-                            🎓
-                          </span>
-                          Reviews by Seniors
-                        </h3>
-                        <div className="mt-4 space-y-4">
-                          {course.testimonials.map((testimonial, testimonialIndex) => (
-                            <blockquote
-                              key={`${course.course_code}-${testimonial.id}-${testimonialIndex}`}
-                              className="rounded-xl border-l-4 border-indigo-400 bg-indigo-50/50 px-4 py-3 shadow-sm dark:border-indigo-500 dark:bg-indigo-950/30"
-                            >
-                                    {testimonial.subject_cgpa !== null && (
-                                      <div className="mb-2 flex flex-wrap items-center gap-2">
-                                        <span className="rounded-full bg-emerald-100 dark:bg-emerald-950/70 px-2.5 py-0.5 text-xs font-semibold text-emerald-800 dark:text-emerald-300">
-                                          Scored: {testimonial.subject_cgpa.toFixed(1)}
-                                        </span>
-                                      </div>
-                                    )}
-                                    {testimonial.review_breakdown ? (
-                                      <ul className="space-y-3 mt-2 mb-3 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
-                                        {testimonial.review_breakdown.difficulty && (
-                                          <li className="flex items-start gap-2">
-                                            <span className="text-rose-500 shrink-0">🧗</span>
-                                            <div><strong className="text-slate-900 dark:text-white">Difficulty Level:</strong> {testimonial.review_breakdown.difficulty}</div>
-                                          </li>
-                                        )}
-                                        {testimonial.review_breakdown.workload && (
-                                          <li className="flex items-start gap-2">
-                                            <span className="text-orange-500 shrink-0">⏳</span>
-                                            <div><strong className="text-slate-900 dark:text-white">Workload Demand:</strong> {testimonial.review_breakdown.workload}</div>
-                                          </li>
-                                        )}
-                                        {testimonial.review_breakdown.exploration && (
-                                          <li className="flex items-start gap-2">
-                                            <span className="text-indigo-500 shrink-0">🧭</span>
-                                            <div><strong className="text-slate-900 dark:text-white">New Field Exploration:</strong> {testimonial.review_breakdown.exploration}</div>
-                                          </li>
-                                        )}
-                                        {testimonial.review_breakdown.conceptual && (
-                                          <li className="flex items-start gap-2">
-                                            <span className="text-blue-500 shrink-0">🧠</span>
-                                            <div><strong className="text-slate-900 dark:text-white">Conceptual Focus:</strong> {testimonial.review_breakdown.conceptual}</div>
-                                          </li>
-                                        )}
-                                        {testimonial.review_breakdown.math && (
-                                          <li className="flex items-start gap-2">
-                                            <span className="text-emerald-500 shrink-0">🧮</span>
-                                            <div><strong className="text-slate-900 dark:text-white">Math Heavy:</strong> {testimonial.review_breakdown.math}</div>
-                                          </li>
-                                        )}
-                                        {testimonial.review_breakdown.practical && (
-                                          <li className="flex items-start gap-2">
-                                            <span className="text-amber-500 shrink-0">🛠️</span>
-                                            <div><strong className="text-slate-900 dark:text-white">Practical Focus:</strong> {testimonial.review_breakdown.practical}</div>
-                                          </li>
-                                        )}
-                                      </ul>
-                                    ) : (
-                                      <p className="whitespace-pre-wrap text-sm leading-relaxed text-slate-700 dark:text-slate-200">
-                                        {testimonial.written_review}
-                                      </p>
-                                    )}
-                                    <p className="mt-2 text-xs font-bold text-slate-500 dark:text-slate-400">
-                                      — {testimonial.reviewer_name}
-                                    </p>
-                            </blockquote>
-                          ))}
-                        </div>
-                      </section>
-                    )}
+                    {/* Modern SaaS-style Student Consensus Blockquote with Bionic Reading */}
+                    <StudentConsensus
+                      courseCode={course.course_code}
+                      courseName={course.course_name}
+                      text={
+                        course.testimonials?.find(
+                          (t) => t.reviewer_name === "Student Consensus",
+                        )?.written_review
+                      }
+                    />
+
+                    {/* Individual Senior Reviews (shown if peer-submitted testimonials exist) */}
+                    {course.testimonials &&
+                      course.testimonials.filter(
+                        (t) => t.reviewer_name !== "Student Consensus",
+                      ).length > 0 && (
+                        <section
+                          className="border-t border-slate-100 pt-5 dark:border-white/10"
+                          aria-label="Reviews by Seniors"
+                        >
+                          <h3 className="flex items-center gap-2 text-sm font-bold text-indigo-600 dark:text-indigo-400">
+                            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-indigo-50 dark:bg-indigo-900/50">
+                              🎓
+                            </span>
+                            Reviews by Seniors
+                          </h3>
+                          <div className="mt-4 space-y-4">
+                            {course.testimonials
+                              .filter((t) => t.reviewer_name !== "Student Consensus")
+                              .map((testimonial, testimonialIndex) => (
+                                <blockquote
+                                  key={`${course.course_code}-${testimonial.id}-${testimonialIndex}`}
+                                  className="rounded-xl border-l-4 border-indigo-400 bg-indigo-50/50 px-4 py-3 shadow-sm dark:border-indigo-500 dark:bg-indigo-950/30"
+                                >
+                                  {testimonial.subject_cgpa !== null && (
+                                    <div className="mb-2 flex flex-wrap items-center gap-2">
+                                      <span className="rounded-full bg-emerald-100 dark:bg-emerald-950/70 px-2.5 py-0.5 text-xs font-semibold text-emerald-800 dark:text-emerald-300">
+                                        Scored: {testimonial.subject_cgpa.toFixed(1)}
+                                      </span>
+                                    </div>
+                                  )}
+                                  <p className="whitespace-pre-wrap text-sm leading-relaxed text-slate-700 dark:text-slate-200">
+                                    {testimonial.written_review}
+                                  </p>
+                                  <p className="mt-2 text-xs font-bold text-slate-500 dark:text-slate-400">
+                                    — {testimonial.reviewer_name}
+                                  </p>
+                                </blockquote>
+                              ))}
+                          </div>
+                        </section>
+                      )}
                   </div>
                 </article>
                   ))}
