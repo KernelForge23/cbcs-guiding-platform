@@ -1,19 +1,18 @@
 # Product Requirements Document (PRD)
 **Project:** CBCS Guiding Platform  
 **Version:** 3.1 (Verified Data, Streamlined Form & Analytics)  
-**Objective:** A deterministic, AI-assisted Choice-Based Credit System (CBCS) elective recommendation platform for first-year engineering students.
+**Objective:** A deterministic Choice-Based Credit System (CBCS) elective recommendation platform for first-year engineering students.
 
 ---
 
 ## 1. Product Vision & Architecture Overview
-The platform matches students to elective courses based on their academic persona and constraints. It strictly avoids black-box AI matching. Instead, it utilizes a deterministic mathematical backend (FastAPI) to calculate fit percentages, followed by an LLM (Gemini) acting strictly as a narrator to explain the math.
+The platform matches students to elective courses based on their academic persona and constraints. It uses a deterministic mathematical backend (FastAPI) to calculate fit percentages from verified course data.
 
 All data injected into the system (course attributes and student testimonials) is strictly gated behind a mandatory human verification protocol before interacting with the recommendation engine.
 
 ### Core Tech Stack
 *   **Frontend:** Next.js + React + Tailwind CSS
 *   **Backend:** FastAPI (Python)
-*   **AI Engine:** Google Gemini (via `google-genai` SDK)
 *   **Database/Storage:** Supabase (PostgreSQL) / Local JSON for MVP (Separated into 'Active' and 'Pending' tables)
 *   **Analytics:** PostHog
 *   **Hosting:** Vercel
@@ -51,8 +50,6 @@ All data injected into the system (course attributes and student testimonials) i
     *   Rank position, Course Name, and Course Code.
     *   `Fit Percentage` badge.
     *   `Topic Tags` (Displayed as #hashtags).
-    *   `Why this fits you` (AI-generated explanation).
-    *   `Worth knowing` (AI-generated caveat).
     *   `Testimonials` (1-2 real quotes displayed verbatim. If 0 exist, show *"Be the first to review this course"*).
 *   **Actions:** 
     *   **"Start Over" Button:** Clears all state and returns the user to the Landing Screen.
@@ -117,23 +114,7 @@ $$\text{fitPercentage}=\text{round}\left(\frac{\sum\text{normalizedScores}}{\tex
 
 ---
 
-## 5. AI Narrative Integration (Phase 3)
-The backend constructs a strict prompt and sends it to the Gemini API.
-
-*   **Input Data:** The computed `fit_percentage`, the `attributes_used` array containing raw and normalized scores, and `evaluation_style_facts`.
-*   **System Instructions:**
-    *   Act as an academic advisor. Write a 3-4 sentence explanation.
-    *   **Part 1 ("Why this fits"):** Highlight the 1-2 highest-scoring attributes. State the student's preference vs. the course reality in plain language.
-    *   **Part 2 ("Worth knowing"):** Highlight the single lowest-scoring attribute as an honest caveat.
-*   **Hard Constraints:**
-    *   NEVER recalculate the `fit_percentage`.
-    *   NEVER invent attributes or reference excluded attributes.
-    *   NEVER use marketing fluff ("amazing", "perfect").
-    *   NEVER summarize or alter the raw testimonial strings.
-
----
-
-## 6. The Feedback Loop: Testimonial Verification Database
+## 5. The Feedback Loop: Testimonial Verification Database
 To ensure bad actors or spam do not corrupt the recommendation engine, testimonials follow a strict quarantine pipeline.
 
 1.  **Quarantine (Separate DB):** Submissions from the "Share a Testimonial" UI are written exclusively to an entirely separate `Pending_Testimonials` database table.
@@ -153,6 +134,6 @@ The Next.js frontend will integrate PostHog for event tracking and telemetry to 
 *   **Event Tracking:**
     *   `wizard_started`: User clicks "Start Wizard".
     *   `wizard_step_completed`: Fires on every "Next" click to build a conversion funnel (identifying if students drop out on a specific question).
-    *   `recommendation_generated`: Triggers when the backend successfully returns the AI course cards.
+    *   `recommendation_generated`: Triggers when the backend successfully returns the deterministic course cards.
     *   `testimonial_started` / `testimonial_submitted`: Tracks the conversion rate of the feedback loop.
 *   **Privacy Constraint:** Analytics must not log personally identifiable information (PII) beyond the MIS numbers strictly required for the testimonial verification database. Session replays must mask standard inputs to protect student names.

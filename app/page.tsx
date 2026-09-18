@@ -1,7 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+import { jsPDF } from "jspdf";
+import autoTable, { type CellInput, type RowInput } from "jspdf-autotable";
 import {
   AlertCircle,
   ArrowRight,
@@ -10,14 +12,13 @@ import {
   MessageSquareQuote,
   RotateCcw,
   Sparkles,
-  Star,
   Check,
-  ChevronDown,
   Command,
   User,
   Sliders,
   Menu,
   X,
+  FileDown,
 } from "lucide-react";
 import {
   COURSE_CATEGORIES,
@@ -46,7 +47,7 @@ type View =
   | "testimonial_login"
   | "testimonial_form";
 
-  type Branch = 
+  type Branch =
   | "Mechanical Engineering"
   | "Electrical Engineering"
   | "Computer Engineering"
@@ -112,33 +113,12 @@ type CourseCard = {
   credits?: string;
   branch_proximity?: number;
   fit_percentage: number;
-  attributes_used?: Array<{
-    name: string;
-    student_value: number | string;
-    course_value: number | string;
-    score: number;
-  }>;
   topic_tags: string[];
-  match_reasons?: string[];
-  why_this_fits?: string;
-  worth_knowing?: string;
-  narrative?: {
-    why_this_fits?: string;
-    worth_knowing?: string;
-  } | null;
-  explanation_points?: string[];
   testimonials: CourseTestimonial[];
   semesterAvailability?: SemesterCode[];
   forbiddenBranches?: StudentBranch[];
   cohortRotation?: CohortRotation;
   calculatedSemesters?: SemesterCode[];
-  evaluation_style_facts?:
-    | {
-        theory_exam_pct: number | null;
-        lab_is_fully_continuous: boolean;
-      }
-    | string
-    | null;
 };
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "";
@@ -151,6 +131,12 @@ const TESTIMONIAL_CATEGORIES = Array.from(
 
 type RecommendResponse = {
   courses: CourseCard[];
+};
+
+type RecommendationPdfRow = {
+  category: string;
+  courseCode: string;
+  courseTitle: string;
 };
 
 const BRANCHES: Branch[] = [
@@ -454,7 +440,7 @@ function FitBadge({ percentage }: { percentage: number }) {
     circumference - (clampedPercentage / 100) * circumference;
 
   return (
-    <div 
+    <div
       className="relative inline-flex h-24 w-24 items-center justify-center cursor-help"
       onMouseEnter={() => setShowTooltip(true)}
       onMouseLeave={() => setShowTooltip(false)}
@@ -498,7 +484,7 @@ function FitBadge({ percentage }: { percentage: number }) {
           {clampedPercentage}%
         </text>
       </svg>
-      
+
       {/* Mobile info icon overlay */}
       <div className="absolute top-0 right-0 sm:hidden flex h-6 w-6 translate-x-1 -translate-y-1 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
         <span className="text-xs font-bold text-slate-500 dark:text-slate-400">i</span>
@@ -522,7 +508,6 @@ export default function CBCSElectiveGuide() {
   const [name, setName] = useState("");
   const [branch, setBranch] = useState<Branch | "">("");
   const [studentBranch, setStudentBranch] = useState<StudentBranch | "">("");
-  const [expandedTestimonials, setExpandedTestimonials] = useState<Record<string, boolean>>({});
 
   const [wizardRatings, setWizardRatings] = useState<StudentAttributes>({
     ...DEFAULT_PREFERENCE_RATINGS,
@@ -732,35 +717,12 @@ export default function CBCSElectiveGuide() {
       }
 
       const data = (await response.json()) as RecommendResponse;
-      const coursesWithLiveTestimonials = await Promise.all(
-        data.courses.map(async (course) => {
-          const fallbackTestimonials = normalizeTestimonials(
-            course.testimonials,
-          );
-          try {
-            const testimonialsResponse = await fetch(
-              `${API_BASE_URL}/api/testimonials/${encodeURIComponent(course.course_code)}`,
-            );
-            if (!testimonialsResponse.ok) {
-              return { ...course, testimonials: fallbackTestimonials };
-            }
-            const liveTestimonials = normalizeTestimonials(
-              await testimonialsResponse.json(),
-            );
-            return {
-              ...course,
-              testimonials:
-                liveTestimonials.length > 0
-                  ? liveTestimonials
-                  : fallbackTestimonials,
-            };
-          } catch {
-            return { ...course, testimonials: fallbackTestimonials };
-          }
-        }),
+      setCourses(
+        data.courses.map((course) => ({
+          ...course,
+          testimonials: normalizeTestimonials(course.testimonials),
+        })),
       );
-
-      setCourses(coursesWithLiveTestimonials);
       setActiveCategory(COURSE_CATEGORIES[0]);
       setSelectedDepartments(null);
       setView("results");
@@ -775,6 +737,191 @@ export default function CBCSElectiveGuide() {
     } finally {
       setIsLoadingRecommendations(false);
     }
+  }
+
+  function handleDownloadPDF() {
+    if (!studentBranch) {
+      setRecommendationError(
+        "Select your branch before saving your recommendations.",
+      );
+      return;
+    }
+
+    const group = GROUP_A_BRANCHES.some((value) => value === studentBranch)
+      ? "Group A"
+      : "Group B";
+    const branchLabel =
+      BRANCH_OPTIONS.find((option) => option.value === studentBranch)?.label ??
+      branch;
+    const rotationalSemester =
+      getRotationalCategorySemester("BS Applied Science II", studentBranch) ===
+      "SEM1"
+        ? "Sem 1"
+        : "Sem 2";
+    const vsecSemester =
+      getRotationalCategorySemester("VSEC", studentBranch) === "SEM1"
+        ? "Sem 1"
+        : "Sem 2";
+
+    const getRankedCourses = (category: CourseCategory) =>
+      eligibleCourses
+        .filter(
+          (course) => normalizeCourseCategory(course.category) === category,
+        )
+        .sort((a, b) => b.fit_percentage - a.fit_percentage);
+
+    const rows: RecommendationPdfRow[] = [];
+    const addCourseRow = (
+      category: string,
+      course: CourseCard,
+      semester: string,
+      choiceLabel?: string,
+    ) => {
+      rows.push({
+        category: `${category} (${semester})`,
+        courseCode: formatCourseCodeForDisplay(course.course_code),
+        courseTitle: choiceLabel
+          ? `${choiceLabel.replace("#", "").replace(" Choice", "")}. ${course.course_name}`
+          : course.course_name,
+      });
+    };
+
+    getRankedCourses("BS Mathematics").forEach((course, index) => {
+      addCourseRow(
+        "BS Mathematics",
+        course,
+        "Sem 1 & 2",
+        `#${index + 1} Choice`,
+      );
+    });
+
+    getRankedCourses("BS Applied Science I").forEach((course, index) => {
+      addCourseRow(
+        "BS Applied Science I",
+        course,
+        "Sem 1 & 2",
+        `#${index + 1} Choice`,
+      );
+    });
+
+    getRankedCourses("BS Applied Science II").forEach((course, index) => {
+      addCourseRow(
+        "BS Applied Science II",
+        course,
+        rotationalSemester,
+        `#${index + 1} Choice`,
+      );
+    });
+
+    getRankedCourses("ES II(Sem1) and ES IV(Sem2)").forEach(
+      (course, index) => {
+        addCourseRow(
+          "ES-II & ES-IV",
+          course,
+          "Sem 1 or 2",
+          `#${index + 1} Choice`,
+        );
+      },
+    );
+
+    getRankedCourses("ES III(Sem 1)").forEach((course, index) => {
+      addCourseRow("ES-III", course, "Sem 1 Only", `#${index + 1} Choice`);
+    });
+
+    getRankedCourses("VSEC").forEach((course, index) => {
+      addCourseRow("VSEC", course, vsecSemester, `#${index + 1} Choice`);
+    });
+
+    if (rows.length === 0) {
+      setRecommendationError(
+        "No recommendations are available to save yet. Please generate recommendations first.",
+      );
+      return;
+    }
+
+    const pdf = new jsPDF();
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    pdf.setTextColor(31, 41, 55);
+    pdf.setFontSize(18);
+    pdf.setFont("helvetica", "bold");
+    pdf.text("COURSE RECOMMENDATIONS REPORT", pageWidth / 2, 22, {
+      align: "center",
+    });
+    pdf.setFontSize(11);
+    pdf.setFont("helvetica", "normal");
+    pdf.text("2026-27 CBCS Curriculum", pageWidth / 2, 30, {
+      align: "center",
+    });
+
+    pdf.setDrawColor(148, 163, 184);
+    pdf.line(14, 36, pageWidth - 14, 36);
+    pdf.setFontSize(10);
+    pdf.text(`Student Name: ${name}`, 14, 46);
+    pdf.text(`MIS Number: ${misNumber}`, 14, 53);
+    pdf.text(`Branch: ${branchLabel}`, 14, 60);
+    pdf.text(`Cohort: ${group}`, 14, 67);
+    pdf.setFontSize(9);
+    const helpText =
+      "Choose any one course from the choices listed for each category. " +
+      "For ES-II & ES-IV, choose one course for Sem 1 and a different course for Sem 2.";
+    const helpLines = pdf.splitTextToSize(helpText, pageWidth - 28);
+    pdf.text(helpLines, 14, 76);
+
+    const categoryRowCounts = new Map<string, number>();
+    rows.forEach((row) => {
+      categoryRowCounts.set(
+        row.category,
+        (categoryRowCounts.get(row.category) ?? 0) + 1,
+      );
+    });
+    const renderedCategories = new Set<string>();
+    const tableBody: RowInput[] = rows.map((row) => {
+      const isFirstCategoryRow = !renderedCategories.has(row.category);
+      if (isFirstCategoryRow) {
+        renderedCategories.add(row.category);
+      }
+
+      const categoryCell: CellInput = isFirstCategoryRow
+        ? {
+            content: row.category,
+            rowSpan: categoryRowCounts.get(row.category),
+          }
+        : null;
+
+      return isFirstCategoryRow
+        ? [categoryCell, row.courseCode, row.courseTitle]
+        : [row.courseCode, row.courseTitle];
+    });
+
+    autoTable(pdf, {
+      startY: 86 + (helpLines.length - 1) * 4,
+      head: [["Category", "Course Code", "Course Title"]],
+      body: tableBody,
+      theme: "grid",
+      headStyles: {
+        fillColor: [79, 70, 229],
+        textColor: [255, 255, 255],
+        fontStyle: "bold",
+      },
+      styles: {
+        font: "helvetica",
+        fontSize: 9,
+        cellPadding: 3,
+        textColor: [31, 41, 55],
+        valign: "middle",
+      },
+      alternateRowStyles: {
+        fillColor: [248, 250, 252],
+      },
+      columnStyles: {
+        0: { cellWidth: 36 },
+        1: { cellWidth: 37 },
+        2: { cellWidth: 111 },
+      },
+    });
+
+    const safeName = name.trim().replace(/[^a-z0-9]+/gi, "-") || "student";
+    pdf.save(`course-recommendations-${safeName}.pdf`);
   }
 
   function handleTestimonialLoginContinue() {
@@ -881,29 +1028,31 @@ export default function CBCSElectiveGuide() {
   <main className="min-h-full bg-slate-50 dark:bg-slate-950">
   <div className="mx-auto max-w-6xl px-5 py-8 text-slate-900 dark:text-slate-100 sm:px-8 sm:py-12 lg:py-16">
     <nav className="mb-4 flex items-center justify-end gap-3" aria-label="Global Navigation">
-      <div className="relative">
-        <button
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="flex size-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 transition hover:bg-slate-50 dark:border-white/10 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
-          aria-label="Open menu"
-        >
-          {isMobileMenuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
-        </button>
-        
-        {isMobileMenuOpen && (
-          <div className="absolute right-0 top-12 z-50 w-56 rounded-xl border border-slate-200 bg-white p-2 shadow-xl shadow-slate-200/50 dark:border-white/10 dark:bg-slate-900 dark:shadow-black/50">
-            <button onClick={() => { setIsMobileMenuOpen(false); document.getElementById('how-to-use')?.scrollIntoView({ behavior: 'smooth' }); }} className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800">
-              <Command className="size-4" /> How to Use
-            </button>
-            <button onClick={() => { setIsMobileMenuOpen(false); document.getElementById('course-explorer')?.scrollIntoView({ behavior: 'smooth' }); }} className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800">
-              <Sparkles className="size-4" /> Course Explorer
-            </button>
-            <button onClick={() => { setIsMobileMenuOpen(false); document.getElementById('senior-testimonials')?.scrollIntoView({ behavior: 'smooth' }); }} className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800">
-              <MessageSquareQuote className="size-4" /> Senior Testimonials
-            </button>
-          </div>
-        )}
-      </div>
+      {view === "home" && (
+        <div className="relative">
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="flex size-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 transition hover:bg-slate-50 dark:border-white/10 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
+            aria-label="Open menu"
+          >
+            {isMobileMenuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+          </button>
+
+          {isMobileMenuOpen && (
+            <div className="absolute right-0 top-12 z-50 w-56 rounded-xl border border-slate-200 bg-white p-2 shadow-xl shadow-slate-200/50 dark:border-white/10 dark:bg-slate-900 dark:shadow-black/50">
+              <button onClick={() => { setIsMobileMenuOpen(false); document.getElementById('how-to-use')?.scrollIntoView({ behavior: 'smooth' }); }} className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800">
+                <Command className="size-4" /> How to Use
+              </button>
+              <button onClick={() => { setIsMobileMenuOpen(false); document.getElementById('course-explorer')?.scrollIntoView({ behavior: 'smooth' }); }} className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800">
+                <Sparkles className="size-4" /> Course Explorer
+              </button>
+              <button onClick={() => { setIsMobileMenuOpen(false); document.getElementById('senior-testimonials')?.scrollIntoView({ behavior: 'smooth' }); }} className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800">
+                <MessageSquareQuote className="size-4" /> Senior Testimonials
+              </button>
+            </div>
+          )}
+        </div>
+      )}
       <ThemeToggle />
     </nav>
         {/* ── Home View ── */}
@@ -955,6 +1104,9 @@ export default function CBCSElectiveGuide() {
 
         <motion.section id="senior-testimonials" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="mt-12 flex flex-col gap-6 rounded-3xl border border-blue-400/20 bg-blue-500/10 p-6 shadow-2xl shadow-blue-950/20 sm:flex-row sm:items-center sm:justify-between sm:p-8"><div><p className="text-xs font-bold uppercase tracking-[0.18em] text-blue-700 dark:text-blue-300">For Seniors</p><h2 className="mt-2 max-w-xl text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Already taken these courses?</h2><p className="mt-2 max-w-xl text-sm leading-6 text-slate-600 dark:text-slate-300">Share your review to help juniors make better choices.</p></div><button type="button" onClick={() => setView("testimonial_login")} className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-bold text-slate-950 transition hover:bg-blue-50"><MessageSquareQuote className="size-4" /> Share a Testimonial</button></motion.section>
         <div className="mt-12 flex items-start justify-center gap-3 border-t border-slate-200 pt-6 text-center text-sm leading-6 text-slate-600 dark:border-white/10 dark:text-slate-400"><AlertCircle className="mt-1 size-4 shrink-0 text-slate-600" /><p>This platform provides data-driven guidance based on your learning profile and peer reviews. Please consult official university guidelines before finalizing your course registration.</p></div>
+        <footer className="mt-8 border-t border-slate-200 pt-6 text-center text-sm font-medium text-slate-500 dark:border-white/10 dark:text-slate-400">
+          Developed by Aaditya Shah (S. Y. AIML) and Sumedh Shelgaonkar (S.Y. CSE).
+        </footer>
       </div>
     </motion.div>
   </div>
@@ -993,14 +1145,24 @@ export default function CBCSElectiveGuide() {
                   {branch} · Based on your preference profile
                 </p>
               </header>
-              <button
-                type="button"
-                onClick={resetAll}
-                className="inline-flex shrink-0 items-center gap-2 rounded-xl border border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-200 shadow-sm transition hover:bg-slate-50 dark:hover:bg-slate-800"
-              >
-                <RotateCcw className="h-4 w-4" />
-                Start Over
-              </button>
+              <div className="flex shrink-0 flex-wrap gap-2">
+                <button
+                  type="button"
+                  onClick={handleDownloadPDF}
+                  className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700"
+                >
+                  <FileDown className="h-4 w-4" />
+                  Save Your Choices
+                </button>
+                <button
+                  type="button"
+                  onClick={resetAll}
+                  className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
+                >
+                  <RotateCcw className="h-4 w-4" />
+                  Start Over
+                </button>
+              </div>
             </div>
 
             <div className="space-y-5">
@@ -1148,58 +1310,20 @@ export default function CBCSElectiveGuide() {
                   </div>
 
                   <div className="space-y-5 px-5 py-5 sm:px-6">
-                    <div>
-                      <h3 className="mb-1.5 flex items-center gap-1.5 text-sm font-semibold text-slate-900 dark:text-white">
-                        <Star className="h-4 w-4 text-indigo-500" />
-                        Why this fits you
-                      </h3>
-                      <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-                        {course.narrative?.why_this_fits ??
-                          course.why_this_fits ??
-                          "This course matches your selected preference profile based on its evaluated attributes."}
-                      </p>
-                    </div>
-
-                    <div>
-                      <h3 className="mb-1.5 flex items-center gap-1.5 text-sm font-semibold text-slate-900 dark:text-white">
-                        <AlertCircle className="h-4 w-4 text-amber-500" />
-                        Worth knowing
-                      </h3>
-                      <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-                        {course.narrative?.worth_knowing ??
-                          course.worth_knowing ??
-                          "Review the course attributes and testimonials before making your final selection."}
-                      </p>
-                    </div>
-
                     {course.testimonials && course.testimonials.length > 0 && (
-                      <div className="pt-2 border-t border-slate-100 dark:border-white/10">
-                        <button
-                          type="button"
-                          onClick={() => setExpandedTestimonials(prev => ({ ...prev, [course.course_code]: !prev[course.course_code] }))}
-                          className="flex items-center gap-2 text-sm font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 transition"
-                        >
-                          <span className="flex items-center justify-center w-6 h-6 rounded-full bg-indigo-50 dark:bg-indigo-900/50">
+                      <section className="border-t border-slate-100 pt-5 dark:border-white/10" aria-label="Reviews by Seniors">
+                        <h3 className="flex items-center gap-2 text-sm font-bold text-indigo-600 dark:text-indigo-400">
+                          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-indigo-50 dark:bg-indigo-900/50">
                             🎓
                           </span>
                           Reviews by Seniors
-                          <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${expandedTestimonials[course.course_code] ? 'rotate-180' : ''}`} />
-                        </button>
-                        
-                        <AnimatePresence>
-                          {expandedTestimonials[course.course_code] && (
-                            <motion.div
-                              initial={{ height: 0, opacity: 0 }}
-                              animate={{ height: "auto", opacity: 1 }}
-                              exit={{ height: 0, opacity: 0 }}
-                              className="overflow-hidden"
+                        </h3>
+                        <div className="mt-4 space-y-4">
+                          {course.testimonials.map((testimonial, testimonialIndex) => (
+                            <blockquote
+                              key={`${course.course_code}-${testimonial.id}-${testimonialIndex}`}
+                              className="rounded-xl border-l-4 border-indigo-400 bg-indigo-50/50 px-4 py-3 shadow-sm dark:border-indigo-500 dark:bg-indigo-950/30"
                             >
-                              <div className="pt-4 space-y-4">
-                                {course.testimonials.map((testimonial, testimonialIndex) => (
-                                  <blockquote
-                                    key={`${course.course_code}-${testimonial.id}-${testimonialIndex}`}
-                                    className="rounded-xl border-l-4 border-indigo-400 dark:border-indigo-500 bg-indigo-50/50 dark:bg-indigo-950/30 px-4 py-3 shadow-sm"
-                                  >
                                     {testimonial.subject_cgpa !== null && (
                                       <div className="mb-2 flex flex-wrap items-center gap-2">
                                         <span className="rounded-full bg-emerald-100 dark:bg-emerald-950/70 px-2.5 py-0.5 text-xs font-semibold text-emerald-800 dark:text-emerald-300">
@@ -1254,13 +1378,10 @@ export default function CBCSElectiveGuide() {
                                     <p className="mt-2 text-xs font-bold text-slate-500 dark:text-slate-400">
                                       — {testimonial.reviewer_name}
                                     </p>
-                                  </blockquote>
-                                ))}
-                              </div>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </div>
+                            </blockquote>
+                          ))}
+                        </div>
+                      </section>
                     )}
                   </div>
                 </article>

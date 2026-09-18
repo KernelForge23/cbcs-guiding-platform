@@ -265,32 +265,13 @@ fit_percentage = round((0.75+1.00+0.50+0.75+0.60)/5 × 100) = round(0.72 × 100)
 
 ---
 
-## PHASE 3: The Model Writes "Why This Fits"
-
-The Python backend sends the Phase 2 payload to the Gemini API to generate the explanation card text.
-
-> **Prompt:**
-> You are a course-fit advisor. I am providing a JSON payload containing the computed `fit_percentage`, matched `attributes_used`, and `evaluation_style_facts` for one or more courses.
-> Write a 3–4 sentence explanation per course, in two parts:
-> 1. **"why_this_fits":** From `attributes_used`, highlight the 1–2 **highest-scoring** entries. State the student's value and the course's value in plain language.
-> 2. **"worth_knowing":** From `attributes_used`, highlight the single **lowest-scoring** entry as an honest caveat. You may reference `evaluation_style_facts` here for added context, but never as a standalone reason — it wasn't part of the score.
->
-> **Strict rules:**
-> - Do NOT recalculate, restate, or alter `fit_percentage`.
-> - Do NOT invent reasons outside `attributes_used`.
-> - Do NOT reference or paraphrase testimonial free-text — that's shown separately, untouched.
-> - Return ONLY a valid JSON array of `{course_code, why_this_fits, worth_knowing}`. No markdown, no backticks.
-
----
-
-## PHASE 4: Frontend Display Assembly
+## PHASE 3: Frontend Display Assembly
 
 The results card assembles four independent, untampered pieces:
 
 1. **Fit percentage** — from Phase 2 (Python math).
-2. **Narrative** — from Phase 3 (AI text: `why_this_fits`, `worth_knowing`).
-3. **Topic tags** — from Phase 1 (syllabus extraction, generated per course and human-reviewed, displayed as `#hashtags`).
-4. **Testimonials** — real student quotes and ratings, injected verbatim, unedited.
+2. **Topic tags** — from Phase 1 (syllabus extraction, generated per course and human-reviewed, displayed as `#hashtags`).
+3. **Testimonials** — real student quotes and ratings, injected verbatim, unedited.
 
 None of these four touches or generates any of the others.
 

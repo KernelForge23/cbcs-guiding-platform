@@ -8,9 +8,9 @@ from typing import Annotated
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Path as FastAPIPath
 from fastapi.middleware.cors import CORSMiddleware
-from google import genai
 from pydantic import BaseModel
-from api.database import Base, engine
+from api.database import Base, SessionLocal, engine
+from api.models import Testimonial
 from api.routers.testimonials import router as testimonials_router
 
 root_dir = Path(__file__).parent.parent
@@ -18,18 +18,11 @@ load_dotenv(root_dir / ".env.local")
 load_dotenv(root_dir / ".env")
 load_dotenv()
 
-api_key = os.getenv("GEMINI_API_KEY")
 cors_origins_env = os.getenv("CORS_ORIGINS")
 if cors_origins_env:
     allowed_origins = [o.strip() for o in cors_origins_env.split(",") if o.strip()]
 else:
     allowed_origins = ["*"]
-
-if not api_key:
-    print("WARNING: Gemini API Key not found!")
-    client = None
-else:
-    client = genai.Client(api_key=api_key)
 
 app = FastAPI()
 Base.metadata.create_all(bind=engine)
@@ -62,7 +55,6 @@ BRANCH_CLUSTERS: dict[str, str] = {
     "Civil Engineering": "Infrastructure"
 }
 ESC_CATEGORIES = {"ESC 1", "ESC 2"}
-REQUIRED_NARRATIVE_FIELDS = ("why_this_fits", "worth_knowing")
 COURSE_CODE_MAX_LENGTH = 64
 COURSE_CODE_ALLOWED_CHARS_PATTERN = re.compile(r"^[A-Za-z0-9() /-]+$")
 COURSE_CODE_PATH_PATTERN = r"^[A-Za-z0-9()]+-[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$"
@@ -200,7 +192,7 @@ def _resolve_course_branch(course: dict, student_branch: str) -> str:
 
 def compute_fit(
     payload: WizardPayload, course: dict
-) -> tuple[int, list[dict[str, float | str]]]:
+) -> int:
     
     s_diff = float(payload.difficulty_level)
     s_workload = float(payload.workload_level)
@@ -222,204 +214,78 @@ def compute_fit(
         "branch_proximity": branch_proximity,
     }
     
-    attributes_used: list[dict[str, float | str]] = []
-
-    for key, s_val in zip(
-        ["difficulty_level", "workload_level", "new_field_exploration", "concept_heavy", "math_heavy", "practical_focus"],
-        [s_diff, s_workload, s_exp, s_concept, s_math, s_practical]
-    ):
-        attributes_used.append({
-            "name": key,
-            "student_value": s_val,
-            "course_value": _get_course_attribute(course, key),
-            "score": scores[key],
-        })
-        
-    attributes_used.append({
-        "name": "branch_proximity",
-        "student_value": payload.branch,
-        "course_value": course_branch,
-        "score": scores["branch_proximity"],
-    })
-
     fit_percentage = round(sum(scores.values()) / len(scores) * 100)
-    return fit_percentage, attributes_used
+    return fit_percentage
 
 
-def _extract_json_array(text: str) -> list[dict]:
-    cleaned = text.strip()
-    if cleaned.startswith("```"):
-        cleaned = cleaned.removeprefix("```json").removeprefix("```").strip()
-        if cleaned.endswith("```"):
-            cleaned = cleaned[:-3].strip()
-    parsed = json.loads(cleaned)
-    if not isinstance(parsed, list):
-        raise ValueError("Gemini response must be a JSON array")
-    return parsed
+def load_approved_testimonials(course_codes: list[str]) -> dict[str, list[dict]]:
+    if not course_codes:
+        return {}
 
-
-def _extract_narrative_fields(payload: dict | None) -> tuple[str | None, str | None]:
-    if not isinstance(payload, dict):
-        return None, None
-    why_this_fits = payload.get(REQUIRED_NARRATIVE_FIELDS[0])
-    worth_knowing = payload.get(REQUIRED_NARRATIVE_FIELDS[1])
-    if not isinstance(why_this_fits, str) or not why_this_fits.strip():
-        return None, None
-    if not isinstance(worth_knowing, str) or not worth_knowing.strip():
-        return None, None
-    return why_this_fits.strip(), worth_knowing.strip()
-
-
-MODELS_TO_TRY = ["gemini-3.5-flash", "gemini-3.5-flash-lite", "gemini-3.1-flash-lite", "gemini-3.6-flash"]
-
-ATTR_LABELS = {
-    "difficulty_level": "difficulty level",
-    "workload_level": "workload demand",
-    "new_field_exploration": "new field exploration preference",
-    "concept_heavy": "conceptual focus",
-    "math_heavy": "mathematical calculation focus",
-    "practical_focus": "hands-on practical orientation",
-    "branch_proximity": "department alignment",
-}
-
-
-def _normalize_code(code: str | None) -> str:
-    if not code:
-        return ""
-    return re.sub(r"[^A-Za-z0-9]", "", str(code)).upper()
-
-
-def _fallback_narrative_for_course(course: dict, attributes_used: list[dict] | None = None) -> tuple[str, str]:
-    if attributes_used:
-        attr_scores = []
-        for item in attributes_used:
-            name = item.get("name")
-            score = item.get("score")
-            if name and isinstance(score, (int, float)) and name in ATTR_LABELS:
-                attr_scores.append((name, float(score), item.get("student_value"), item.get("course_value")))
-
-        if attr_scores:
-            attr_scores.sort(key=lambda x: x[1], reverse=True)
-            top1 = attr_scores[0]
-            top2 = attr_scores[1] if len(attr_scores) > 1 else None
-            lowest = attr_scores[-1]
-
-            why_parts = [f"Matches your preference for {ATTR_LABELS[top1[0]]}."]
-            if top2 and top2[1] >= 0.5:
-                why_parts.append(f"Also aligns well with your {ATTR_LABELS[top2[0]]}.")
-
-            why_this_fits = " ".join(why_parts)
-
-            if lowest[1] < 0.8:
-                worth_knowing = f"Note: The course demands {ATTR_LABELS[lowest[0]]} (course: {lowest[3]}/4 vs your profile: {lowest[2]}/4). Plan your schedule accordingly."
-            else:
-                worth_knowing = "This course aligns smoothly across all your requested learning preferences."
-
-            return why_this_fits, worth_knowing
-
-    course_name = course.get("course_name", "This course")
-    return (
-        f"{course_name} is recommended based on your evaluated learning style and workload capacity.",
-        "Review student testimonials and course details before finalizing your selection.",
-    )
-
-
-def generate_batch_narratives(top_courses: list[tuple[dict, int, list[dict[str, float | str]]]]) -> list[dict]:
-    prompt_courses = []
-    for course, fit_percentage, attributes_used in top_courses:
-        prompt_courses.append(
-            {
-                "course_code": course.get("course_code"),
-                "course_name": course.get("course_name"),
-                "fit_percentage": fit_percentage,
-                "attributes_used": attributes_used,
-                "evaluation_style_facts": course.get("evaluation_style_facts"),
-            }
-        )
-
-    prompt_payload = json.dumps(prompt_courses, ensure_ascii=False, indent=2)
-    prompt = (
-        "You are a course-fit advisor. I am providing a JSON payload containing the computed "
-        "fit_percentage, matched attributes_used, and evaluation_style_facts for one or more courses.\n"
-        "Return ONLY a valid JSON array (no markdown, no backticks), where each object has exactly:\n"
-        '{"course_code","why_this_fits","worth_knowing"}.\n'
-        "Rules:\n"
-        "- why_this_fits must highlight the 1-2 highest scoring attributes in plain language.\n"
-        "- worth_knowing must highlight the single lowest scoring attribute as an honest caveat.\n"
-        "- Do NOT recalculate fit_percentage.\n"
-        "- Do NOT invent attributes not present in attributes_used.\n\n"
-        f"Input:\n{prompt_payload}"
-    )
-
-    last_error = None
-    for model_name in MODELS_TO_TRY:
-        try:
-            response = client.models.generate_content(
-                model=model_name,
-                contents=prompt,
+    db = SessionLocal()
+    try:
+        testimonials = (
+            db.query(Testimonial)
+            .filter(
+                Testimonial.course_code.in_(course_codes),
+                Testimonial.status == "APPROVED",
             )
-            if response and response.text:
-                narratives = _extract_json_array(response.text)
-                res = [item for item in narratives if isinstance(item, dict)]
-                if res:
-                    print(f"Successfully generated AI narratives via model '{model_name}' for {len(res)} courses")
-                    return res
-        except Exception as e:
-            last_error = e
-            continue
-
-    if last_error:
-        print(f"Warning: Gemini narrative generation failed across models: {last_error}")
-    return []
+            .order_by(Testimonial.is_featured.desc(), Testimonial.id.desc())
+            .all()
+        )
+        grouped: dict[str, list[dict]] = {}
+        for testimonial in testimonials:
+            reviews = grouped.setdefault(testimonial.course_code, [])
+            if len(reviews) >= 3:
+                continue
+            reviews.append(
+                {
+                    "id": testimonial.id,
+                    "course_code": testimonial.course_code,
+                    "course_category": testimonial.course_category,
+                    "reviewer_name": testimonial.reviewer_name,
+                    "mis_no": testimonial.mis_no,
+                    "subject_cgpa": testimonial.subject_cgpa,
+                    "overall_cgpa": testimonial.overall_cgpa,
+                    "difficulty_level": testimonial.difficulty_level,
+                    "workload_level": testimonial.workload_level,
+                    "new_field_exploration": testimonial.new_field_exploration,
+                    "concept_heavy": testimonial.concept_heavy,
+                    "math_heavy": testimonial.math_heavy,
+                    "practical_focus": testimonial.practical_focus,
+                    "written_review": testimonial.written_review,
+                    "status": testimonial.status,
+                    "is_featured": testimonial.is_featured,
+                }
+            )
+        return grouped
+    finally:
+        db.close()
 
 @app.post("/recommend")
 @app.post("/api/recommend")
 def get_recommendations(payload: WizardPayload):
-    if not client:
-        raise HTTPException(status_code=500, detail="API Key missing")
-
     courses = load_courses()
     eligible_courses = getEligibleCourses(payload, courses)
     scored = []
 
     for course in eligible_courses:
-        fit_percentage, attributes_used = compute_fit(payload, course)
-        scored.append((course, fit_percentage, attributes_used))
+        fit_percentage = compute_fit(payload, course)
+        scored.append((course, fit_percentage))
 
     scored.sort(key=lambda item: item[1], reverse=True)
     top_courses = scored
 
-    ai_narratives: list[dict] = []
-    try:
-        ai_narratives = generate_batch_narratives(top_courses)
-    except Exception as exc:
-        print(f"Failed to generate narratives via Gemini API: {exc}")
-        ai_narratives = []
-
-    narratives_by_exact = {}
-    narratives_by_norm = {}
-    for idx, item in enumerate(ai_narratives):
-        if isinstance(item, dict):
-            c_code = item.get("course_code")
-            if c_code:
-                narratives_by_exact[str(c_code).strip()] = item
-                narratives_by_norm[_normalize_code(c_code)] = item
+    course_codes = [
+        course.get("course_code")
+        for course, _ in top_courses
+        if isinstance(course.get("course_code"), str)
+    ]
+    approved_testimonials = load_approved_testimonials(course_codes)
 
     course_cards = []
-    for rank, (course, fit_percentage, attributes_used) in enumerate(top_courses, start=1):
+    for rank, (course, fit_percentage) in enumerate(top_courses, start=1):
         course_code = course.get("course_code")
-
-        ai_item = None
-        if course_code:
-            ai_item = narratives_by_exact.get(str(course_code).strip())
-            if not ai_item:
-                ai_item = narratives_by_norm.get(_normalize_code(course_code))
-        if not ai_item and (rank - 1) < len(ai_narratives) and isinstance(ai_narratives[rank - 1], dict):
-            ai_item = ai_narratives[rank - 1]
-
-        why_this_fits, worth_knowing = _extract_narrative_fields(ai_item)
-        if not why_this_fits or not worth_knowing:
-            why_this_fits, worth_knowing = _fallback_narrative_for_course(course, attributes_used)
 
         card = {
             "rank": rank,
@@ -432,16 +298,11 @@ def get_recommendations(payload: WizardPayload):
             "cohortRotation": course.get("cohortRotation", "NONE"),
             "branch_proximity": course.get("branch_proximity", 1.0),
             "fit_percentage": fit_percentage,
-            "attributes_used": attributes_used,
-            "evaluation_style_facts": course.get("evaluation_style_facts"),
             "topic_tags": course.get("topic_tags", []),
-            "why_this_fits": why_this_fits,
-            "worth_knowing": worth_knowing,
-            "narrative": {
-                "why_this_fits": why_this_fits,
-                "worth_knowing": worth_knowing,
-            },
-            "testimonials": course.get("testimonials", [])
+            "testimonials": approved_testimonials.get(
+                course_code,
+                course.get("testimonials", []),
+            ),
         }
         course_cards.append(card)
 
