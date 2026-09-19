@@ -82,6 +82,7 @@ type CourseTestimonial = {
   course_code?: string;
   course_category?: string;
   reviewer_name?: string;
+  reviewer_branch?: string;
   mis_no?: string;
   subject_cgpa: number | null;
   overall_cgpa?: number | null;
@@ -303,6 +304,10 @@ function normalizeTestimonials(
           typeof candidate.reviewer_name === "string" && candidate.reviewer_name.trim()
             ? candidate.reviewer_name.trim()
             : "Verified Senior",
+        reviewer_branch:
+          typeof candidate.reviewer_branch === "string" && candidate.reviewer_branch.trim()
+            ? candidate.reviewer_branch.trim()
+            : undefined,
         subject_cgpa: parsedCgpa,
         is_featured: candidate.is_featured === true,
         review_breakdown: candidate.review_breakdown,
@@ -520,6 +525,8 @@ export default function CBCSElectiveGuide() {
   const [selectedDepartments, setSelectedDepartments] = useState<string[] | null>(
     null,
   );
+  const [expandedTestimonials, setExpandedTestimonials] = useState<Record<string, boolean>>({});
+  const [reviewModalCourse, setReviewModalCourse] = useState<CourseCard | null>(null);
   const [isLoadingRecommendations, setIsLoadingRecommendations] = useState(false);
   const [recommendationError, setRecommendationError] = useState<string | null>(
     null,
@@ -1027,7 +1034,7 @@ export default function CBCSElectiveGuide() {
 
   return (
   <main className="min-h-full bg-slate-50 dark:bg-slate-950">
-  <div className="mx-auto max-w-6xl px-5 py-8 text-slate-900 dark:text-slate-100 sm:px-8 sm:py-12 lg:py-16">
+  <div className={`mx-auto max-w-6xl px-5 text-slate-900 dark:text-slate-100 sm:px-8 ${view === "wizard" ? "py-2 sm:py-2 lg:py-4" : "py-8 sm:py-12 lg:py-16"}`}>
     <nav className="mb-4 flex items-center justify-end gap-3" aria-label="Global Navigation">
       {view === "home" && (
         <div className="relative">
@@ -1262,6 +1269,24 @@ export default function CBCSElectiveGuide() {
                           <h2 className="text-lg font-bold text-slate-900 dark:text-white sm:text-xl">
                             {course.course_name}
                           </h2>
+                          
+                          {/* Real Reviews Badge/Button */}
+                          {course.testimonials &&
+                            course.testimonials.filter(
+                              (t) => t.reviewer_name !== "Student Consensus",
+                            ).length > 0 && (
+                              <button
+                                type="button"
+                                onClick={() => setReviewModalCourse(course)}
+                                className="group flex items-center gap-1.5 rounded-lg border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-bold text-amber-900 shadow-sm transition hover:bg-amber-100 hover:scale-105 active:scale-95 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-200 dark:hover:bg-amber-900/70"
+                                title="Read individual student reviews"
+                              >
+                                <MessageSquareQuote className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400" />
+                                Read {course.testimonials.filter(t => t.reviewer_name !== "Student Consensus").length} Student Reviews
+                                <ArrowRight className="h-3 w-3 opacity-60 transition-transform group-hover:translate-x-0.5" />
+                              </button>
+                            )}
+
                           {shouldShowSemesterAvailability(
                             normalizeCourseCategory(course.category),
                           ) &&
@@ -1310,59 +1335,45 @@ export default function CBCSElectiveGuide() {
                     </div>
                   </div>
 
-                  <div className="space-y-5 px-5 py-5 sm:px-6">
-                    {/* Modern SaaS-style Student Consensus Blockquote with Bionic Reading */}
-                    <StudentConsensus
-                      courseCode={course.course_code}
-                      courseName={course.course_name}
-                      text={
-                        course.testimonials?.find(
-                          (t) => t.reviewer_name === "Student Consensus",
-                        )?.written_review
+                  <div className="border-t border-slate-100 px-5 py-4 dark:border-white/10 sm:px-6">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setExpandedTestimonials((prev) => ({
+                          ...prev,
+                          [course.course_code]: !prev[course.course_code],
+                        }))
                       }
-                    />
-
-                    {/* Individual Senior Reviews (shown if peer-submitted testimonials exist) */}
-                    {course.testimonials &&
-                      course.testimonials.filter(
-                        (t) => t.reviewer_name !== "Student Consensus",
-                      ).length > 0 && (
-                        <section
-                          className="border-t border-slate-100 pt-5 dark:border-white/10"
-                          aria-label="Reviews by Seniors"
-                        >
-                          <h3 className="flex items-center gap-2 text-sm font-bold text-indigo-600 dark:text-indigo-400">
-                            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-indigo-50 dark:bg-indigo-900/50">
-                              🎓
-                            </span>
-                            Reviews by Seniors
-                          </h3>
-                          <div className="mt-4 space-y-4">
-                            {course.testimonials
-                              .filter((t) => t.reviewer_name !== "Student Consensus")
-                              .map((testimonial, testimonialIndex) => (
-                                <blockquote
-                                  key={`${course.course_code}-${testimonial.id}-${testimonialIndex}`}
-                                  className="rounded-xl border-l-4 border-indigo-400 bg-indigo-50/50 px-4 py-3 shadow-sm dark:border-indigo-500 dark:bg-indigo-950/30"
-                                >
-                                  {testimonial.subject_cgpa !== null && (
-                                    <div className="mb-2 flex flex-wrap items-center gap-2">
-                                      <span className="rounded-full bg-emerald-100 dark:bg-emerald-950/70 px-2.5 py-0.5 text-xs font-semibold text-emerald-800 dark:text-emerald-300">
-                                        Scored: {testimonial.subject_cgpa.toFixed(1)}
-                                      </span>
-                                    </div>
-                                  )}
-                                  <p className="whitespace-pre-wrap text-sm leading-relaxed text-slate-700 dark:text-slate-200">
-                                    {testimonial.written_review}
-                                  </p>
-                                  <p className="mt-2 text-xs font-bold text-slate-500 dark:text-slate-400">
-                                    — {testimonial.reviewer_name}
-                                  </p>
-                                </blockquote>
-                              ))}
-                          </div>
-                        </section>
-                      )}
+                      className="flex w-full items-center justify-between group"
+                    >
+                      <h3 className="flex items-center gap-2 text-sm font-bold text-slate-800 transition group-hover:text-indigo-600 dark:text-slate-200 dark:group-hover:text-indigo-400">
+                        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-slate-100 group-hover:bg-indigo-50 dark:bg-slate-800 dark:group-hover:bg-indigo-900/50">
+                          💡
+                        </span>
+                        Senior Insights
+                      </h3>
+                      <ChevronLeft
+                        className={`size-4 text-slate-400 transition-transform ${
+                          expandedTestimonials[course.course_code]
+                            ? "rotate-90"
+                            : "-rotate-90"
+                        }`}
+                      />
+                    </button>
+                    {expandedTestimonials[course.course_code] && (
+                      <div className="mt-5 space-y-4">
+                        {/* Student Consensus — the main content */}
+                        <StudentConsensus
+                          courseCode={course.course_code}
+                          courseName={course.course_name}
+                          text={
+                            course.testimonials?.find(
+                              (t) => t.reviewer_name === "Student Consensus",
+                            )?.written_review
+                          }
+                        />
+                      </div>
+                    )}
                   </div>
                 </article>
                   ))}
@@ -1741,6 +1752,71 @@ export default function CBCSElectiveGuide() {
           </div>
         )}
       </div>
+
+      {/* ── Student Reviews Modal ── */}
+      {reviewModalCourse && (
+        <div
+          className="fixed inset-0 z-[200] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+          onClick={() => setReviewModalCourse(null)}
+        >
+          <div
+            className="relative w-full max-w-xl max-h-[80vh] overflow-y-auto rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-slate-900 shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-100 dark:border-white/10 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md px-6 py-4 rounded-t-2xl">
+              <div>
+                <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                  <GraduationCap className="h-5 w-5 text-indigo-500" />
+                  Student Reviews
+                </h2>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                  {reviewModalCourse.course_name}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setReviewModalCourse(null)}
+                className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 transition hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-slate-800 dark:hover:text-slate-200"
+                aria-label="Close reviews"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            {/* Modal Body — Individual Reviews */}
+            <div className="space-y-4 p-6">
+              {reviewModalCourse.testimonials
+                .filter((t) => t.reviewer_name !== "Student Consensus")
+                .map((testimonial, idx) => (
+                  <blockquote
+                    key={`modal-${reviewModalCourse.course_code}-${testimonial.id}-${idx}`}
+                    className="rounded-xl border border-slate-100 dark:border-white/5 bg-slate-50 dark:bg-slate-800/50 px-5 py-4 shadow-sm"
+                  >
+                    {/* Reviewer identity: Branch + Subject CGPA */}
+                    <div className="mb-3 flex flex-wrap items-center gap-2">
+                      <span className="rounded-full bg-indigo-100 dark:bg-indigo-950/60 px-2.5 py-0.5 text-xs font-semibold text-indigo-700 dark:text-indigo-300">
+                        {testimonial.reviewer_branch
+                          ? `${testimonial.reviewer_branch} Student`
+                          : "Verified Senior"}
+                      </span>
+                      {testimonial.subject_cgpa !== null && (
+                        <span className="rounded-full bg-emerald-100 dark:bg-emerald-950/70 px-2.5 py-0.5 text-xs font-semibold text-emerald-800 dark:text-emerald-300">
+                          Subject CGPA: {testimonial.subject_cgpa.toFixed(1)}
+                        </span>
+                      )}
+                    </div>
+                    {/* Review text */}
+                    <p className="whitespace-pre-wrap text-sm leading-relaxed text-slate-700 dark:text-slate-200">
+                      &ldquo;{testimonial.written_review}&rdquo;
+                    </p>
+                  </blockquote>
+                ))}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Back to Top */}
 <button
   type="button"
